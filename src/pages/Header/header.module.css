@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
+body{
+    margin:0;
+    font-family: "NOTO Sans JP", san-serif;
+    background-color:white;
+}
+a{
+    text-decoration: none;
+}
+:root{
+    --blue:#0f73ee;
+    --lighter-blue:rgba(146,205,250);
+    --lavender:rgba(215,215,255);
+    --yellow:#fba707;
+    --orange:#eb7d16;
+    --white:#FFFFFF;
+    --black:#000000;
+    --gray:#666666;
+    --lighter-gray:rgb(232, 232, 232);
+    --latte:rgb(255, 248, 231);
+}
+.header{
+    width: 100%;
+    max-width: 1920px;
+    height: 54px;
+    border-bottom: 1px solid var(--lighter-gray);
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    background-color: var(--white);
+}
+.headerContent{
+    width: 1500px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #3366CC;
+}
+.theme{
+    width: 150px;
+    height: 34px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 34px;
+    color: var(--blue);
+}
+.navItem{
+    color: var(--gray);
+    cursor: pointer;
+}

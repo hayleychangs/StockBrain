@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
+body{
+    margin:0;
+    font-family: "NOTO Sans JP", san-serif;
+}
+:root{
+    --blue:#0f73ee;
+    --lighter-blue:rgba(146,205,250);
+    --lavender:rgba(215,215,255);
+    --yellow:#fba707;
+    --orange:#eb7d16;
+    --white:#FFFFFF;
+    --black:#000000;
+    --gray:#666666;
+    --lighter-gray:rgb(232, 232, 232);
+    --latte:rgb(255, 248, 231);
+}
+.trackingList{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+.title{
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    color: var(--white);
+}
+.container{
+    display: flex;
+    height: 80%;
+    width: 95%;
+    border-radius: 10px;
+    border-bottom: 2px solid white;
+    flex-direction: column;
+    align-items: center;
+    font-size: 20px;
+    color: white;
+    background-color: #fff;
+    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+}
+.addtrackBtn{
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+    background-color:var(--blue);
+    color: var(--white);
+    margin-left: 20px;
+    cursor: pointer;
+}
+.inputForm{
+    display: flex;
+    justify-content: space-around;
+    width: 200px;
+}
+.inputText{
+    width: 50%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: var(--yellow);
+}
+.subTitle{
+    width: 300px;
+    height: 20px;
+    font-size: 16px;
+    margin: 20px 5px 10px 5px;
+    justify-content: space-between;
+    display: flex;
+    background-color: var(---light-Gray);
+    color: var(--gray);
+}
+.allTrackingList{
+    width: 90%;
+    margin:5px 0 0 0;
+    padding: 0;
+    border-radius: 10px;
+    overflow-y: auto;
+   
+}
+.allTrackingList::-webkit-scrollbar{
+    width: 8px;
+}
+.allTrackingList::-webkit-scrollbar-track{
+    background: none;
+}
+.allTrackingList::-webkit-scrollbar-thumb{
+    background-color: var(---light-Gray);
+    border-radius: 10px;
+}
+.singleTrack{
+    width: 260px;
+    height: 40px;
+    margin: 20px 2px 0 12px;
+    /* padding: 10px 20px; */  
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    font-size: 16px;
+    color: var(--blue);
+}
+.singleTrack:hover{
+    transform: scale(1.01);
+    background-color: var(--latte);
+}
+.trackText{
+    /*flex: 1;    split evenly*/
+}
+.deleteBtn{
+    width: 80px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color:var(--blue);
+    color: var(--white);
+    margin: 0 5px;
+    cursor: pointer;
+}
+.deleteBtn:hover{
+    background-color: var(--orange);
+    font-weight: bold;
+}  

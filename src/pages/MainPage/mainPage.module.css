@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
+body{
+    margin:0;
+    font-family: "NOTO Sans JP", san-serif;
+}
+:root{
+    --blue:#0f73ee;
+    --lighter-blue:rgba(146,205,250);
+    --lavender:rgba(215,215,255);
+    --yellow:#fba707;
+    --orange:#eb7d16;
+    --white:#FFFFFF;
+    --black:#000000;
+    --gray:#666666;
+    --lighter-gray:rgb(232, 232, 232);
+    --latte:rgb(255, 248, 231);
+}
+a{
+    text-decoration: none;
+}
+.mainSection{
+    width: 100%;
+    max-width: 1920px;
+    /* height: 1200px; */
+    display: grid;
+    grid-template-rows: 54px 10px 60px 20px 100px 200px 350px auto 250px 54px;
+    grid-template-columns: 160px 250px 275px 275px 275px 275px 250px 160px;
+}
+.searchBar{
+    width: 530px;
+    height:60px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 100px; 
+    /*!會讓candle圖消失 display: flex; */
+    /*!會讓candle圖消失 margin: auto; */
+    grid-row: 3 / 4;
+    grid-column: 3 / 6;
+}
+
+.candleStickChart{
+    grid-row: 5 / 6;
+    grid-column: 3 / 5;
+}
+.trackingList{
+    height: 300px;
+    width: 350px;
+    border-radius: 10px;
+    grid-row: 5 / 6;
+    grid-column: 7 / 8;
+    background-color: var(--lighter-blue);
+    box-shadow: 6px -4px 2px var(--yellow);
+}
+.calculater{
+    width: 350px;
+    height: 300px;
+    margin: 50px 0 0 0;
+    color: gray;
+    background-color: #E7E6E6;
+    grid-row: 7 / 8;
+    grid-column: 7 / 8;
+}

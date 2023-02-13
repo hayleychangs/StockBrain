@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
+body{
+    margin:0;
+    font-family: "NOTO Sans TC", san-serif;
+    background-color: cadetblue;
+}
+:root{
+    --blue:#0f73ee;
+    --lighter-blue:rgba(146,205,250);
+    --lavender:rgba(215,215,255);
+    --yellow:#fba707;
+    --orange:#eb7d16;
+    --white:#FFFFFF;
+    --black:#000000;
+    --gray:#666666;
+    --lighter-gray:rgb(232, 232, 232);
+    --latte:rgb(255, 248, 231);
+}
+a{
+    text-decoration: none;
+}
+.searchBox{
+    width: 500px;
+    height: 50px;
+    margin-right: 100px;
+    background-color:#fff;
+}
+.input{
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    font-weight:bolder;
+    margin-left: 10px;
+    border-style: none;
+    border-radius: 50px;
+    border: 2px solid Var(--yellow);  
+}
+.searchBox input{
+    width: 90%;
+    height: 80%;
+    font-size: 20px;
+    font-weight:bolder;
+    margin-top: 5px;
+    margin-left: 20px;
+    border-style: none;
+    outline: none;
+}
+.searchBox input::placeholder{
+    color: gray;
+}
+.searchBtn{
+    box-sizing: border-box;
+    width: 60px;
+    height: 46px;
+    position: relative;
+    left: 440px;
+    bottom: 50px;
+    border-style: none;
+    border-radius: 0px 5px 5px 0px;
+    cursor: pointer;
+    padding: 0;
+    background-color:#fff;
+}
+.search{
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.searchResults{
+    width: 480px;
+    height: 170px;
+    position: relative;
+    bottom: 40px;
+    left: 20px;
+    background-color:var(--white);
+    overflow: hidden;
+    overflow-y: auto;
+    margin: 0;
+    z-index: 900;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.searchResults::-webkit-scrollbar{
+    display: none;
+}
+.resultsItem{
+    font-size: 20px;
+    list-style: none;
+    padding-left: 5px;
+    margin: 10px 10px 0 10px;
+}
+.resultsItem:hover{
+    border-radius: 10px;
+    background-color: var(--latte);
+    cursor: pointer;
+}
+.itemId{
+    font-weight: bold;
+    color: var(--blue);
+}
