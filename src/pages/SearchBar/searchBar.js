@@ -5,9 +5,9 @@ import {db} from "../../firebase/firebase";
 
 import styles from "./searchBar.module.css";
 
-import searchIcon from "../images/search.png"
+import searchIcon from "../../images/search.png"
 
-import MarketData from "../market.json";
+import MarketData from "./market.json";
 
 function SearchBar (props) {
 

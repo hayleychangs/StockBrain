@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
+body{
+    margin:0;
+    font-family: "NOTO Sans JP", san-serif;
+}
+:root{
+    --blue:#0f73ee;
+    --lighter-blue:rgba(146,205,250);
+    --lavender:rgba(215,215,255);
+    --yellow:#fba707;
+    --orange:#eb7d16;
+    --white:#FFFFFF;
+    --black:#000000;
+    --gray:#666666;
+    --lighter-gray:rgb(232, 232, 232);
+    --latte:rgb(255, 248, 231);
+}
+a{
+    text-decoration: none;
+}
+.tabs{
+    /* width: 300px; */
+    height: 326px;
+    max-width: 360px;
+    display: flex;
+	flex-wrap: wrap;
+    background-color: var(--lighter-gray);
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px var(--lighter-blue);
+}
+.tabs input[type="radio"] {
+    display: none;
+}
+.tabs label {
+    width: 165px;
+    padding: 10px 0;
+    text-align: center;
+    background-color:var(--lighter-gray);
+    font-weight: bold;
+    color: var(--white);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    margin-top: 10px;
+}
+.tabs label:hover{
+    background-color: var(--latte);
+    color: var(--gray);
+}
+.tabsLabel1{
+    margin-left: 10px;
+}
+.tabs .tab{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    order:1;    /*set tabs after the label*/
+    display: none;
+}
+.tabs input[type="radio"]:checked + label + .tab {
+    display: block;
+
+}
+.tabs input[type="radio"]:checked + label {
+    padding-top: 15px; 
+    top: 0;
+}
+.row{
+    width: 94.5%;
+    height: 255px;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--latte);
+    font-size: 14px;
+    margin-left: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.inputBox, .resultBox{
+    width: 180px;
+    background-color: var(--latte);
+    color: var(--gray);
+    font-weight: bold;
+}
+.inputBox{
+    border-bottom-left-radius: 10px;
+}
+.resultBox{
+    border-bottom-right-radius: 10px;
+}
+.rowItem{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+    margin-left: 10px;
+    margin-right: 15px;
+}
+input{
+    background-color: var(--lighter-gray);
+}
+.purchasePrice{
+    width: 50px;
+    height: 20px;
+    margin-left: 7px;
+    padding-left: 10px;
+    border-radius: 10px;
+    border-style: none;
+    outline: none;
+}
+.stopLossPoint, .stopProfitPoint{
+    width: 50px;
+    height: 20px;
+    margin-left: 5px;
+    padding-left: 10px;
+    border-radius: 10px;
+    border-style: none;
+    outline: none;
+}
+.subRow{
+    display: flex;
+    margin-top: 35px;
+    margin-left: 5px;
+}
+.RRRatio{
+    width: 55px;
+    height: 22px;
+    margin-left: 9.5px;
+    padding-left: 10px;
+    background-color: var(--lighter-gray);
+    border-radius: 10px;
+    color: var(--orange);
+}
+.stopLossRatio, .stopProfitRatio{
+    width: 55px;
+    height: 22px;
+    margin-left: 8px;
+    padding-left: 10px;
+    background-color: var(--lighter-gray);
+    border-radius: 10px;
+}
+.stopLossRatio{
+    color: green;
+}
+.stopProfitRatio{
+    color: red;
+}
+.clearBtn{
+    width: 100px;
+    height: 30px;
+    background-color: var(--yellow);
+    position: relative;
+    bottom: 50px;
+    left: 130px;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--white);
+    cursor: pointer;
+    box-shadow: 2px 2px 2px var(--orange);
+}
+.clearBtn:hover{
+    transform: scale(1.03);
+}

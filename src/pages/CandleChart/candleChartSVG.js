@@ -134,7 +134,7 @@ function CandleChartSVG ({data}) {
     const handleMouseMove = (event, i) => {
         // access the data using data[i]
         setStockClose(data[i].close);
-        setStockChange(parseFloat((data[145].close-data[144].close).toFixed(2)));
+        setStockChange(parseFloat((data[i].close-data[i-1].close).toFixed(2)));
         setStockChangePercent(parseFloat((((data[i].close-data[i-1].close)/data[i-1].close)*100).toFixed(2)));
         setStockVolume(parseInt(data[i].Trading_Volume/1000));
         setStockAmount((data[i].Trading_money/100000000).toFixed(2));

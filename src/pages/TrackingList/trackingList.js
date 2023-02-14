@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./trackingList.module.css";
 
-import { Auth } from "../components/auth";
 import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot } from "firebase/firestore";
 import {db, auth} from "../../firebase/firebase";
 import { onAuthStateChanged } from 'firebase/auth';

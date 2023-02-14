@@ -27,7 +27,7 @@ a{
     position: fixed;
     top: 0;
     z-index: 50;
-    background-color: var(--white);
+    background-color: var(--lighter-blue);
 }
 .headerContent{
     width: 1500px;
@@ -48,6 +48,22 @@ a{
     color: var(--blue);
 }
 .navItem{
+    display: flex;
     color: var(--gray);
     cursor: pointer;
+    margin-right: 50px;
+}
+@media screen and (max-width:1200px) and (min-width:600px){
+    .header{
+        width: 90%;
+    }
+    .headerContent{
+        width: 90%;
+    }
+    .theme{
+        margin-left: 10px;
+    }
+    .navItem{
+        margin-right: 10px;
+    }
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Auth } from "../components/auth";
 
 import styles from "./homePage.module.css";
 
