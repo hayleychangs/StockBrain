@@ -59,6 +59,17 @@ a{
     grid-row: 7 / 8;
     grid-column: 7 / 8;
 }
+.singleNote{
+    margin-top: 50px;
+    grid-row: 8 / 9;
+    grid-column: 3 / 5;
+}
+.multiNote{
+    margin-top: 50px;
+    margin-left: 150px;
+    grid-row: 8 / 9;
+    grid-column: 5 / 6;
+}
 @media screen and (max-width:1200px) and (min-width:600px){
     .mainSection{
         width: 90%;

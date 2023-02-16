@@ -5,6 +5,8 @@ import CandleChart from "../CandleChart/candleChart";
 import Calculator from "../Calculator/calculator";
 import SearchBar from "../SearchBar/searchBar";
 import TrackingList from "../TrackingList/trackingList";
+import MyNote from "../Note/singleNote";
+import MultiNote from "../MultiNote/multiNote";
 
 import styles from "./mainPage.module.css";
 
@@ -28,6 +30,9 @@ function MainPage () {
                 </div>
                 <div className={styles.calculator}>
                     {<Calculator />}
+                </div>
+                <div className={styles.singleNote}>
+                    {<MyNote />}
                 </div>
             </div>
         </>
