@@ -3,7 +3,6 @@ import React, {useState} from "react";
 import styles from "./calculator.module.css";
 
 function Calculator () {
-    console.log("計算機")
 
     const [purchasePrice, setPurchasePrice] = useState("");
     const [stopLossPoint, setStopLossPoint] = useState("");

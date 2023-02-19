@@ -101,7 +101,6 @@ a{
     margin-left: 50px;
     padding-bottom: 5px;
     display: flex;
-    background-color:beige;
     overflow-x: auto;
     overflow-y: hidden;
 }

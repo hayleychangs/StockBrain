@@ -18,10 +18,11 @@ function SearchBar (props) {
     const navigate = useNavigate()
     const search = () => {
         setSearchValue(inputRef.current.value);
-        console.log(searchValue);
+        console.log("21-列印輸入值", searchValue);
         //設定querystring
         navigate(`/home/${searchValue}`)
         setSearchValue("");
+        setIsHidden(false);
     }
     //--------------------------------------
  
@@ -33,6 +34,7 @@ function SearchBar (props) {
 
     const handleFilter = (event) => {
         const searchValue = event.target.value;
+        setIsHidden(true);
         setSearchValue(searchValue);
         setFilteredData(data.filter(item =>
               item.股票代碼.toString().includes(searchValue.toString()) ||
@@ -47,21 +49,20 @@ function SearchBar (props) {
 
     const handleOnFocus = (event) => {
         event.target.placeholder="";
-        setIsHidden(true);
     }
 
     const handleOnBlur = (event) => {
         event.target.placeholder="輸入台股名稱或代號搜尋";
+        setSearchValue("");
         setIsHidden(false);
     }
 
-
-    const handleClick = (keyword) => {
+    function handleClick (keyword) {
         console.log("關鍵字", keyword)
-        setSearchValue(keyword);
-        search();
+        navigate(`/home/${keyword}`)
+        setSearchValue("");
+        setIsHidden(false);
     }
-
     //------------------------------------------
 
     
@@ -84,12 +85,11 @@ function SearchBar (props) {
             <button className={styles.searchBtn}>
                 <img className={styles.search} src={searchIcon} alt="search" onClick={search} />
             </button>
-            {isHidden && searchValue && (
+            {isHidden && filteredData.length !== 0 && (
                 <div className={styles.searchResults}>
-                    {/* data from props或from firestore查詢結果---filteredData */}
-                    {filteredData.slice(0, 10).map((value) => {
+                    {filteredData.slice(0, 5).map((value, i) => {
                         return (
-                            <li key={value.股票代碼} className={styles.resultsItem} onClick={() => handleClick(value.股票代碼)}>
+                            <li key={i} className={styles.resultsItem} onClick={() => handleClick(value.股票代碼)}>
                                 <span className={styles.itemId}>{value.股票代碼}&emsp;</span>
                                 <span className={styles.itemName}>{value.股票名稱}</span>
                             </li>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { useParams } from "react-router-dom";
 
-import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where } from "firebase/firestore";
+import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot } from "firebase/firestore";
 import {db, auth} from "../../firebase/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -111,14 +111,14 @@ function CandleChartSVG ({data}) {
     }
 
     //---------- init briefInfo value --------
-    const [stockName ,setStockName] = useState(data[145].stock_name);
-    const [stockId ,setStockId] = useState(data[145].stock_id);
+    const [stockName, setStockName] = useState(data[145].stock_name);
+    const [stockId, setStockId] = useState(data[145].stock_id);
     const [stockClose, setStockClose] = useState(data[145].close);
     const [stockChange, setStockChange] = useState(parseFloat((data[145].close-data[144].close).toFixed(2)));
     const [stockChangePercent, setStockChangePercent] = useState(parseFloat((data[145].spread/data[144].close*100).toFixed(2)));
     const [stockVolume, setStockVolume] = useState(parseInt(data[145].Trading_Volume/1000));
     const [stockAmount, setStockAmount] = useState((data[145].Trading_money/100000000).toFixed(2));
-    const [stockDate ,setStockDate] = useState(data[145].date);
+    const [stockDate, setStockDate] = useState(data[145].date);
 
     useEffect(() => {
         setStockName(data[145].stock_name);
@@ -441,6 +441,7 @@ function CandleChartSVG ({data}) {
     //user狀態確認並取得資料庫清單
     const [user, setUser] = useState(null);
     const [trackingList, setTrackingList] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false);
     const [tracked, setTracked] = useState(false);
 
     useEffect(() => {
@@ -455,7 +456,7 @@ function CandleChartSVG ({data}) {
         return () => unsubscribe();
     }, []);
 
-    //進入畫面就取得資料庫的追蹤清單
+    //取得資料庫的追蹤清單
     const fetchList = async () => {
         if (!user) {
             return;
@@ -463,49 +464,48 @@ function CandleChartSVG ({data}) {
         try {
             const listRef = collection(db, "trackingList");
             const q = query(listRef, where("userId", "==", user.uid));
-            const data = await getDocs(q);
-            const newData = data.docs.map((doc) => ({...doc.data(), id:doc.id }));
-            setTrackingList(newData);
+
+            onSnapshot(q, (snapshot) => {
+                const newData = [];
+                snapshot.docs.forEach((doc) => {
+                  newData.push({ ...doc.data(), id: doc.id });
+                  setTrackingList(newData);
+                  console.log("列印newData", newData)
+                });
+            })
+            
             console.log("列印data", data)
-            console.log("列印newData", newData)
+            
+            console.log("471列印trackingList", trackingList)
+            setIsLoaded(true);
         } catch (error) {
             console.log(error);
         } 
-        //finally{
-            
-        //     console.log("清單item", trackingList) //!空值
-        //     console.log("資料股票ID", data[145].stock_id.toString())
-        //     if (isStockIdExists) {
-        //         setTracked(true);
-        //         console.log("檢查text是否存在-true", isStockIdExists)
-        //     }else {
-        //         setTracked(false);
-        //         console.log("檢查text是否存在-false", isStockIdExists)
-        //     }
-        //     console.log("追蹤清單", trackingList);
-        // }
+
     };
 
     useEffect(()=>{
         fetchList();
-    }, [user]);
+
+    }, [user, data]); //depends on data update
+
+    console.log("494列印trackingList", trackingList)
 
     //追蹤狀態判斷，判斷是否有該值
-    const isStockIdExists = trackingList.some(item => item.text === data[145].stock_id.toString());
     useEffect(() => {
-        if (isStockIdExists) {
-            setTracked(true);
-            console.log("檢查text是否存在-true", isStockIdExists)
-        }else {
-            setTracked(false);
-            console.log("檢查text是否存在-false", isStockIdExists)
+        if (isLoaded){
+            const isStockIdExists = trackingList.some(item => item.stock_id === data[145].stock_id.toString());
+            if (isStockIdExists) {
+                setTracked(true);
+                console.log("檢查text是否存在-true", isStockIdExists)
+            }else {
+                setTracked(false);
+                console.log("檢查text是否存在-false", isStockIdExists)
+            }
+            console.log("追蹤清單", trackingList);
         }
-        console.log("追蹤清單", trackingList);
-    }, [data]);
+    }, [isLoaded, data, trackingList]); //depends on trackingList
 
-    //檢查 stockId 在 trackingList 裡的 text 是否存在
-    // const stockcheck = "5";
-    // const checkList =trackingList;
     
     //clickToTrack 
     const clickToTrack = async () => {
@@ -530,10 +530,9 @@ function CandleChartSVG ({data}) {
     const clickToCancel = async () =>{
         try {
             const listRef = collection(db, "trackingList");
-            const q = query(listRef, where("userId", "==", auth?.currentUser?.uid), where("text", "==", stockId));
+            const q = query(listRef, where("userId", "==", auth?.currentUser?.uid), where("stock_id", "==", stockId));
             const data = await getDocs(q);
             const results=data.docs.map((doc) => ({...doc.data(), id:doc.id }));
-            console.log("刪除前查詢結果", results);
             await deleteDoc(doc(db, "trackingList", results[0].id));
         }catch (error) {
             console.log(error);
@@ -541,7 +540,34 @@ function CandleChartSVG ({data}) {
         setTracked(false);
     }
     //*加入追蹤功能-------------------------------------------------------
-    
+
+    //滑鼠事件---------------
+    const svgRef = useRef(null);
+    const hlineRef = useRef(null);
+    const vlineRef = useRef(null);
+  
+    function handleMouseMove1(e) {
+      const svg = svgRef.current;
+      const rect = svg.getBoundingClientRect();
+      const x = e.nativeEvent.offsetX / rect.width;
+      const y = e.nativeEvent.offsetY / rect.height;
+  
+      // 繪製水平線
+      const hline = hlineRef.current;
+      hline.x1.baseVal.value = 100;
+      hline.y1.baseVal.value = y * rect.height;
+      hline.x2.baseVal.value = 1550;
+      hline.y2.baseVal.value = y * rect.height;
+  
+      // 繪製垂直線
+      const vline = vlineRef.current;
+      vline.x1.baseVal.value = x * rect.width;
+      vline.y1.baseVal.value = 20;
+      vline.x2.baseVal.value = x * rect.width;
+      vline.y2.baseVal.value = 520;
+    }
+    //---------------
+
     return (
         <div className={styles.container}>
             <div className={styles.SVG}>
@@ -571,7 +597,7 @@ function CandleChartSVG ({data}) {
                     </div>
                     <div className={styles.updateTime}>資料時間: {stockDate}</div>
                 </div>
-                {tracked ? 
+                {tracked ?
                     <div className={styles.trackedBox} onClick={clickToCancel}>
                         <span className={styles.add}>✔</span>
                         <p>已追蹤</p>
@@ -592,12 +618,36 @@ function CandleChartSVG ({data}) {
                         
                         {/* chart border */}
                         <rect
+                            ref={svgRef}
+                            onMouseMove={(e) => handleMouseMove1(e)}
                             x="100"
                             y="20"
                             width="1450"
                             height="500"
                             fill="#FFFFFF"
                             stroke="rgb(190, 190, 190)"
+                            strokeWidth="0.5"
+                        />
+
+                       {/* 繪製水平線 */}
+                        <line
+                            ref={hlineRef}
+                            x1="100"
+                            y1="0"
+                            x2="1550"
+                            y2="0"
+                            stroke="gray"
+                            strokeWidth="0.5"
+                        />
+
+                        {/* 繪製垂直線 */}
+                        <line
+                            ref={vlineRef}
+                            x1="0"
+                            y1="20"
+                            x2="0"
+                            y2="520"
+                            stroke="gray"
                             strokeWidth="0.5"
                         />
 

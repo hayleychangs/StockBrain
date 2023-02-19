@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import Header from "../Header/header";
 import CandleChart from "../CandleChart/candleChart";
@@ -6,7 +7,7 @@ import Calculator from "../Calculator/calculator";
 import SearchBar from "../SearchBar/searchBar";
 import TrackingList from "../TrackingList/trackingList";
 import MyNote from "../Note/singleNote";
-import MultiNote from "../MultiNote/multiNote";
+import InfoCard from "../InfoCard/infoCard";
 
 import styles from "./mainPage.module.css";
 
@@ -33,6 +34,9 @@ function MainPage () {
                 </div>
                 <div className={styles.singleNote}>
                     {<MyNote />}
+                </div>
+                <div className={styles.infoCard}>
+                    {<InfoCard />}
                 </div>
             </div>
         </>

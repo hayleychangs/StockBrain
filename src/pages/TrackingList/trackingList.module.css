@@ -104,10 +104,17 @@ body{
     border-radius: 5px;
     font-size: 16px;
     color: var(--blue);
+    position: relative;
 }
 .singleTrack:hover{
     transform: scale(1.01);
     background-color: var(--latte);
+    cursor: pointer;
+}
+.singleTrack:hover .deleteBtn{
+    display: inline-block;
+    transform: translateY(-50%);
+    transform: translateX(50%);
 }
 .trackText{
     /*flex: 1;    split evenly*/
@@ -121,6 +128,10 @@ body{
     color: var(--white);
     margin: 0 5px;
     cursor: pointer;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 180px;
 }
 .deleteBtn:hover{
     background-color: var(--orange);

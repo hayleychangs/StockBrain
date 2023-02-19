@@ -96,9 +96,6 @@ a{
     margin-left: 10px;
     margin-right: 15px;
 }
-input{
-    background-color: var(--lighter-gray);
-}
 .purchasePrice{
     width: 50px;
     height: 20px;
@@ -107,6 +104,7 @@ input{
     border-radius: 10px;
     border-style: none;
     outline: none;
+    background-color: var(--lighter-gray);
 }
 .stopLossPoint, .stopProfitPoint{
     width: 50px;
@@ -116,6 +114,7 @@ input{
     border-radius: 10px;
     border-style: none;
     outline: none;
+    background-color: var(--lighter-gray);
 }
 .subRow{
     display: flex;

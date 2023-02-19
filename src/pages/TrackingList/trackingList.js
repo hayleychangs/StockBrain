@@ -52,7 +52,7 @@ const TrackingList = () => {
             // console.log("使用者ID", auth?.currentUser?.uid);
             const q = query(listRef, where("userId", "==", auth?.currentUser?.uid), orderBy("timestamp", "desc"));
            
-            onSnapshot(listRef, (snapshot) => {
+            onSnapshot(q, (snapshot) => {
                 const newData = []
                 snapshot.docs.forEach((doc) => {
                     newData.push({...doc.data(), id:doc.id})
@@ -61,15 +61,9 @@ const TrackingList = () => {
                 setTrackingList(newData);
             })
 
-            // console.log("這裡是讀取");
-            // console.log(listRef);
-            // console.log("列印追蹤清單",trackingList);
         } catch (error) {
             console.log(error);
         }; 
-        // finally {
-        //     setIsLoading(false);
-        // };
     };
         
     //!user狀態確認
@@ -100,10 +94,11 @@ const TrackingList = () => {
         fetchList();
     }
     
-    //render component
-    // if (isLoading) {
-    //     return <Loading />
-    // }
+    const navigate = useNavigate()
+    function handleClick (keyword) {
+        navigate(`/home/${keyword}`)
+    }
+
     return (
         <div className={styles.trackingList}>
             <div className={styles.title}>我的追蹤</div>
@@ -122,12 +117,11 @@ const TrackingList = () => {
                         <div>收盤價</div>
                         <div>漲跌元</div>
                         <div>漲跌幅</div>
-                        {/* <div>成交量</div> */}
                 </div>
                 <div className={styles.allTrackingList}>
                     {
                         trackingList?.map((track,i)=>(
-                            <div className={styles.singleTrack} key={i}>
+                            <div className={styles.singleTrack} key={i} onClick={() => handleClick(track.stock_id)}>
                                 <div className={styles.trackText}>
                                     {track.stock_id}
                                 </div>
@@ -143,7 +137,7 @@ const TrackingList = () => {
                                 <div>
                                     {track.change_percent}
                                 </div>
-                                {/* <button className={styles.deleteBtn} onClick={() => handleDelete(track.id)}>刪除</button> */}
+                                <button className={styles.deleteBtn} onClick={() => handleDelete(track.id)}>刪除</button>
                             </div>
                         ))
                     }
