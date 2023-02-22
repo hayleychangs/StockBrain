@@ -77,7 +77,7 @@ body{
     color: var(--gray);
 }
 .allTrackingList{
-    width: 90%;
+    width: 100%;
     margin:5px 0 0 0;
     padding: 0;
     border-radius: 10px;
@@ -95,12 +95,15 @@ body{
     border-radius: 10px;
 }
 .singleTrack{
-    width: 260px;
-    height: 40px;
-    margin: 20px 2px 0 12px;
+    width: 90%;
+    height: 35px;
     /* padding: 10px 20px; */  
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1.2fr 1.2fr 1fr;
+    justify-content: center;
+    text-align: center;
+    padding-top: 10px;
+    margin-left: 10px;
     border-radius: 5px;
     font-size: 16px;
     color: var(--blue);
@@ -116,24 +119,26 @@ body{
     transform: translateY(-50%);
     transform: translateX(50%);
 }
-.trackText{
-    /*flex: 1;    split evenly*/
+.close{
+    margin-left: 2px;
 }
 .deleteBtn{
-    width: 80px;
+    width: 20px;
     height: 40px;
     border: none;
     border-radius: 5px;
-    background-color:var(--blue);
-    color: var(--white);
-    margin: 0 5px;
+    background-color:var(--lighter-gray);
+    color: var(--gray);
+    display: flex;
+    padding-left: 3px;
     cursor: pointer;
     display: none;
     position: absolute;
     top: 0;
-    left: 180px;
+    left: 290px;
 }
 .deleteBtn:hover{
-    background-color: var(--orange);
+    background-color: var(--yellow);
+    color: var(--white);
     font-weight: bold;
 }  

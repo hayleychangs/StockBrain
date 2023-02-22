@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
+body{
+    margin:0;
+    font-family: "NOTO Sans JP", san-serif;
+}
+/* *{
+    font-family: "NOTO Sans JP", san-serif;
+} */
+:root{
+    --blue:#0f73ee;
+    --lighter-blue:rgba(146,205,250);
+    --lavender:rgba(215,215,255);
+    --yellow:#fba707;
+    --orange:#eb7d16;
+    --white:#FFFFFF;
+    --black:#000000;
+    --gray:#666666;
+    --lighter-gray:rgb(232, 232, 232);
+    --latte:rgb(255, 248, 231);
+}
+a{
+    text-decoration: none;
+}
+.tradePlan{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--latte);
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px var(--lighter-gray);
+}
+.title{
+    height: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: var(--gray);
+    margin: 10px;
+}
+.content{
+    height: 300px;
+    margin-top: 10px;
+    background-color:#fba707;
+}

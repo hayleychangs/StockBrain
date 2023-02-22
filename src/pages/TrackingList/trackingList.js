@@ -135,7 +135,7 @@ const TrackingList = () => {
                                     {track.change}
                                 </div>
                                 <div>
-                                    {track.change_percent}
+                                    {track.change_percent}%
                                 </div>
                                 <button className={styles.deleteBtn} onClick={() => handleDelete(track.id)}>刪除</button>
                             </div>

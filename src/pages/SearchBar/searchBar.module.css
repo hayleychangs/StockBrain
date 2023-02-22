@@ -20,7 +20,7 @@ a{
     text-decoration: none;
 }
 .searchBox{
-    width: 500px;
+    width: 680px;
     height: 50px;
     margin-right: 100px;
     background-color:#fff;
@@ -36,13 +36,14 @@ a{
     border: 2px solid Var(--yellow);  
 }
 .searchBox input{
-    width: 90%;
+    width: 95%;
     height: 80%;
     font-size: 20px;
     font-weight:bolder;
     margin-top: 5px;
     margin-left: 20px;
     border-style: none;
+    border-radius: 10px;
     outline: none;
 }
 .searchBox input::placeholder{
@@ -50,23 +51,24 @@ a{
 }
 .searchBtn{
     box-sizing: border-box;
-    width: 60px;
+    width: 46px;
     height: 46px;
     position: relative;
-    left: 400px;
-    bottom: 50px;
+    left: 630px;
+    bottom: 45px;
     border-style: none;
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 20px;
     cursor: pointer;
     padding: 0;
-    background-color:#fff;
+    background-color: var(--white);
+}
+.searchBtn:hover{
+    transform: scale(1.08);
 }
 .search{
-    width: 30px;
-    height: 30px;
-    object-fit: cover;
-    margin-top: 5px;
-    margin-left: 10px;
+    /* object-fit: cover; */
+    margin-top: 3px;
+    /* margin-left: 10px; */
 }
 .searchResults{
     width: 480px;

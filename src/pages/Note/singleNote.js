@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { useParams } from "react-router-dom";
 
 import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot, updateDoc } from 'firebase/firestore';
 import {db, auth} from "../../firebase/firebase";
@@ -11,8 +12,9 @@ import { FaRegLightbulb } from "react-icons/fa";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { BiSave } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { ImMenu3, ImMenu4 } from "react-icons/im";
 
-function MyNote () {
+function MyNote ({ onMenuToggle }) {
   //user狀態確認
   const [user, setUser] = useState(null);
 
@@ -27,6 +29,8 @@ function MyNote () {
   
     return () => unsubscribe();
   }, []);
+
+  let { stockId } = useParams();
 
   //add note
   const [inputValue, setInputValue] = useState('');
@@ -43,8 +47,15 @@ function MyNote () {
       setMoodValue("0");
     }
 
+    if (!stockId) {
+      stockId = "2330";
+    }
+
+    console.log("55-print", auth?.currentUser?.uid)
+
       try {
         const docRef = await addDoc(collection(db, 'myNote'), {
+          stock_id: stockId,
           text: inputValue,
           mood: moodValue,
           time: serverTimestamp(),
@@ -56,7 +67,7 @@ function MyNote () {
       } catch (e) {
         console.error('Error adding document: ', e);
       }
-    }
+  }
 
 
   function handleInputChange(event) {
@@ -78,36 +89,37 @@ function MyNote () {
     }
     console.log(moodValue)
   }
+  //---------------------------------------------
+
+  //read note---------
+  async function fetchNotes () {
+
+    if (!user) {
+      return;
+    }
+
+    if (!stockId) {
+      stockId = "2330";
+    }
+    
+    const notesRef = collection(db, "myNote");
+    const q = query(notesRef, where("user_id", "==", auth?.currentUser?.uid), where("stock_id", "==", stockId), orderBy("time", "desc"));
+
+    onSnapshot(q, (querySnapshot) => {
+      const result = [];
+      querySnapshot.forEach((doc) => {
+        result.push({...doc.data(), id: doc.id});
+      });
+      console.log("列印符合條件的筆記", result);
+      setNotes(result);
+      
+    });
+  }
 
   useEffect(() => {
-      async function fetchNotes() {
-
-        if (!user) {
-          return;
-        }
-
-        try {
-          const noteRef = collection(db, "myNote");
-          console.log("使用者ID", auth?.currentUser?.uid);
-          const q = query(noteRef, where("user_id", "==", auth?.currentUser?.uid), orderBy("timestamp", "desc"));
-        
-          onSnapshot(noteRef, (snapshot) => {
-              const notes = []
-              snapshot.docs.forEach((doc) => {
-                  notes.push({...doc.data(), id:doc.id})
-              })
-              console.log("列印筆記", notes);
-              setNotes(notes);
-          })
-
-        } catch (error) {
-            console.log(error);
-        }; 
-
-      }
-  
-      fetchNotes();
-  }, [user]);
+    fetchNotes();
+  }, [user, stockId])
+  //----------------------
 
   //update note
   const [editableContent, setEditableContent] = useState("");
@@ -180,43 +192,61 @@ function MyNote () {
   }
   //------------------------------------------
 
+  //menu shoe hide ----------------------------
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+    onMenuToggle();
+  };
+
+  //------------------------------------------
+
+
   return (
     <div className={styles.myNote}>
-      <div className={styles.title} >想法捕捉</div>
-      <div className={styles.container}>
-        <div className={styles.inputCard}>
-            <div className={styles.input}>
-              <input type="text" value={inputValue} placeholder="隨時紀錄交易想法及心情" onChange={handleInputChange} onFocus={handleOnFocus} onBlur={handleOnBlur} style={{ backgroundColor: inputBackgroundColor }} />
-            </div>
-            <div className={styles.addIcon} onClick={handleAddItem}><MdOutlinePostAdd size={35} color="#0f73ee"/></div>
-            <div className={styles.moodInput}>
-              <div className={styles.moodIcon} value="0" onClick={() => getMoodValue(0)} ><FaRegLightbulb size={30} color={"#eb7d16"} /></div>
-              <div className={styles.moodIcon} value="1" onClick={() => getMoodValue(1)}  ><GiNewspaper  size={30} color={"#9966FF"} /></div>
-              <div className={styles.moodIcon}  value="2" onClick={() => getMoodValue(2)} ><GiArchiveResearch size={30} color={"green"}  /></div>
-              <div className={styles.moodIcon}  value="3" onClick={() => getMoodValue(3)} ><GiCalculator size={30} color={"#666666"} /></div>
-            </div>
-        </div> 
-        <div className={styles.notes}>
-          {
-            notes?.map((note) => (
-                <div className={styles.singleNoteCard} key={note.id}>
-                  <div className={styles.singleNote} style={{ backgroundColor: setBackgroundColor(note.mood) }} contentEditable onInput={handleEditableChange}>
-                    {note.text}
-                  </div>
-                  <div className={styles.updateIcon} onClick={() => handleUpdateNote(note.id)}><BiSave size={30} color={"#0f73ee"} /></div>
-                  <div className={styles.deleteIcon} onClick={() => handleDeleteNote(note.id)}><RiDeleteBin5Line size={25} color={"#666666"} /></div>
-                  {note?.time && <div className={styles.updatedDate}>最後編輯時間：{note.time.toDate().toLocaleString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</div>}
-                  <div className={styles.moodInNote}>
-                    <div className={styles.moodIconInNote} value="0" onClick={() => handleMoodClick(0, note.id)} ><FaRegLightbulb GiNewspaper size={25} color={"#eb7d16"} /></div>
-                    <div className={styles.moodIconInNote} value="1" onClick={() => handleMoodClick(1, note.id)} ><GiNewspaper size={25} color={"#9966FF"} /></div>
-                    <div className={styles.moodIconInNote} value="2" onClick={() => handleMoodClick(2, note.id)} ><GiArchiveResearch size={25} color={"green"} /></div>
-                    <div className={styles.moodIconInNote} value="3" onClick={() => handleMoodClick(3, note.id)} ><GiCalculator size={25} color={"#666666"}/></div>
-                  </div>
-                </div>
-            ))
-          }
-        </div>
+      <div className={styles.title} onClick={handleClick}>
+        {isOpen ? <ImMenu4 /> : <ImMenu3 />}
+        <span> 想法捕捉</span>
       </div>
+      {isOpen && (
+        <div className={styles.container}>
+          <div className={styles.inputCard}>
+              <div className={styles.input}>
+                <input type="text" value={inputValue} placeholder="隨時紀錄交易想法及心情" onChange={handleInputChange} onFocus={handleOnFocus} onBlur={handleOnBlur} style={{ backgroundColor: inputBackgroundColor }} />
+              </div>
+              <div className={styles.addIcon} onClick={handleAddItem}><MdOutlinePostAdd size={35} color="#0f73ee"/></div>
+              <div className={styles.moodInput}>
+                <div className={styles.moodIcon} value="0" onClick={() => getMoodValue(0)} ><FaRegLightbulb size={30} color={"#eb7d16"} /></div>
+                <div className={styles.moodIcon} value="1" onClick={() => getMoodValue(1)}  ><GiNewspaper  size={30} color={"#9966FF"} /></div>
+                <div className={styles.moodIcon}  value="2" onClick={() => getMoodValue(2)} ><GiArchiveResearch size={30} color={"green"}  /></div>
+                <div className={styles.moodIcon}  value="3" onClick={() => getMoodValue(3)} ><GiCalculator size={30} color={"#666666"} /></div>
+              </div>
+          </div> 
+          <div className={styles.notes}>
+            {notes ?
+              notes.map((note) => (
+                  <div className={styles.singleNoteCard} key={note.id}>
+                    <div className={styles.singleNote} style={{ backgroundColor: setBackgroundColor(note.mood) }} contentEditable onInput={handleEditableChange}>
+                      {note.text}
+                    </div>
+                    <div className={styles.updateIcon} onClick={() => handleUpdateNote(note.id)}><BiSave size={30} color={"#0f73ee"} /></div>
+                    <div className={styles.deleteIcon} onClick={() => handleDeleteNote(note.id)}><RiDeleteBin5Line size={25} color={"#666666"} /></div>
+                    {note?.time && <div className={styles.updatedDate}>最後編輯時間：{note.time.toDate().toLocaleString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</div>}
+                    <div className={styles.moodInNote}>
+                      <div className={styles.moodIconInNote} value="0" onClick={() => handleMoodClick(0, note.id)} ><FaRegLightbulb GiNewspaper size={25} color={"#eb7d16"} /></div>
+                      <div className={styles.moodIconInNote} value="1" onClick={() => handleMoodClick(1, note.id)} ><GiNewspaper size={25} color={"#9966FF"} /></div>
+                      <div className={styles.moodIconInNote} value="2" onClick={() => handleMoodClick(2, note.id)} ><GiArchiveResearch size={25} color={"green"} /></div>
+                      <div className={styles.moodIconInNote} value="3" onClick={() => handleMoodClick(3, note.id)} ><GiCalculator size={25} color={"#666666"}/></div>
+                    </div>
+                  </div>
+              ))
+              :
+              <p>Loading...</p>
+            }
+          </div>
+        </div>
+      )}
     </div>
   );
 }

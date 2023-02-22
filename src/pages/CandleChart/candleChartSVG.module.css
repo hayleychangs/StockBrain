@@ -21,7 +21,7 @@ a{
     text-decoration: none;
 }
 .container{
-    width: 900px;
+    width: 700px;
     display: grid;
     grid-template-rows: 667px;
 }
@@ -40,17 +40,24 @@ a{
     background: #c6c6c6;
 }
 .candleChart{
+    width: 780px;
+    height: 565px;
     grid-row: 3 / 4;
     grid-column: 1 / 5;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 .SVG{
+    width: 780px;
     background: #fff;
     border-radius: 10px;
     border: 1px solid #dfdfdf;  /* */
+    margin-left: 10px;
+    margin-right: 10px;
     /* color: #434343; */
     display: grid;
     grid-template-rows: 30px 70px 560px;
-    grid-template-columns: 50px 100px 600px 150px;
+    grid-template-columns: 20px 500px 20px;
     /* box-shadow: 5px -3px 2px var(--yellow); */
 }
 .stockNameAndId{
@@ -75,8 +82,9 @@ a{
 .stockBriefInfo{
     width: 600px;
     height: 80px;
+    margin-left: 90px;
     grid-row: 2 / 3;
-    grid-column: 3 / 4;
+    grid-column: 2 / 3;
     display: grid;
     grid-template-rows: 50% 50%;
     grid-template-columns: 200px 150px 2fr 5fr;
@@ -99,12 +107,6 @@ a{
     grid-row: 2 / 3;
     grid-column: 4 / 5;
 }
-.candleChart{
-    width: 900px;
-    height: 565px;
-    overflow-x: auto;
-    overflow-y: hidden;
-}
 .infoTitle{
     color: var(--gray);
 }
@@ -121,6 +123,7 @@ a{
     height: 60px;
     grid-row: 2 / 3;
     grid-column: 4 / 5;
+    margin-left: 110px;
     display: flex;
     background-color: #fba707;
     align-items:center;
@@ -148,6 +151,7 @@ a{
     height: 60px;
     grid-row: 2 / 3;
     grid-column: 4 / 5;
+    margin-left: 110px;
     display: flex;
     background-color: var(--lighter-gray);
     color: var(--gray);

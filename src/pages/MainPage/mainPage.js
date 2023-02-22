@@ -8,11 +8,25 @@ import SearchBar from "../SearchBar/searchBar";
 import TrackingList from "../TrackingList/trackingList";
 import MyNote from "../Note/singleNote";
 import InfoCard from "../InfoCard/infoCard";
+import TradePlan from "../TradePlan/tradePlan";
 
 import styles from "./mainPage.module.css";
 
 
 function MainPage () {
+    const [isMyNoteOpen, setIsMyNoteOpen] = useState(true);
+    const handleMyNoteToggle = () => {
+        setIsMyNoteOpen(!isMyNoteOpen);
+        console.log("19列印", isMyNoteOpen)
+    };
+      
+    const [isTradePlanOpen, setIsTradePlanOpen] = useState(true);
+    const handleTradePlanToggle = () => {
+        setIsTradePlanOpen(!isTradePlanOpen);
+        console.log("28列印", isTradePlanOpen)
+    };
+
+    const [isInfoCardOpen, setIsInfoCardOpen] = useState(true);
 
     return (
         <>
@@ -33,15 +47,17 @@ function MainPage () {
                     {<Calculator />}
                 </div>
                 <div className={styles.singleNote}>
-                    {<MyNote />}
+                    <MyNote onMenuToggle={handleMyNoteToggle} />
                 </div>
-                <div className={styles.infoCard}>
+                <div className={styles.tradePlan} style={{ marginTop: isMyNoteOpen ? 0 : -330 }}>
+                    <TradePlan onMenuToggle={handleTradePlanToggle} />
+                </div>
+                <div className={styles.infoCard} style={{ marginTop: isMyNoteOpen && isTradePlanOpen ? 0 : isMyNoteOpen && !isTradePlanOpen ? -330 :isMyNoteOpen ? 0 : isTradePlanOpen ? -340 : -660 }}>
                     {<InfoCard />}
                 </div>
             </div>
         </>
     )
 }
-
 
 export default MainPage;

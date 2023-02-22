@@ -5,98 +5,111 @@ import {db} from "../../firebase/firebase";
 
 import styles from "./searchBar.module.css";
 
-import searchIcon from "../../images/search.png"
+import { BiSearchAlt } from "react-icons/bi";
+
 
 import MarketData from "./market.json";
 
-function SearchBar (props) {
+function SearchBar () {
+    const [data, setData] = useState(MarketData);
+    const [searchInput, setSearchInput] = useState("");
+    const [stockId, setStockId] = useState("");
+    const [filteredData, setFilteredData] = useState([]);
 
-    //----------取得input值
-    const inputRef = useRef(null);
-
-    //--------搜尋欄 feat. filter-------------
     const navigate = useNavigate()
-    const search = () => {
-        setSearchValue(inputRef.current.value);
-        console.log("21-列印輸入值", searchValue);
+
+    //--------搜尋欄-------------
+    const handleSubmit = (event) => {
+        event.preventDefault();
         //設定querystring
-        navigate(`/home/${searchValue}`)
-        setSearchValue("");
-        setIsHidden(false);
+        navigate(`/home/${stockId}`);
+        setFilteredData([]);
+        setSearchInput("");
     }
     //--------------------------------------
  
 
     //-----處理搜尋結果篩選---------------------
-    const [data, setData] = useState(MarketData);
-    const [searchValue, setSearchValue] = useState("");
-    const [filteredData, setFilteredData] = useState([]);
-
     const handleFilter = (event) => {
-        const searchValue = event.target.value;
-        setIsHidden(true);
-        setSearchValue(searchValue);
-        setFilteredData(data.filter(item =>
-              item.股票代碼.toString().includes(searchValue.toString()) ||
-              item.股票名稱.toString().includes(searchValue)
-        ));
+        let searchWord = event.target.value;
+        setSearchInput(searchWord);
+        let filterResult;
+        const searchId = Number(searchWord);
+
+        if(searchId){
+            filterResult = data.filter((item) =>{
+                return item.股票代碼.toString().includes(searchWord)
+            });
+            setStockId(searchWord);
+        } else {
+            filterResult = data.filter( (item) =>{
+                return item.股票名稱.includes(searchWord)
+            });
+            setStockId(filterResult[0].股票代碼);
+        }
+
+        if (searchWord === "") {
+            setFilteredData([]);
+        } else {
+            setFilteredData(filterResult);
+        }
     }
     //------------------------------------------
 
 
     //-----OnFocus & OnBlur & click---------------------
-    const [isHidden, setIsHidden] = useState(true);
-
+ 
     const handleOnFocus = (event) => {
         event.target.placeholder="";
     }
 
     const handleOnBlur = (event) => {
         event.target.placeholder="輸入台股名稱或代號搜尋";
-        setSearchValue("");
-        setIsHidden(false);
+        setSearchInput("");
     }
 
     function handleClick (keyword) {
         console.log("關鍵字", keyword)
         navigate(`/home/${keyword}`)
-        setSearchValue("");
-        setIsHidden(false);
+        setFilteredData([]);
+        setSearchInput("");
     }
-    //------------------------------------------
-
+    //-------------------------------------------------
     
-
+    useEffect(() => {
+        if (searchInput==""){
+            setFilteredData([]);
+        }
+    }, [searchInput]);
+    
     return (
       <div>
         <div className={styles.searchBox}>
-            <div className={styles.input}>
-                <input ref={inputRef}
-                    value={searchValue}
-                    className="input"
+            <form className={styles.input} onSubmit={handleSubmit}>
+                <input
+                    value={searchInput}
                     type="text"
                     placeholder="輸入台股名稱或代號搜尋"
                     onFocus={handleOnFocus}
                     onBlur={handleOnBlur}
                     onChange={handleFilter}
-
                 />
-            </div>
-            <button className={styles.searchBtn}>
-                <img className={styles.search} src={searchIcon} alt="search" onClick={search} />
-            </button>
-            {isHidden && filteredData.length !== 0 && (
-                <div className={styles.searchResults}>
-                    {filteredData.slice(0, 5).map((value, i) => {
-                        return (
-                            <li key={i} className={styles.resultsItem} onClick={() => handleClick(value.股票代碼)}>
-                                <span className={styles.itemId}>{value.股票代碼}&emsp;</span>
-                                <span className={styles.itemName}>{value.股票名稱}</span>
-                            </li>
-                        )
-                    })}
-                </div>
-            )}
+                <button className={styles.searchBtn}>
+                    <BiSearchAlt className={styles.search} size={40} color={"#eb7d16"} />
+                </button>
+                {filteredData.length !== 0 && (
+                    <div className={styles.searchResults}>
+                        {filteredData.slice(0, 5).map((value, i) => {
+                            return (
+                                <li key={i} className={styles.resultsItem} onClick={() => handleClick(value.股票代碼)}>
+                                    <span className={styles.itemId}>{value.股票代碼}&emsp;</span>
+                                    <span className={styles.itemName}>{value.股票名稱}</span>
+                                </li>
+                            )
+                        })}
+                    </div>
+                )}
+            </form>
         </div>
         
       </div>
