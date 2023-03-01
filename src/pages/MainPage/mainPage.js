@@ -6,7 +6,7 @@ import CandleChart from "../CandleChart/candleChart";
 import Calculator from "../Calculator/calculator";
 import SearchBar from "../SearchBar/searchBar";
 import TrackingList from "../TrackingList/trackingList";
-import MyNote from "../Note/singleNote";
+import MyNote from "../Note/myNote";
 import InfoCard from "../InfoCard/infoCard";
 import TradePlan from "../TradePlan/tradePlan";
 
@@ -46,7 +46,7 @@ function MainPage () {
                 <div className={styles.calculator}>
                     {<Calculator />}
                 </div>
-                <div className={styles.singleNote}>
+                <div className={styles.myNote}>
                     <MyNote onMenuToggle={handleMyNoteToggle} />
                 </div>
                 <div className={styles.tradePlan} style={{ marginTop: isMyNoteOpen ? 0 : -330 }}>

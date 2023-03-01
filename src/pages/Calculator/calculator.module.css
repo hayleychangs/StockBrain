@@ -148,9 +148,9 @@ a{
     width: 100px;
     height: 30px;
     background-color: var(--yellow);
-    position: relative;
+    /* position: relative;
     bottom: 50px;
-    left: 130px;
+    left: 130px; */
     border: none;
     border-radius: 20px;
     font-weight: bold;
@@ -159,6 +159,33 @@ a{
     cursor: pointer;
     box-shadow: 2px 2px 2px var(--orange);
 }
+.saveBtn{
+    width: 100px;
+    height: 30px;
+    background-color: var(--blue);
+    /* position: relative;
+    bottom: 50px;
+    left: 130px; */
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--white);
+    cursor: pointer;
+    box-shadow: 2px 2px 2px var(--lighter-blue);
+}
 .clearBtn:hover{
     transform: scale(1.03);
+}
+.saveBtn:hover{
+    transform: scale(1.03);
+}
+.buttonContainer{
+    width: 250px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    bottom: 50px;
+    left: 50px;
+    justify-content: space-between;
 }

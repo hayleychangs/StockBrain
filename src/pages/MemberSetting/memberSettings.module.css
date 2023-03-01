@@ -1,0 +1,350 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
+body{
+    margin:0;
+    font-family: "Carter One", "NOTO Sans JP", san-serif;
+}
+:root{
+    --blue:#0f73ee;
+    --lighter-blue:rgba(146,205,250);
+    --lavender:rgba(215,215,255);
+    --yellow:#fba707;
+    --orange:#eb7d16;
+    --white:#FFFFFF;
+    --black:#000000;
+    --gray:#666666;
+    --lighter-gray:rgb(232, 232, 232);
+    --latte:rgb(255, 248, 231);
+}
+a{
+    text-decoration: none;
+}
+.header{
+    width: 100%;
+    max-width: 1920px;
+    height: 54px;
+    border-bottom: 1px solid var(--lighter-gray);
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    background-color: var(--white);
+    display: grid;
+    grid-template-columns: 0.1fr 5.8fr 0.1fr;  
+}
+.memberSettings{
+    width: 500px;
+    height: 500px;
+    background-color: var(--latte);
+    margin: 80px auto auto auto;
+    color: #666666;
+}
+.title{
+    font-size: 30px;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+.photoBox{
+    
+}
+.avatarBox{
+    width: 200px;
+    height: auto;
+    margin: auto;
+    position: relative;
+    border-radius: 100px;
+    margin-top: 10px;
+}
+.avatarBox:hover > .cameraICon{
+    display: block;
+}
+.cameraICon{
+    position: absolute;
+    top: 75%;
+    left: 51%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 4;
+}
+.defaultAvatar{
+    border: 2px solid var(--lighter-gray);
+    position: relative;
+}
+.defaultAvatar:hover::before{
+    content: '';
+    position: absolute;
+    top: 150px;
+    left: 102px;
+    width: 200px;
+    height: 100px;
+    border-radius: 0 0 100px 100px;
+    transform: translate(-50%, -50%) scale(1);
+    background: rgba(0, 0, 0, 0.25);
+    /* border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px; */
+    z-index: 5;
+    cursor: pointer;
+    pointer-events: auto; /* 偽元素出現時才啟用點擊事件 */
+}
+.defaultAvatar::before{
+  pointer-events: none; /* 偽元素隱藏時不啟用點擊事件 */
+}
+.original{
+    border: 3px solid var(--blue);
+    position: relative;
+}
+.original:hover::before{
+    content: '';
+    position: absolute;
+    top: 150px;
+    left: 102px;
+    width: 200px;
+    height: 100px;
+    border-radius: 0 0 100px 100px;
+    transform: translate(-50%, -50%) scale(1);
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 5;
+    cursor: pointer;
+    pointer-events: auto; /* 偽元素出現時才啟用點擊事件 */
+}
+.original::before{
+  pointer-events: none; /* 偽元素隱藏時不啟用點擊事件 */
+}
+.preview{
+    border: 1px dashed var(--gray);
+}
+.popUpAvatar{
+    border: 2px solid var(--lighter-gray);
+}
+.overlay{
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: brightness(60%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 500;
+}
+.popup{
+    /*定位*/
+    position: absolute;
+    top: 100px;             
+    bottom: 200;           
+    left: 0;        
+    right: 0;
+    margin: auto;
+
+    width: 400px;
+    height: auto;
+    z-index: 1000;
+    background-color: #fff;
+    border-radius: 13px;
+}
+.popupBox{
+    width: 100%;
+    height: 100%;    
+    border-top: 10px solid;
+    border-image: linear-gradient(
+        to right, 
+        var(--lighter-blue) 0%,
+        var(--blue) 100%
+    ) 1 0 0 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    clip-path: inset(0 round 10px);
+}
+.closeBar{
+    margin-top: 3px;
+    width: 100%;
+    height: 16px;
+}
+.closeIcon{
+    margin-left: 365px;
+    margin-bottom: 3px;
+    cursor: pointer;
+}
+.closeIcon:hover{
+    transform: scale(1.03);
+}
+.previewAvatar{
+    width: 200px;
+    height: auto;
+    margin: 8px auto;
+    /* background-color:#eb7d16; */
+}
+.buttonBox{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.uploadBtn, .submitBtn{
+    width: 90%;
+    height: 25px;
+    margin: 5px auto 10px auto;
+    border: none;
+    outline: none;
+    background-color: var(--white);
+    border: 1px solid var(--gray);
+    border-radius: 5px;
+    color: var(--gray);
+    font-size: 12px;
+    cursor: pointer;
+}
+.uploadBtn{
+    margin-left: 20px;
+}
+.uploadBtn:hover{
+    background-color: var(--blue);
+    border-color: var(--blue);
+    color: var(--white);
+    font-weight: bold;
+}
+.submitBtn:hover{
+    background-color: var(--blue);
+    border-color: var(--blue);
+    color: var(--white);
+    font-weight: bold;
+}
+.memberInfo{
+    display: flex;
+    margin: 30px 0px 15px 75px;
+}
+.infoItem{
+    font-size: 16px;
+    color: var(--blue);
+    font-weight: bold;
+}
+.memberAccount[readonly], .memberPassword[readonly]{
+    width: 250px;;
+    pointer-events: none;
+    background-color: #f0f0f0;
+    border: none;
+    color: var(--gray);
+    font-size: 20px;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+.memberNickName{
+    width: 250px;
+    height: 25px;
+    border: none;
+    font-size: 14px;
+    padding-left: 10px;
+    border-radius: 5px;
+    border-style: none;
+    outline: none; 
+}
+.nickNameBtn{
+    box-sizing: border-box;
+    width: 28px;
+    height: 28px;
+    position: relative;
+    left: -30px;
+    border-style: none;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 0;
+    background-color: var(--white);
+}
+.nickNameBtn:hover{
+    color: var(--blue);
+    transform: scale(1.08);
+}
+/* .memberNickName input::placeholder{
+    font-size: 12px;
+} */
+.changePasswordBox{
+    width: 100%;
+    height: 200px;    
+    border-top: 10px solid;
+    border-image: linear-gradient(
+        to right, 
+        var(--lighter-blue) 0%,
+        var(--blue) 100%
+    ) 1 0 0 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    clip-path: inset(0 round 10px);
+    position: relative;
+}
+.changePasswordCloseBar{
+    margin-top: 3px;
+    width: 100%;
+    height: 25px;
+}
+.formItem{
+    margin: 10px 0px 10px 55px;
+    display: flex;
+}
+.itemLabel{
+    width: 100px;
+    text-align: right;
+}
+.currentPasswordInput, .newPasswordInput,.confirmNewPasswordInput{
+    width: 150px;
+    margin-left: 10px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+}
+.changePasswordBtn{
+    width: 30%;
+    height: 25px;
+    margin: 0px auto 10px 0px;
+    border: none;
+    outline: none;
+    background-color: var(--white);
+    border: 1px solid var(--lighter-gray);
+    border-radius: 5px;
+    color: var(--gray);
+    font-size: 13px;
+    cursor: pointer;
+}
+.changePasswordBtn:hover{
+    background-color: var(--blue);
+    border-color: var(--blue);
+    color: var(--white);
+    font-weight: bold;
+}
+.changePasswordSubmitBtn{
+    width: 20%;
+    height: 25px;
+    margin: 10px auto 10px 150px;
+    border: none;
+    outline: none;
+    background-color: var(--white);
+    border: 1px solid var(--lighter-gray);
+    border-radius: 5px;
+    color: var(--gray);
+    font-size: 12px;
+    cursor: pointer;
+}
+.changePasswordSubmitBtn:hover{
+    background-color: var(--blue);
+    border-color: var(--blue);
+    color: var(--white);
+    font-weight: bold;
+}
+.changePasswordMsgBox{
+    width: 140px;
+    height: 25px;
+    position: absolute;
+    right: 15px;
+    bottom: 16px;
+}
+.successMsg, .errorMsg{
+    position: absolute;
+    font-size: 12px;
+    top: -10px;
+    left: 18px;
+}
+.backToHomeBtn{
+    width: 100%;
+    text-align: right;
+}
+.arrowBack{
+    margin-right: 10px;
+    cursor: pointer;
+}
+.arrowBack:hover{
+    transform: translateX(-2px);
+    transition: transform 0.5s;
+}

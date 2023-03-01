@@ -1,21 +1,41 @@
-import  React, {useState, useEffect } from "react";
+import  React, {useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import Avatar from 'react-avatar';
+import classNames from 'classnames';
 
 import { auth } from "../../firebase/firebase";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 import styles from "./header.module.css";
+import defaultAvatar from "../../images/default.png";
 
 import { VscSignOut } from "react-icons/vsc";
 import { GoSignOut } from "react-icons/go";
 import { FiLogOut} from "react-icons/fi";
 
 function Header(){
+     //user狀態確認
+     const [user, setUser] = useState(null);
+     const [photoURL, setPhotoURL] = useState("");
+ 
+     useEffect(() => {
+         const unsubscribe = onAuthStateChanged(auth, user => {
+             if (user) {
+             setUser(user);
+             const url = user.photoURL;
+             setPhotoURL(url || "");
+             } else {
+             setUser(null);
+             setPhotoURL("");
+             }
+         });
+         return () => unsubscribe();
+     }, []);
 
     const navigate = useNavigate();
 
     //sign out
-    const logOut = async () => {
+    async function logOut () {
         try{
             await signOut(auth);
             navigate("/");
@@ -25,7 +45,28 @@ function Header(){
         }
     };
 
+    function backToHome () {
+        navigate("/home");
+    }
+
     const [boxShadow, setBoxShadow] = useState('none');
+    const [showPopup, setShowPopup] = useState(false);
+
+    let popUpRef = useRef();
+
+    useEffect(() => {
+        const  handler = (e) => {
+            if(!popUpRef.current.contains(e.target)){
+                setShowPopup(false);
+            }
+        };
+        document.addEventListener("mousedown", handler);
+
+        return() =>{
+            document.removeEventListener("mousedown", handler);
+        }
+    })
+
     useEffect(() => {
         const handleScroll = () => {
           const scrollPos = window.scrollY;
@@ -45,13 +86,34 @@ function Header(){
     return (
         <div className={styles.header} style={{ boxShadow }}>
             <div className={styles.headerContent}>
-                <a href="/home">
-                    <h2 className={styles.theme}>StockBrain</h2>
-                </a>
-                <nav>
-                    <div className={styles.navItem} onClick={logOut}><FiLogOut  size={25} color="#666666" /></div>
+                <h2 className={styles.theme} onClick={backToHome}>StockBrain</h2>
+                <nav ref={popUpRef}>
+                    <div 
+                        className={styles.navItem} 
+                        onClick={() => setShowPopup(!showPopup)}
+                    >
+                        <Avatar 
+                            src={photoURL ? photoURL : defaultAvatar}
+                            size={40} round={true} style={{ border: 'none' }} 
+                            alt="User"
+                            className={styles.userHead}
+                        />
+                    </div>
+                    
+                        <div className={classNames(!showPopup ? styles['popup-inactive'] : styles['popup-active'])}>
+                            <div className={styles.popupContent}>
+                                <div className={styles.popupLink} onClick={() => navigate("/myaccount")}>
+                                    我的帳戶
+                                </div>
+                                <div className={styles.popupLink} onClick={logOut}>
+                                    <FiLogOut  size={25} color="#666666" />
+                                </div>
+                            </div>
+                        </div>
+                    
                 </nav>
             </div>
+            
         </div>
     )
 }

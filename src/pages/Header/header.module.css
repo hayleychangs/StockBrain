@@ -50,6 +50,7 @@ a{
     font-size: 30px;
     line-height: 34px;
     color: var(--blue);
+    cursor: pointer;
 }
 .navItem{
     display: flex;
@@ -59,6 +60,83 @@ a{
 .navItem:hover{
     transform: translateX(1.5px);
     transition: transform 0.5s;
+}
+.userHead{
+    border: 1px solid var(--lighter-gray);
+}
+.popup{
+    /*定位*/
+    position: absolute;
+    top: 55px;             
+    bottom: 200;           
+    left: 100;        
+    right: 0;
+    margin: auto;
+
+    width: 130px;
+    height: 105px;
+    z-index: 1000;
+    border-radius: 13px;
+}
+.popupContent{
+    width: 120px;
+    height: 82px;
+    background-color: var(--white);
+    margin: auto;
+    border-radius: 5px;
+    border: 1px solid var(--lighter-gray);
+}
+.popup-active{
+    /*定位*/
+    position: absolute;
+    top: 55px;             
+    bottom: 200;           
+    left: 100;        
+    right: 0;
+    margin: auto;
+
+    width: 130px;
+    height: 105px;
+    z-index: 1000;
+    border-radius: 13px;
+
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: 0.5s ease;
+}
+.popup-inactive{
+    /*定位*/
+    position: absolute;
+    top: 55px;             
+    bottom: 200;           
+    left: 100;        
+    right: 0;
+    margin: auto;
+
+    width: 130px;
+    height: 105px;
+    z-index: 1000;
+    border-radius: 13px;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: 0.5s ease;
+}
+.popupLink{
+    width: 90%;
+    height: 30px;
+    margin-top: 5px;
+    padding-top: 5px;
+    padding-left: 12px;
+    color: var(--gray);
+    cursor: pointer;
+    border-bottom: 1px solid var(--lighter-gray);
+}
+.popupLink:hover{
+    font-weight: bolder;
+    transform: scale(1.03);
 }
 @media screen and (max-width:1200px) and (min-width:600px){
     .header{

@@ -12,14 +12,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "firebase": "^9.16.0",
+    "classnames": "^2.3.2",
+    "firebase": "^9.17.1",
     "firestore": "^1.1.6",
     "react": "^18.2.0",
+    "react-avatar": "^5.0.3",
     "react-dom": "^18.2.0",
     "react-fetch-hook": "^1.9.5",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.7.0",
-    "save": "^2.9.0"
+    "save": "^2.9.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

@@ -216,7 +216,7 @@ function InfoCard () {
     //-----------------------------------------------------------
 
 
-     //menu shoe hide ----------------------------
+     //menu show hide ----------------------------
      const [isOpen, setIsOpen] = useState(true);
 
      const handleMenuClick = () => {

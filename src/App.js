@@ -6,17 +6,19 @@ import HomePage from "./pages/HomePage/homePage";
 import { Auth } from "./pages/Auth/auth";
 import { LogIn } from "./pages/LogIn/logIn";
 import { SignUp } from "./pages/SignUp/signUp";
+import MemberSettings from "./pages/MemberSetting/memberSettings";
 
 function App(){
     return(
         <BrowserRouter>
             <Routes>
-                <Route path="/home" element={ <MainPage /> } />
-                <Route path="/home/:stockId" element={ <MainPage /> } />
-                <Route path="/" element={ <HomePage /> } />
+                <Route path="/home" element={ <MainPage /> } exact/>
+                <Route path="/home/:stockId" element={ <MainPage /> } exact/>
+                <Route path="/" element={ <HomePage /> } exact/>
                 <Route path="/auth" element={ <Auth /> } />
-                <Route path="/login" element={ <LogIn /> } />
-                <Route path="/signup" element={ <SignUp /> } />
+                <Route path="/login" element={ <LogIn /> } exact/>
+                <Route path="/signup" element={ <SignUp /> } exact/>
+                <Route path="/myaccount" element={ <MemberSettings /> } exact/>
             </Routes>               
         </BrowserRouter>
     )

@@ -7,6 +7,7 @@ import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, or
 import {db, auth} from "../../firebase/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 const TrackingList = () => {
     
@@ -137,7 +138,7 @@ const TrackingList = () => {
                                 <div>
                                     {track.change_percent}%
                                 </div>
-                                <button className={styles.deleteBtn} onClick={() => handleDelete(track.id)}>刪除</button>
+                                <button className={styles.deleteBtn} onClick={() => handleDelete(track.id)}><RiDeleteBin5Line size={20} /></button>
                             </div>
                         ))
                     }

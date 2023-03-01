@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
+
 import { collection, addDoc, query, getDocs, where, deleteDoc, doc, serverTimestamp, orderBy, onSnapshot } from "firebase/firestore";
 import {db} from "../../firebase/firebase";
 
@@ -65,7 +67,6 @@ function SearchBar () {
 
     const handleOnBlur = (event) => {
         event.target.placeholder="輸入台股名稱或代號搜尋";
-        setSearchInput("");
     }
 
     function handleClick (keyword) {
@@ -81,10 +82,29 @@ function SearchBar () {
             setFilteredData([]);
         }
     }, [searchInput]);
+
+    
+    let resultRef = useRef();
+
+    useEffect(() => {
+        const handler = (e) => {
+            if(!resultRef.current.contains(e.target)){
+                setSearchInput("");
+                setFilteredData([]);
+                // console.log(e);
+            };
+        };
+
+        document.addEventListener("mousedown", handler);
+
+        return() =>{
+            document.removeEventListener("mousedown", handler);
+        }
+    })
     
     return (
       <div>
-        <div className={styles.searchBox}>
+        <div className={styles.searchBox} ref={resultRef}>
             <form className={styles.input} onSubmit={handleSubmit}>
                 <input
                     value={searchInput}

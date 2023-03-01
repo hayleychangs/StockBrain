@@ -73,7 +73,6 @@ body{
     margin: 20px 5px 10px 5px;
     justify-content: space-between;
     display: flex;
-    background-color: var(---light-Gray);
     color: var(--gray);
 }
 .allTrackingList{
@@ -123,22 +122,19 @@ body{
     margin-left: 2px;
 }
 .deleteBtn{
-    width: 20px;
+    width: 18px;
     height: 40px;
     border: none;
     border-radius: 5px;
-    background-color:var(--lighter-gray);
+    background-color: transparent;
     color: var(--gray);
-    display: flex;
-    padding-left: 3px;
     cursor: pointer;
     display: none;
     position: absolute;
-    top: 0;
-    left: 290px;
+    top: 2px;
+    left: 285px;
 }
 .deleteBtn:hover{
-    background-color: var(--yellow);
-    color: var(--white);
+    color: red;
     font-weight: bold;
 }  

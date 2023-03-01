@@ -5,7 +5,7 @@ import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, or
 import {db, auth} from "../../firebase/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 
-import styles from "./singleNote.module.css";
+import styles from "./myNote.module.css";
 
 import { GiNewspaper, GiArchiveResearch, GiCalculator } from "react-icons/gi";
 import { FaRegLightbulb } from "react-icons/fa";
