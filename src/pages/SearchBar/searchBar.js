@@ -103,9 +103,8 @@ function SearchBar () {
     })
     
     return (
-      <div>
         <div className={styles.searchBox} ref={resultRef}>
-            <form className={styles.input} onSubmit={handleSubmit}>
+            <form className={filteredData.length !== 0 ? `${styles.input} ${styles['has-results']}` : styles.input} onSubmit={handleSubmit}>
                 <input
                     value={searchInput}
                     type="text"
@@ -115,7 +114,7 @@ function SearchBar () {
                     onChange={handleFilter}
                 />
                 <button className={styles.searchBtn}>
-                    <BiSearchAlt className={styles.search} size={40} color={"#eb7d16"} />
+                    <BiSearchAlt className={styles.search} size={40} color={"#666666"} />
                 </button>
                 {filteredData.length !== 0 && (
                     <div className={styles.searchResults}>
@@ -131,8 +130,6 @@ function SearchBar () {
                 )}
             </form>
         </div>
-        
-      </div>
     );
 }
 

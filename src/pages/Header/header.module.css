@@ -9,7 +9,7 @@ a{
 }
 :root{
     --blue:#0f73ee;
-    --lighter-blue:rgba(146,205,250);
+    --lighter-blue:rgb(232,240,254);
     --lavender:rgba(215,215,255);
     --yellow:#fba707;
     --orange:#eb7d16;
@@ -17,6 +17,7 @@ a{
     --black:#000000;
     --gray:#666666;
     --lighter-gray:rgb(232, 232, 232);
+    --fa-gray:#f0f0f0;
     --latte:rgb(255, 248, 231);
 }
 .header{
@@ -39,6 +40,7 @@ a{
     align-items: center;
     color: #3366CC;
     grid-column: 2 / 3;
+    margin-left: -10px;
 }
 .theme{
     box-sizing: border-box;
@@ -79,11 +81,11 @@ a{
     border-radius: 13px;
 }
 .popupContent{
-    width: 120px;
-    height: 82px;
+    width: 100%;
+    height: 100px;
     background-color: var(--white);
     margin: auto;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid var(--lighter-gray);
 }
 .popup-active{
@@ -93,7 +95,7 @@ a{
     bottom: 200;           
     left: 100;        
     right: 0;
-    margin: auto;
+    margin: auto 25px auto auto;
 
     width: 130px;
     height: 105px;
@@ -112,7 +114,7 @@ a{
     bottom: 200;           
     left: 100;        
     right: 0;
-    margin: auto;
+    margin: auto 25px auto auto;
 
     width: 130px;
     height: 105px;
@@ -124,31 +126,57 @@ a{
     transform: translateY(-20px);
     transition: 0.5s ease;
 }
-.popupLink{
+.myAccountLink, .logOutLink{
     width: 90%;
-    height: 30px;
-    margin-top: 5px;
-    padding-top: 5px;
-    padding-left: 12px;
+    height: 35px;
+
+    padding-top: 15px;
+    padding-left: 15px;
     color: var(--gray);
     cursor: pointer;
+}
+.myAccountLink{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     border-bottom: 1px solid var(--lighter-gray);
 }
-.popupLink:hover{
+.myAccountLink:hover{
     font-weight: bolder;
-    transform: scale(1.03);
+    background-color: var(--fa-gray);
 }
-@media screen and (max-width:1200px) and (min-width:600px){
+.logOutLink{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: 1px solid var(--lighter-gray);
+}
+.logOutLink:hover{
+    font-weight: bolder;
+    background-color: var(--fa-gray);
+}
+.logOut{
+    position: relative;
+    bottom: 3px;
+    left: 2px;
+}
+@media screen and (max-width:1200px) and (min-width:768px){
     .header{
-        width: 90%;
+        width: 100%;
     }
     .headerContent{
-        width: 90%;
+        width: 100%;
     }
     .theme{
         margin-left: 10px;
     }
-    .navItem{
-        margin-right: 10px;
+}
+@media screen and (max-width:767px) and (min-width:360px){
+    .header{
+        width: 100%;
+    }
+    .headerContent{
+        width: 100%;
+    }
+    .theme{
+        margin-left: 10px;
     }
 }

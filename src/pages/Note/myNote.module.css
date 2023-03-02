@@ -8,7 +8,7 @@ body{
 } */
 :root{
     --blue:#0f73ee;
-    --lighter-blue:rgba(146,205,250);
+    --lighter-blue:rgb(232,240,254);
     --lavender:rgba(215,215,255);
     --yellow:#fba707;
     --orange:#eb7d16;
@@ -39,7 +39,7 @@ a{
 }
 .container{
     width: 100%;
-    height: 300px;
+    height: 290px;
     display: flex;
     flex-direction: row;
     margin-top: 20px;
@@ -195,4 +195,7 @@ a{
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
     font-size: 12px;
-  }
+}
+@media screen and (max-width:1200px) and (min-width:768px){
+
+}

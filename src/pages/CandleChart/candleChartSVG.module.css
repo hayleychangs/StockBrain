@@ -7,7 +7,7 @@ body{
 }
 :root{
     --blue:#0f73ee;
-    --lighter-blue:rgba(146,205,250);
+    --lighter-blue:rgb(232,240,254);
     --lavender:rgba(215,215,255);
     --yellow:#fba707;
     --orange:#eb7d16;
@@ -21,26 +21,28 @@ a{
     text-decoration: none;
 }
 .container{
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
     display: grid;
-    grid-template-rows: 667px;
+    grid-template-rows: 666px;
 }
 .candleChart::-webkit-scrollbar {
     height: 14px;           
     width: 16px;               
     border: 3px solid #dfdfdf;
-    border-radius: 10px;
+    border-radius: 12px;
 }
 .candleChart::-webkit-scrollbar-track {
-    border-radius: 10px;
+    border-radius: 12px;
     background: var(--lighter-gray);
 }
 .candleChart::-webkit-scrollbar-thumb {
-    border-radius: 10px;
+    border-radius: 12px;
     background: #c6c6c6;
 }
 .candleChart{
-    width: 780px;
+    /* width: 780px; */
+    width: 100%;
     height: 565px;
     grid-row: 4 / 5;
     grid-column: 1 / 5;
@@ -48,70 +50,69 @@ a{
     overflow-y: hidden;
 }
 .SVG{
-    width: 780px;
+    /* width: 780px; */
+    /* width: 100%; */
     background: #fff;
     border-radius: 10px;
     border: 1px solid #dfdfdf;  /* */
     margin-left: 10px;
     margin-right: 10px;
-    /* color: #434343; */
     display: grid;
     grid-template-rows: 15px 70px 15px 560px;
     grid-template-columns: 20px 680px 60px 20px;
-    /* box-shadow: 5px -3px 2px var(--yellow); */
 }
 .stockNameAndId{
-    width: 100px;
+    width: 80px;
     height: 80px;
     grid-row: 2 / 3;
     grid-column: 2 / 3;
     margin-top: 5px;
+    margin-left: 10px;
     font-size: 20px;
     color: var(--blue);
     border-radius: 5px;
+    background-color: var(--lighter-blue);
+    text-align: center;
 }
 .stockName{
     font-weight: bold;
     letter-spacing: 1px;
-    padding-top: 2px;
-    padding-left: 5px;
+    padding-top: 7px;
 }
 .stockId{
-    padding-top: 10px;
-    padding-left: 5px;
+    padding-top: 8px;
 }
 .stockBriefInfo{
     width: 580px;
     height: 120px;
     margin-left: 80px;
-    margin-top: 2px;
+    margin-top: 5px;
     grid-row: 1 / 3;
     grid-column: 2 / 3;
     display: grid;
     grid-template-rows: 25% 25% 25% 25%;
     grid-template-columns: 25% 30% 20% 25%;;
-    /* grid-row: 4 / 5;
-    grid-column: 4 / 5; */
+    font-size: 14px;
 }
 .open{
     grid-row: 1 / 2;
     grid-column: 1 / 2;
-    margin-left: 20px;
+    margin-left: 40px;
 }
 .high{
     grid-row: 2 / 3;
     grid-column: 1 / 2;
-    margin-left: 20px;
+    margin-left: 40px;
 }
 .low{
     grid-row: 3 / 4;
     grid-column: 1 / 2;
-    margin-left: 20px;
+    margin-left: 40px;
 }
 .close{
     grid-row: 4 / 5;
     grid-column: 1 / 2;
-    margin-left: 20px;
+    margin-left: 40px;
 }
 .change{
     grid-row: 1 / 2;
@@ -131,18 +132,23 @@ a{
 .updateTime{
     grid-row: 1 / 2;
     grid-column: 4 / 5;
-    margin-left: 15px;
+    margin-left: 28px;
+    padding-top: 5px;
+    font-size: 10px;
+    font-weight: lighter;
+    color: var(--gray);
 }
 .infoTitle{
     color: var(--gray);
 }
 .infoContent{
-    color: var(--blue);
-}
-.updateTime{
-    padding-top: 5px;
-    font-size: 12px;
     color: var(--gray);
+}
+.green{
+    color: #68BE8D;
+}
+.red{
+    color: #F2666C;
 }
 .trackBtn{
     width: 35px;
@@ -160,17 +166,10 @@ a{
     color: var(--white);
     letter-spacing: 4px;
     cursor: pointer;
+    box-shadow: 0 0px 0px, 0 2px 12px rgb(60 63 66 / 15%);
 }
 .trackBtn:hover{
     transform: scale(1.1);
-}
-.add{
-    /* width: 20px;
-    height: 20px;
-    position: relative; */
-    right: 5px;
-    font-weight: bold;
-    font-size: 24px;
 }
 .trackedBox{
     width: 35px;
@@ -188,6 +187,7 @@ a{
     border-radius: 30px;
     letter-spacing: 4px;
     cursor: pointer;
+    box-shadow: 4px -0.1px 2px var(--yellow);
 }
 .trackedBox:hover{
     transform: scale(1.1);
@@ -195,7 +195,6 @@ a{
 .maBox{
     grid-row: 4 / 5;
     grid-column: 3 / 5;
-    margin-top: 2px;
     margin-right: -5px;
     justify-content: right;
     display: flex;
@@ -208,7 +207,7 @@ a{
     text-align: center;
     align-items: center;
     background-color: var(--lighter-blue);
-    color: gold;
+    color: var(--yellow);
     cursor: pointer;
     z-index: 1;
     border-radius: 5px;
@@ -230,6 +229,7 @@ a{
 }
 .maFiveActive:hover{
     transform: scale(1.05);
+    font-weight: bold;
 }
 .maTenActive{
     width: 50px;
@@ -245,6 +245,7 @@ a{
 }
 .maTenActive:hover{
     transform: scale(1.05);
+    font-weight: bold;
 }
 .maTenInActive{
     width: 50px;
@@ -275,6 +276,7 @@ a{
 }
 .maTwentyActive:hover{
     transform: scale(1.05);
+    font-weight: bold;
 }
 .maTwentyInActive{
     width: 50px;
@@ -290,4 +292,85 @@ a{
 }
 .maTwentyInActive:hover{
     transform: scale(1.05);
+}
+@media screen and (max-width:1200px) and (min-width:768px){
+    .container{
+        width: 100%;
+    }
+    .candleChart{
+        width: 750px;
+    }
+    .SVG{
+        width: 750px;
+        margin-left: -5px;
+    }
+    .trackBtn{
+        margin-left: -5px;
+    }
+    .trackedBox{
+        margin-left: -5px;
+    }
+}
+@media screen and (max-width:767px) and (min-width:360px){
+    .container{
+        width: 100%;
+    }
+    .candleChart{
+        width: 100%;
+    }
+    .SVG{
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+        grid-template-columns: 0.2fr minmax(320px, 767px) 0.2fr;
+    }
+    .stockBriefInfo{
+        width: 90%;
+        margin-left: 60px;
+        font-size: 12px;
+    }
+    .open, .high, .low, .close{
+        grid-column: 1 / 3;
+    }
+    .change, .vol, .amount{
+        grid-column: 2 / 5;
+    }
+    .updateTime{
+        grid-column: 4 / 4;
+        margin-top: -10px;
+        margin-left: -14px;
+        transform: scale(0.8);
+    }
+    .maBox{
+        grid-column: 2 / 5;
+        font-size: 12px;
+        margin-right: 20px;
+    }
+    .maFiveActive, .maTenActive, .maTwentyActive, .maFiveInActive, .maTenInActive, .maTwentyInActive{
+        width: 40px;
+    }
+    .trackBtn{
+        margin-left: -55px;
+        margin-top: 28px;
+    }
+    .trackedBox{
+        margin-left: -55px;
+        margin-top: 28px;
+    }
+}
+@media screen and (max-width:668px) and (min-width:360px){
+    .updateTime{
+        margin-top: -10px;
+        margin-left: -5px;
+        margin-right: 8px;
+        transform: scale(0.6);
+        text-align: right;
+        padding-right: 4px;
+    }
+    .trackBtn{
+        margin-left: -46px;
+    }
+    .trackedBox{
+        margin-left: -46px;
+    }
 }

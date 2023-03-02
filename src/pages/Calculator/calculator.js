@@ -51,24 +51,6 @@ function Calculator () {
         setStopProfitPoint("");
     };
 
-    // const handleLossRatioChange = (e) => {
-    //     setLossRatio(e.target.value);
-    //     console.log(e.target.value)
-
-    // };
-
-    // const handleProfitRatioChange = (e) => {
-    //     setProfitRatio(e.target.value);
-    //     console.log(e.target.value)
-
-    // };
-
-    // const handleRRRatioChange = (e) => {
-    //     setRRRatio(e.target.value);
-    //     console.log(e.target.value)
-
-    // };
-
     //user狀態確認---------------------------
     const [user, setUser] = useState(null);
 
@@ -165,9 +147,11 @@ function Calculator () {
     //-------------------------------------
 
     return (
+        <>
+        <div className={styles.title}>風險報酬比試算</div>
         <div className={styles.tabs}>
             <input type="radio" name="tabs" id="tabone" value="tabone" onChange={handleTabChange} checked={tab === "tabone"} />
-            <label className={styles.tabsLabel1} htmlFor="tabone" style={tab === "tabone" ? { backgroundColor: "#FFCCCC", color: "red" } : {}}>看 多</label>
+            <label className={styles.tabsLabel1} htmlFor="tabone" style={tab === "tabone" ? { backgroundColor: "#FFCCCC", color: "#F2666C" } : {}}>看 多</label>
             <div  className={styles.tab}>
                 <div className={styles.row}>
                     <div className={styles.inputBox}>
@@ -208,7 +192,7 @@ function Calculator () {
 
 
             <input type="radio" name="tabs" id="tabtwo" value="tabtwo" onChange={handleTabChange}/>
-            <label className={styles.tabsLabel} htmlFor="tabtwo" style={tab === "tabtwo" ? {backgroundColor: "#CBE3BB", color: "green" } : {}}>看 空</label>
+            <label className={styles.tabsLabel} htmlFor="tabtwo" style={tab === "tabtwo" ? {backgroundColor: "#CDE6C7", color: "#68BE8D" } : {}}>看 空</label>
             <div  className={styles.tab}>
                 <div className={styles.row}>
                     <div className={styles.inputBox}>
@@ -246,6 +230,7 @@ function Calculator () {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

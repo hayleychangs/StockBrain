@@ -3,12 +3,9 @@ body{
     margin:0;
     font-family: "NOTO Sans JP", san-serif;
 }
-/* *{
-    font-family: "NOTO Sans JP", san-serif;
-} */
 :root{
     --blue:#0f73ee;
-    --lighter-blue:rgba(146,205,250);
+    --lighter-blue:rgb(232,240,254);
     --lavender:rgba(215,215,255);
     --yellow:#fba707;
     --orange:#eb7d16;
@@ -16,6 +13,7 @@ body{
     --black:#000000;
     --gray:#666666;
     --lighter-gray:rgb(232, 232, 232);
+    --fa-gray:#f0f0f0;
     --latte:rgb(255, 248, 231);
 }
 a{
@@ -25,9 +23,6 @@ a{
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: var(--latte);
-    border-radius: 10px;
-    box-shadow: 4px 4px 4px var(--lighter-gray);
 }
 .title{
     height: 30px;
@@ -40,13 +35,37 @@ a{
 .container{
     width: 100%;
     height: 300px;
+}
+.planBox{
+    max-width: 1170px;
+    width: 100%;
+    height: 100%;
     margin-top: 10px;
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
     color: var(--gray);
+    overflow-x: auto;
+    overflow-y: auto;
+    border: 1px solid var(--fa-gray);
+    border-radius: 10px;
+}
+.planBox::-webkit-scrollbar {
+    height: 14px;           
+    width: 16px;               
+    border: 3px solid #dfdfdf;
+    border-radius: 10px;
+}
+.planBox::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: var(--lighter-gray);
+}
+.planBox::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #c6c6c6;
 }
 .subTitle{
-    width: 100%;
+    width: 1180px;
     height: 30px;
     display: flex;
     flex-direction: row;
@@ -55,26 +74,13 @@ a{
     font-weight: bold;
 }
 .allPlan{
-    width: 100%;
-    /* height: 270px; */
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-.allPlan::-webkit-scrollbar{
-    width: 8px;
-}
-.allPlan::-webkit-scrollbar-track{
-    background: none;
-}
-.allPlan::-webkit-scrollbar-thumb{
-    background-color: var(--lighter-gray);
-    border-radius: 10px;
+    width: 1180px;
 }
 .singlePlan{
     box-sizing: border-box;
     height: 40px;
     width: 98%;
-    margin-left: 12px;
+    margin-left: 7px;
     margin-right: 20px;
     padding-top: 10px;
     display: grid;
@@ -84,7 +90,7 @@ a{
 }
 .singlePlan:hover{
     transform: scale(1.01);
-    background-color: var(--lighter-gray);
+    background-color: var(--lighter-blue);
     border-radius: 5px;
     cursor: pointer;
 }
@@ -121,4 +127,9 @@ a{
 .deleteBtn:hover{
     color: red;
     font-weight: bold;
-}  
+}
+@media screen and (max-width:1200px) and (min-width:768px){
+    .subTitle{
+        font-size: 12px;
+    }
+}

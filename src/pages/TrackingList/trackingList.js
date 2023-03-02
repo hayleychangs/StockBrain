@@ -104,14 +104,6 @@ const TrackingList = () => {
         <div className={styles.trackingList}>
             <div className={styles.title}>我的追蹤</div>
             <div className={styles.container}>
-                {/* <form className={styles.inputForm} onSubmit={handleSubmit}>
-                    <input className={styles.inputText}
-                        type="text" 
-                        value={inputValue} 
-                        onChange={(e) => setInputValue(e.target.value)}
-                    />  
-                    <button className={styles.addtrackBtn} type="submit">新增紀錄</button> 
-                </form> */}
                 <div className={styles.subTitle}>
                         <div>股票代號</div>
                         <div>股票名稱</div>
@@ -126,16 +118,16 @@ const TrackingList = () => {
                                 <div className={styles.trackText}>
                                     {track.stock_id}
                                 </div>
-                                 <div>
+                                <div  className={styles.trackText}>
                                     {track.stock_name}
-                                 </div>
-                                <div>
+                                </div>
+                                <div  className={styles.trackText}>
                                     {track.close}
                                 </div>
-                                <div>
+                                <div  className={`${styles.trackText} ${track.change > 0 ? styles.red : track.change < 0 ? styles.green : ''}`}>
                                     {track.change}
                                 </div>
-                                <div>
+                                <div  className={`${styles.trackText} ${track.change_percent > 0 ? styles.red : track.change_percent < 0 ? styles.green : ''}`}>
                                     {track.change_percent}%
                                 </div>
                                 <button className={styles.deleteBtn} onClick={() => handleDelete(track.id)}><RiDeleteBin5Line size={20} /></button>

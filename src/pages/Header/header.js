@@ -12,6 +12,7 @@ import defaultAvatar from "../../images/default.png";
 import { VscSignOut } from "react-icons/vsc";
 import { GoSignOut } from "react-icons/go";
 import { FiLogOut} from "react-icons/fi";
+import { IoSettingsOutline } from "react-icons/io5";
 
 function Header(){
      //user狀態確認
@@ -102,11 +103,11 @@ function Header(){
                     
                         <div className={classNames(!showPopup ? styles['popup-inactive'] : styles['popup-active'])}>
                             <div className={styles.popupContent}>
-                                <div className={styles.popupLink} onClick={() => navigate("/myaccount")}>
+                                <div className={styles.myAccountLink} onClick={() => navigate("/myaccount")}>
                                     我的帳戶
                                 </div>
-                                <div className={styles.popupLink} onClick={logOut}>
-                                    <FiLogOut  size={25} color="#666666" />
+                                <div className={styles.logOutLink} onClick={logOut}>
+                                    <FiLogOut  size={20} color="#666666" /><span className={styles.logOut}>登出</span>
                                 </div>
                             </div>
                         </div>

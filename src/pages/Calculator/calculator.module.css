@@ -5,7 +5,8 @@ body{
 }
 :root{
     --blue:#0f73ee;
-    --lighter-blue:rgba(146,205,250);
+    --sky-blue: rgba(146,205,250);
+    --lighter-blue:rgb(232,240,254);
     --lavender:rgba(215,215,255);
     --yellow:#fba707;
     --orange:#eb7d16;
@@ -13,49 +14,63 @@ body{
     --black:#000000;
     --gray:#666666;
     --lighter-gray:rgb(232, 232, 232);
+    --fa-gray:#f0f0f0;
     --latte:rgb(255, 248, 231);
 }
 a{
     text-decoration: none;
 }
+.title{
+    width: 180px;
+    height: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    position: relative;
+    left: 86px;
+    top: 25px;
+    text-align: center;
+    color: var(--gray);
+}
 .tabs{
     /* width: 300px; */
-    height: 326px;
-    max-width: 360px;
+    height: 350px;
+    max-width: 350px;
     display: flex;
 	flex-wrap: wrap;
-    background-color: var(--lighter-gray);
+    background-color: var(--fa-gray);
     border-radius: 20px;
-    box-shadow: 3px 3px 3px var(--lighter-blue);
 }
 .tabs input[type="radio"] {
     display: none;
 }
 .tabs label {
-    width: 165px;
-    padding: 10px 0;
+    width: 165.5px;
+    padding: 9.5px 0 10px 0;
     text-align: center;
-    background-color:var(--lighter-gray);
+    background-color:var(--fa-gray);
     font-weight: bold;
-    color: var(--white);
+    font-size: 16px;
+    color: #c9c9c9;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
-    margin-top: 10px;
+    margin-top: 45px;
 }
 .tabs label:hover{
-    background-color: var(--latte);
+    /* background-color: var(--lighter-gray); */
     color: var(--gray);
+    background-color:var(--white);
 }
 .tabsLabel1{
     margin-left: 10px;
 }
 .tabs .tab{
     width: 100%;
-    height: 400px;
+    /* height: 300px; */
     display: flex;
-    order:1;    /*set tabs after the label*/
+    order: 1;    /*set tabs after the label*/
     display: none;
 }
 .tabs input[type="radio"]:checked + label + .tab {
@@ -68,18 +83,19 @@ a{
 }
 .row{
     width: 94.5%;
-    height: 255px;
+    height: 245px;
     display: flex;
     flex-direction: row;
-    background-color: var(--latte);
+    /* background-color: var(--lighter-blue); */
     font-size: 14px;
     margin-left: 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
 }
 .inputBox, .resultBox{
     width: 180px;
-    background-color: var(--latte);
+    background-color: var(--white);
     color: var(--gray);
     font-weight: bold;
 }
@@ -99,12 +115,12 @@ a{
 .purchasePrice{
     width: 50px;
     height: 20px;
-    margin-left: 7px;
+    margin-left: 5px;
     padding-left: 10px;
     border-radius: 10px;
     border-style: none;
     outline: none;
-    background-color: var(--lighter-gray);
+    background-color: #f0f0f0;
 }
 .stopLossPoint, .stopProfitPoint{
     width: 50px;
@@ -114,7 +130,7 @@ a{
     border-radius: 10px;
     border-style: none;
     outline: none;
-    background-color: var(--lighter-gray);
+    background-color: #f0f0f0;
 }
 .subRow{
     display: flex;
@@ -124,68 +140,75 @@ a{
 .RRRatio{
     width: 55px;
     height: 22px;
-    margin-left: 9.5px;
+    margin-left: 7px;
     padding-left: 10px;
-    background-color: var(--lighter-gray);
+    background-color: #f0f0f0;
     border-radius: 10px;
     color: var(--orange);
 }
 .stopLossRatio, .stopProfitRatio{
     width: 55px;
     height: 22px;
-    margin-left: 8px;
+    margin-left: 5px;
     padding-left: 10px;
-    background-color: var(--lighter-gray);
+    background-color: #f0f0f0;
     border-radius: 10px;
 }
 .stopLossRatio{
-    color: green;
+    color: #68BE8D;
 }
 .stopProfitRatio{
-    color: red;
+    color: #F2666C;
 }
 .clearBtn{
-    width: 100px;
+    width: 90px;
     height: 30px;
-    background-color: var(--yellow);
+    background-color: #f0f0f0;
     /* position: relative;
     bottom: 50px;
     left: 130px; */
+    font-weight: bold;
     border: none;
     border-radius: 20px;
+    font-size: 14px;
     font-weight: bold;
-    font-size: 16px;
-    color: var(--white);
+    color: var(--gray);
     cursor: pointer;
-    box-shadow: 2px 2px 2px var(--orange);
+    box-shadow: 2px 2px 2px #c9c9c9;
 }
 .saveBtn{
-    width: 100px;
+    width: 90px;
     height: 30px;
-    background-color: var(--blue);
+    background-color: var(--lighter-blue);
     /* position: relative;
     bottom: 50px;
     left: 130px; */
     border: none;
     border-radius: 20px;
     font-weight: bold;
-    font-size: 16px;
-    color: var(--white);
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--gray);
     cursor: pointer;
-    box-shadow: 2px 2px 2px var(--lighter-blue);
+    box-shadow: 2px 2px 2px var(--sky-blue);
 }
 .clearBtn:hover{
     transform: scale(1.03);
+    background-color: #c9c9c9;
+    color: var(--white);
 }
 .saveBtn:hover{
     transform: scale(1.03);
+    background-color: var(--sky-blue);
+    box-shadow: 2px 2px 2px var(--blue);
+    color: var(--white);
 }
 .buttonContainer{
-    width: 250px;
+    width: 220px;
     display: flex;
     flex-direction: row;
     position: relative;
     bottom: 50px;
-    left: 50px;
+    left: 70px;
     justify-content: space-between;
 }

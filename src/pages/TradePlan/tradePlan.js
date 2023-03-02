@@ -141,6 +141,7 @@ function TradePlan ({ onMenuToggle }) {
       </div>
       {isOpen && (
         <div className={styles.container}>
+          <div className={styles.planBox}>
             <div className={styles.subTitle}>
               <div onClick={handleStockIdClick}>
                 {stockIdClickCount % 2 === 0 ?  <RxTriangleDown /> : <RxTriangleUp />}股票代號
@@ -190,7 +191,7 @@ function TradePlan ({ onMenuToggle }) {
               <p>Loading...</p>
             }
             </div>
-
+          </div>
         </div>
       )}
     </div>

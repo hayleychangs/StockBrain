@@ -216,15 +216,15 @@ function InfoCard () {
     //-----------------------------------------------------------
 
 
-     //menu show hide ----------------------------
-     const [isOpen, setIsOpen] = useState(true);
+    //menu show hide ----------------------------
+    const [isOpen, setIsOpen] = useState(true);
 
-     const handleMenuClick = () => {
-         setIsOpen(!isOpen);
-         onMenuToggle();
-     };
- 
-     //------------------------------------------
+    const handleMenuClick = () => {
+        setIsOpen(!isOpen);
+        onMenuToggle();
+    };
+
+    //------------------------------------------
 
 
     return(

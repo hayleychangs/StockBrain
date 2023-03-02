@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
 body{
     margin:0;
-    font-family: "Carter One", "NOTO Sans JP", san-serif;
+    font-family: "NOTO Sans JP", san-serif;
 }
 :root{
     --blue:#0f73ee;
-    --lighter-blue:rgba(146,205,250);
+    --sky-blue: rgba(146,205,250);
+    --lighter-blue:rgb(232,240,254);
     --lavender:rgba(215,215,255);
     --yellow:#fba707;
     --orange:#eb7d16;
@@ -13,6 +14,7 @@ body{
     --black:#000000;
     --gray:#666666;
     --lighter-gray:rgb(232, 232, 232);
+    --fa-gray:#f0f0f0;
     --latte:rgb(255, 248, 231);
 }
 a{
@@ -31,19 +33,46 @@ a{
     grid-template-columns: 0.1fr 5.8fr 0.1fr;  
 }
 .memberSettings{
-    width: 500px;
-    height: 500px;
+    max-width: 1920px;
+    box-sizing: border-box;
+    min-height: 100vh;
+    margin-top: 54px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;    
+    background:linear-gradient(var(--lighter-blue), var(--sky-blue));
+}
+.memberCard{
+    width: 1000px;
+    height: 600px;
     background-color: var(--latte);
-    margin: 80px auto auto auto;
     color: #666666;
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+.leftSide{
+    width: 350px;
+    height: 100%;
+    background-color: var(--fa-gray);
+    border-top-left-radius: 20px;
+}
+.rightSide{
+    width: 650px;
+    height: 100%;
+    background-color: var(--white);
+    border-top-right-radius: 20px;
 }
 .title{
-    font-size: 30px;
-    padding-left: 20px;
-    padding-top: 10px;
+    font-size: 24px;
+    padding-left: 40px;
+    padding-top: 30px;
+    font-family: "Carter One";
 }
 .photoBox{
-    
+    margin-top: 50px;
 }
 .avatarBox{
     width: 200px;
@@ -55,6 +84,15 @@ a{
 }
 .avatarBox:hover > .cameraICon{
     display: block;
+}
+.showNickName{
+    width: 150px;
+    height: 20px;
+    font-size: 16px;
+    color: var(--gray);
+    font-weight: bold;
+    margin: 15px auto;
+    text-align: center;
 }
 .cameraICon{
     position: absolute;
@@ -88,7 +126,7 @@ a{
   pointer-events: none; /* 偽元素隱藏時不啟用點擊事件 */
 }
 .original{
-    border: 3px solid var(--blue);
+    border: 3px solid var(--gray);
     position: relative;
 }
 .original:hover::before{
@@ -185,7 +223,7 @@ a{
     border: 1px solid var(--gray);
     border-radius: 5px;
     color: var(--gray);
-    font-size: 12px;
+    font-size: 14px;
     cursor: pointer;
 }
 .uploadBtn{
@@ -203,17 +241,20 @@ a{
     color: var(--white);
     font-weight: bold;
 }
+.memberInfoBox{
+    width: 100%;
+}
 .memberInfo{
     display: flex;
-    margin: 30px 0px 15px 75px;
+    margin: 40px 0px 70px 40px;
 }
 .infoItem{
     font-size: 16px;
-    color: var(--blue);
+    color: var(--gray);
     font-weight: bold;
 }
 .memberAccount[readonly], .memberPassword[readonly]{
-    width: 250px;;
+    width: 250px;
     pointer-events: none;
     background-color: #f0f0f0;
     border: none;
@@ -230,7 +271,8 @@ a{
     padding-left: 10px;
     border-radius: 5px;
     border-style: none;
-    outline: none; 
+    outline: none;
+    border: 1px solid var(--fa-gray);
 }
 .nickNameBtn{
     box-sizing: border-box;
@@ -295,7 +337,7 @@ a{
     border: 1px solid var(--lighter-gray);
     border-radius: 5px;
     color: var(--gray);
-    font-size: 13px;
+    font-size: 14px;
     cursor: pointer;
 }
 .changePasswordBtn:hover{
@@ -338,13 +380,109 @@ a{
 }
 .backToHomeBtn{
     width: 100%;
-    text-align: right;
-}
-.arrowBack{
-    margin-right: 10px;
+    margin-top: 270px;
+    padding-left: 20px;
     cursor: pointer;
 }
-.arrowBack:hover{
-    transform: translateX(-2px);
+.backToHomeBtn:hover{
+    transform: translateX(-4px);
     transition: transform 0.5s;
+}
+.backHomeText{
+    font-size: 16px;
+    position: relative;
+    bottom: 4px;
+}
+@media screen and (max-width:1200px) and (min-width:768px){
+    .memberCard{
+        width: 90%;
+    }
+}
+@media screen and (max-width:767px) and (min-width:360px){
+    .memberCard{
+        width: 90%;
+        flex-direction: column;
+    }
+    .title{
+        font-size: 20px;
+        padding-left: 20px;
+    }
+    .leftSide{
+        width: 100%;
+        height: 45%;
+        border-top-right-radius: 20px;
+    }
+    .rightSide{
+        border-top-right-radius: 0px;
+    }
+    .photoBox{
+        margin-top: 10px;
+    }
+    .avatarBox{
+        width: 90%;
+        position:absolute;
+        margin-left: 20px;
+        border-radius: 100px;
+        margin-top: 10px;
+    }
+    .cameraICon{
+        position: relative;
+        bottom: 80px;
+        left: 85px;
+        transform: translate(0%, 0%);
+        z-index: 4;
+    }
+    .showNickName{
+        position: relative;
+        top: 215px;
+        margin-left: 50px;
+    }
+    .rightSide{
+        width: 100%;
+        height: 55%;
+    }
+    .memberInfo{
+        display: flex;
+        margin: 20px 0px 60px 20px;
+    }
+    
+    .memberAccount[readonly]{
+        width: 90%;
+    }
+    .memberNickName{
+        width: 90%;
+    }
+    .backToHomeBtn{
+        width: 95%;
+        position: relative;
+        top: 200px;
+        margin-top: -15px;
+        padding-left: 0px;
+        cursor: pointer;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+@media screen and (max-width:475px) and (min-width:360px){
+    .memberInfo{
+        display: flex;
+        margin: 20px 0px 50px 5px;
+    }
+    .title{
+        font-size: 20px;
+        padding-left: 5px;
+    }
+    .avatarBox{
+        margin-left: 28px;
+    }
+    .infoItem{
+        width: 25%;
+        font-size: 14px;
+    }
+    .memberAccount[readonly]{
+        width: 90%;
+    }
+    .memberNickName{
+        width: 80%;
+    }
 }

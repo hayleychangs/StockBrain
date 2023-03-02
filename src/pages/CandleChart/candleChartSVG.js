@@ -8,8 +8,6 @@ import { onAuthStateChanged } from 'firebase/auth';
 import styles from "./candleChartSVG.module.css";
 import { BsCheckCircleFill, BsPlusCircle } from "react-icons/bs";
 
-// import add from "../images/add.png";
-
 //redCandlestick
 function redCandlestick(candleStick, candleData, maxPrice, multiplier){
     candleStick.high=40+(maxPrice-candleData.max)*multiplier;
@@ -338,13 +336,9 @@ function CandleChartSVG ({data}) {
     const maxAndMinArray = DataCrafting(data).maxAndMinArray;
     const priceScale = DataCrafting(data).priceScale;
     const volScale =  DataCrafting(data).volScale;     
-    const MA5 = DataCrafting(data).MA5;                                                                                                                       DataCrafting(data).volScale;
+    const MA5 = DataCrafting(data).MA5;
     const MA10 = DataCrafting(data).MA10;             
     const MA20 = DataCrafting(data).MA20;
-    
-    console.log("336", MA5)
-    console.log("337", MA10)
-    console.log("338", MA20)
 
     //*build candlestick
     const BuildCandle = () => {
@@ -451,9 +445,9 @@ function CandleChartSVG ({data}) {
 
             let color;
             if (candleData.positive === 1) {
-                color = "#F44747";
+                color = "#F2666C";
             } else if (candleData.positive === 2) {
-                color = "#18BF69";
+                color = "#68BE8D";
             } else {
                 color = "#8592A2";
             }
@@ -720,8 +714,8 @@ function CandleChartSVG ({data}) {
                         <span className={styles.infoContent}>{stockClose}</span>
                     </div>
                     <div className={styles.change}>
-                        <span className={styles.infoTitle}>漲跌幅：</span>
-                        <span className={styles.infoContent}>{stockChange} ({stockChangePercent}%)</span>
+                        <span className={styles.infoTitle}>漲跌元(幅)：</span>
+                        <span className={`${styles.infoContent} ${stockChange > 0 ? styles.red : stockChange < 0 ? styles.green : ''}`}>{stockChange} ({stockChangePercent}%)</span>
                     </div>
                     <div className={styles.vol}>
                         <span className={styles.infoTitle}>成交量：</span>
@@ -743,7 +737,7 @@ function CandleChartSVG ({data}) {
                 </div>
                 {tracked ?
                     <div className={styles.trackedBox} onClick={clickToCancel}>
-                        <BsCheckCircleFill size={40} color="#fba707"/>
+                        <BsCheckCircleFill size={40} color="gold"/>
                     </div>
                     :<div className={styles.trackBtn} onClick={clickToTrack}>
                             <BsPlusCircle size={40} color="#666666"/>

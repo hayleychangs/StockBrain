@@ -9,6 +9,7 @@ import TrackingList from "../TrackingList/trackingList";
 import MyNote from "../Note/myNote";
 import InfoCard from "../InfoCard/infoCard";
 import TradePlan from "../TradePlan/tradePlan";
+import Footer from "../Footer/footer";
 
 import styles from "./mainPage.module.css";
 
@@ -29,11 +30,9 @@ function MainPage () {
     const [isInfoCardOpen, setIsInfoCardOpen] = useState(true);
 
     return (
-        <>
-            <div className={styles.mainSection}>
-                <div>
-                    {<Header />}
-                </div>
+        <div className={styles.mainSection}>
+            {<Header className={styles.header} />}
+            <div className={styles.container}>
                 <div className={styles.searchBar}>
                     {<SearchBar />}
                 </div>
@@ -56,7 +55,10 @@ function MainPage () {
                     {<InfoCard />}
                 </div>
             </div>
-        </>
+            <div className={styles.footer}>
+                    {<Footer />}
+            </div>
+        </div>
     )
 }
 
