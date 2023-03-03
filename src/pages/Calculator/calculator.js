@@ -185,7 +185,11 @@ function Calculator () {
                 </div>
                 <div className={styles.buttonContainer}>
                     <button className={styles.clearBtn} onClick={handleClear}>清空</button>
-                    <button className={styles.saveBtn} onClick={handleSave}>儲存</button>
+                    {user ?
+                        <button className={styles.saveBtn} onClick={handleSave}>儲存</button>
+                        :
+                        <button className={`${styles.saveBtn} ${styles["tipsForSavePlan"]}`}>儲存</button>
+                    }
                 </div>
             </div>
             
@@ -226,7 +230,11 @@ function Calculator () {
                 </div>
                 <div className={styles.buttonContainer}>
                     <button className={styles.clearBtn} onClick={handleClear}>清空</button>
-                    <button className={styles.saveBtn} onClick={handleSave}>儲存</button>
+                    {user ?
+                        <button className={styles.saveBtn} onClick={handleSave}>儲存</button>
+                        :
+                        <button className={`${styles.saveBtn} ${styles["tipsForSavePlan"]}`}>儲存</button>
+                    }
                 </div>
             </div>
         </div>

@@ -17,6 +17,7 @@ body{
     --black:#000000;
     --gray:#666666;
     --lighter-gray:rgb(232, 232, 232);
+    --fa-gray:#f0f0f0;
     --latte:rgb(255, 248, 231);
 }
 a{

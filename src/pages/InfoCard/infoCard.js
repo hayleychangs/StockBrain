@@ -59,15 +59,19 @@ function InfoCard () {
         getData();
     },[]);
     //-----------------------------------------------------------
-
-
+ 
     //-----------------------------------------------------------
     const [cardList, setCardList] = useState([]);
-
+    
 
     const navigate = useNavigate()
     function handleClick (keyword) {
         navigate(`/home/${keyword}`)
+
+        const chartContainer = document.querySelector(".searchBar-module__input___O_uKh");
+        const containerOffsetTop = chartContainer.offsetTop;
+
+        window.scrollTo({ top: containerOffsetTop, behavior: "smooth" });
     }
 
     useEffect(() => {
@@ -75,10 +79,10 @@ function InfoCard () {
             setCardList([
                 {
                     id: 1,
-                    order: 3,
+                    order: 2,
                     text: (
                       <div>
-                        <div><HiChartBar size={18} color="#0f73ee"/>成交量最大</div>
+                        <div><HiChartBar size={18} color="#0f73ee"/> 成交量最大</div>
                         <div className={styles.cardItem}>
                             <div>股票代號</div>
                             <div>股票名稱</div>
@@ -86,12 +90,12 @@ function InfoCard () {
                             <div>漲跌幅</div>
                         </div>
                         {maxVol.map((item) => (
-                          <div key={item.vol} className={styles.cardItem} onClick={() => handleClick(item.stock_id)}>
-                            <div>{item.stock_id}</div>
-                            <div>{item.name}</div>
-                            <div>{item.close}</div>
-                            <div>{item.changePercent}</div>
-                          </div>
+                            <div key={item.vol} className={styles.singleItem} onClick={() => handleClick(item.stock_id)}>
+                                <div className={styles.itemId}>{item.stock_id}</div>
+                                <div className={styles.itemName}>{item.name}</div>
+                                <div className={styles.itemClose}>{item.close}</div>
+                                <div className={styles.itemChange} style={{color: item.changePercent > 0 ? '#F2666C' : '#68BE8D'}}>{item.changePercent}%</div>
+                            </div>
                         ))}
                       </div>
                     )
@@ -101,7 +105,7 @@ function InfoCard () {
                     order: 1, 
                     text: (
                         <div>
-                            <div><HiCurrencyDollar size={18} color="#0f73ee"/>成交金額最大</div>
+                            <div><HiCurrencyDollar size={18} color="#0f73ee"/> 成交金額最大</div>
                             <div className={styles.cardItem}>
                                 <div>股票代號</div>
                                 <div>股票名稱</div>
@@ -109,12 +113,12 @@ function InfoCard () {
                                 <div>漲跌幅</div>
                             </div>
                             {maxAmount.map((item) => (
-                            <div key={item.amount} className={styles.cardItem} onClick={() => handleClick(item.stock_id)}>
-                                <div>{item.stock_id}</div>
-                                <div>{item.name}</div>
-                                <div>{item.close}</div>
-                                <div>{item.changePercent}</div>
-                            </div>
+                                <div key={item.vol} className={styles.singleItem} onClick={() => handleClick(item.stock_id)}>
+                                    <div className={styles.itemId}>{item.stock_id}</div>
+                                    <div className={styles.itemName}>{item.name}</div>
+                                    <div className={styles.itemClose}>{item.close}</div>
+                                    <div className={styles.itemChange} style={{color: item.changePercent > 0 ? '#F2666C' : '#68BE8D'}}>{item.changePercent}%</div>
+                                </div>
                             ))}
                         </div>
                     
@@ -122,10 +126,10 @@ function InfoCard () {
                 },
                 { 
                     id: 3, 
-                    order: 2, 
+                    order: 3, 
                     text: (
                         <div>
-                            <div><HiArrowTrendingUp size={18} color="red"/>漲幅最大</div>
+                            <div><HiArrowTrendingUp size={18} color="#F2666C"/> 漲幅最大</div>
                             <div className={styles.cardItem}>
                                 <div>股票代號</div>
                                 <div>股票名稱</div>
@@ -133,12 +137,12 @@ function InfoCard () {
                                 <div>漲跌幅</div>
                             </div>
                             {maxRise.map((item) => (
-                            <div key={item.changePercent} className={styles.cardItem} onClick={() => handleClick(item.stock_id)}>
-                                <div>{item.stock_id}</div>
-                                <div>{item.name}</div>
-                                <div>{item.close}</div>
-                                <div>{item.changePercent}</div>
-                            </div>
+                                <div key={item.vol} className={styles.singleItem} onClick={() => handleClick(item.stock_id)}>
+                                    <div className={styles.itemId}>{item.stock_id}</div>
+                                    <div className={styles.itemName}>{item.name}</div>
+                                    <div className={styles.itemClose}>{item.close}</div>
+                                    <div className={styles.itemChange} style={{color: item.changePercent > 0 ? '#F2666C' : '#68BE8D'}}>{item.changePercent}%</div>
+                                </div>
                             ))}
                         </div>
                     )
@@ -148,7 +152,7 @@ function InfoCard () {
                     order: 4, 
                     text: (
                         <div>
-                            <div><HiArrowTrendingDown size={18} color="green"/>跌幅最大</div>
+                            <div><HiArrowTrendingDown size={18} color="#68BE8D"/> 跌幅最大</div>
                             <div className={styles.cardItem}>
                                 <div>股票代號</div>
                                 <div>股票名稱</div>
@@ -156,12 +160,12 @@ function InfoCard () {
                                 <div>漲跌幅</div>
                             </div>
                             {maxFall.map((item) => (
-                            <div key={item.changePercent} className={styles.cardItem} onClick={() => handleClick(item.stock_id)}>
-                                <div>{item.stock_id}</div>
-                                <div>{item.name}</div>
-                                <div>{item.close}</div>
-                                <div>{item.changePercent}</div>
-                            </div>
+                                <div key={item.vol} className={styles.singleItem} onClick={() => handleClick(item.stock_id)}>
+                                    <div className={styles.itemId}>{item.stock_id}</div>
+                                    <div className={styles.itemName}>{item.name}</div>
+                                    <div className={styles.itemClose}>{item.close}</div>
+                                    <div className={styles.itemChange} style={{color: item.changePercent > 0 ? '#F2666C' : '#68BE8D'}}>{item.changePercent}%</div>
+                                </div>
                             ))}
                         </div>
                     )
@@ -183,7 +187,7 @@ function InfoCard () {
 
     function handleDragLeave(e) {
         console.log("dragleave");
-        e.target.style.background="white";
+        e.target.style.background="rgb(232,240,254)";
     }
 
     function handleDragOver(e) {
@@ -203,7 +207,7 @@ function InfoCard () {
             }
             return c;
         }))
-        e.target.style.background="white";
+        e.target.style.background="rgb(232,240,254)";
     }
 
     const sortCards = (a,b) => {

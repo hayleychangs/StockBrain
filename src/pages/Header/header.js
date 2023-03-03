@@ -1,5 +1,5 @@
 import  React, {useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Avatar from 'react-avatar';
 import classNames from 'classnames';
 
@@ -89,18 +89,23 @@ function Header(){
             <div className={styles.headerContent}>
                 <h2 className={styles.theme} onClick={backToHome}>StockBrain</h2>
                 <nav ref={popUpRef}>
-                    <div 
-                        className={styles.navItem} 
-                        onClick={() => setShowPopup(!showPopup)}
-                    >
-                        <Avatar 
-                            src={photoURL ? photoURL : defaultAvatar}
-                            size={40} round={true} style={{ border: 'none' }} 
-                            alt="User"
-                            className={styles.userHead}
-                        />
-                    </div>
-                    
+                    {user ?
+                        <div 
+                            className={styles.navItem} 
+                            onClick={() => setShowPopup(!showPopup)}
+                        >
+                            <Avatar 
+                                src={photoURL ? photoURL : defaultAvatar}
+                                size={40} round={true} style={{ border: 'none' }} 
+                                alt="User"
+                                className={styles.userHead}
+                            />
+                        </div>
+                        :
+                        <div>
+                            <p><Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span> ｜ </span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link></p>
+                        </div>
+                    }
                         <div className={classNames(!showPopup ? styles['popup-inactive'] : styles['popup-active'])}>
                             <div className={styles.popupContent}>
                                 <div className={styles.myAccountLink} onClick={() => navigate("/myaccount")}>

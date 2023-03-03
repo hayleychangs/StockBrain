@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot, updateDoc } from 'firebase/firestore';
 import {db, auth} from "../../firebase/firebase";
@@ -8,11 +8,11 @@ import { onAuthStateChanged } from 'firebase/auth';
 import styles from "./myNote.module.css";
 
 import { GiNewspaper, GiArchiveResearch, GiCalculator } from "react-icons/gi";
-import { FaRegLightbulb } from "react-icons/fa";
-import { MdOutlinePostAdd } from "react-icons/md";
+import { FaRegLightbulb, FaThumbtack, FaCircle } from "react-icons/fa";
 import { BiSave } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { ImMenu3, ImMenu4 } from "react-icons/im";
+import { TbCircleHalf2, TbCircleFilled } from "react-icons/tb";
 
 function MyNote ({ onMenuToggle }) {
   //user狀態確認
@@ -35,6 +35,7 @@ function MyNote ({ onMenuToggle }) {
   //add note
   const [inputValue, setInputValue] = useState('');
   const [moodValue, setMoodValue] = useState('');
+  const [selectedColor, setSelectedColor] = useState(null);
   const [inputBackgroundColor, setInputBackgroundColor] = useState('white');
   const [notes, setNotes] = useState([]);
 
@@ -64,6 +65,8 @@ function MyNote ({ onMenuToggle }) {
 
         setInputValue('');
         setMoodValue('');
+        setSelectedColor(null);
+        setInputBackgroundColor('white');
       } catch (e) {
         console.error('Error adding document: ', e);
       }
@@ -77,21 +80,29 @@ function MyNote ({ onMenuToggle }) {
   function getMoodValue(value) {
     setMoodValue(value);
     if (value === 0) {
-      setInputBackgroundColor('#FFCC99');
+      setInputBackgroundColor('#FFDEAD');
     } else if (value === 1) {
-      setInputBackgroundColor('rgba(215,215,255)');
+      setInputBackgroundColor('#E6E6FA');
     } else if (value === 2) {
-      setInputBackgroundColor('#CBE3BB');
+      setInputBackgroundColor('#CDE6C7');
     } else if (value === 3) {
-      setInputBackgroundColor('rgba(146,205,250)');
+      setInputBackgroundColor('#FFE4E1');
     } else {
       setInputBackgroundColor('rgb(232, 232, 232)');
+    };
+    
+    if (selectedColor === value) {
+      setSelectedColor(null);
+      setInputBackgroundColor('white');
+    } else {
+      setSelectedColor(value);
     }
-    console.log(moodValue)
+
   }
   //---------------------------------------------
 
   //read note---------
+  const [isLoading, setIsLoading] = useState(false);
   async function fetchNotes () {
 
     if (!user) {
@@ -101,6 +112,8 @@ function MyNote ({ onMenuToggle }) {
     if (!stockId) {
       stockId = "2330";
     }
+
+    setIsLoading(true);
     
     const notesRef = collection(db, "myNote");
     const q = query(notesRef, where("user_id", "==", auth?.currentUser?.uid), where("stock_id", "==", stockId), orderBy("time", "desc"));
@@ -112,7 +125,7 @@ function MyNote ({ onMenuToggle }) {
       });
       console.log("列印符合條件的筆記", result);
       setNotes(result);
-      
+      setIsLoading(false);
     });
   }
 
@@ -129,6 +142,7 @@ function MyNote ({ onMenuToggle }) {
   }
 
   async function handleUpdateNote(id) {
+    setIsLoading(true);
     try {
       const noteRef = doc(db, "myNote", id);
       await updateDoc(noteRef, 
@@ -140,6 +154,8 @@ function MyNote ({ onMenuToggle }) {
       console.log("updated document");
     } catch (e) {
       console.log("Error updating document", e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -160,13 +176,13 @@ function MyNote ({ onMenuToggle }) {
   //set background color
   function setBackgroundColor(mood) {
     if (mood === 0) {
-      return '#FFCC99';
+      return '#FFDEAD';
     }else if (mood === 1) {
-      return 'rgba(215,215,255)';
+      return '#E6E6FA';
     } else if (mood === 2) {
-      return '#CBE3BB';
+      return '#CDE6C7';
     } else if (mood === 3) {
-      return 'rgba(146,205,250)';
+      return '#FFE4E1';
     } else {
       return 'rgb(232, 232, 232)';
     }
@@ -187,7 +203,7 @@ function MyNote ({ onMenuToggle }) {
   }
 
   const handleOnBlur = (event) => {
-      event.target.placeholder="隨時紀錄交易想法及心情";
+      event.target.placeholder="隨時紀錄交易想法及心情...";
       setIsHidden(false);
   }
   //------------------------------------------
@@ -213,38 +229,100 @@ function MyNote ({ onMenuToggle }) {
         <div className={styles.container}>
           <div className={styles.inputCard}>
               <div className={styles.input}>
-                <input type="text" value={inputValue} placeholder="隨時紀錄交易想法及心情" onChange={handleInputChange} onFocus={handleOnFocus} onBlur={handleOnBlur} style={{ backgroundColor: inputBackgroundColor }} />
+                <input type="text" value={inputValue} placeholder="隨時紀錄交易想法及心情..." onChange={handleInputChange} onFocus={handleOnFocus} onBlur={handleOnBlur} style={{ backgroundColor: inputBackgroundColor }} />
               </div>
-              <div className={styles.addIcon} onClick={handleAddItem}><MdOutlinePostAdd size={35} color="#0f73ee"/></div>
+              {user ?
+                  <div className={styles.addIcon} onClick={handleAddItem}><FaThumbtack size={25} color="#0f73ee" style={{ transform: 'rotate(20deg)' }}/></div>
+                :
+                <div className={`${styles.addIcon} ${styles["tipsForAddNote"]}`}><FaThumbtack size={25} color="#0f73ee" style={{ transform: 'rotate(20deg)' }} /></div>
+              }
               <div className={styles.moodInput}>
-                <div className={styles.moodIcon} value="0" onClick={() => getMoodValue(0)} ><FaRegLightbulb size={30} color={"#eb7d16"} /></div>
-                <div className={styles.moodIcon} value="1" onClick={() => getMoodValue(1)}  ><GiNewspaper  size={30} color={"#9966FF"} /></div>
-                <div className={styles.moodIcon}  value="2" onClick={() => getMoodValue(2)} ><GiArchiveResearch size={30} color={"green"}  /></div>
-                <div className={styles.moodIcon}  value="3" onClick={() => getMoodValue(3)} ><GiCalculator size={30} color={"#666666"} /></div>
+                <div className={styles.moodIcon} value="0" onClick={() => getMoodValue(0)} >
+                  {selectedColor === 0 ? (
+                    <FaCircle size={16} color={"#eb7d16"} />
+                  ) : (
+                    <TbCircleHalf2 size={16} color={"#eb7d16"} />
+                  )}
+                </div>
+                <div className={styles.moodIcon} value="1" onClick={() => getMoodValue(1)}  >
+                  {selectedColor === 1 ? (
+                    <FaCircle size={16} color={"#9966FF"} />
+                  ) : (
+                    <TbCircleHalf2 size={16} color={"#9966FF"} />
+                  )}
+                </div>
+                <div className={styles.moodIcon}  value="2" onClick={() => getMoodValue(2)} >
+                  {selectedColor === 2 ? (
+                    <FaCircle size={16} color={"#68BE8D"} />
+                  ) : (
+                    <TbCircleHalf2 size={16} color={"#68BE8D"} />
+                  )}
+                </div>
+                <div className={styles.moodIcon}  value="3" onClick={() => getMoodValue(3)} >
+                  {selectedColor === 3 ? (
+                    <FaCircle size={16} color={"#F2666C"} />
+                  ) : (
+                    <TbCircleHalf2 size={16} color={"#F2666C"} />
+                  )}
+                </div>
               </div>
-          </div> 
-          <div className={styles.notes}>
-            {notes ?
-              notes.map((note) => (
-                  <div className={styles.singleNoteCard} key={note.id}>
-                    <div className={styles.singleNote} style={{ backgroundColor: setBackgroundColor(note.mood) }} contentEditable onInput={handleEditableChange}>
-                      {note.text}
-                    </div>
-                    <div className={styles.updateIcon} onClick={() => handleUpdateNote(note.id)}><BiSave size={30} color={"#0f73ee"} /></div>
-                    <div className={styles.deleteIcon} onClick={() => handleDeleteNote(note.id)}><RiDeleteBin5Line size={25} color={"#666666"} /></div>
-                    {note?.time && <div className={styles.updatedDate}>最後編輯時間：{note.time.toDate().toLocaleString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</div>}
-                    <div className={styles.moodInNote}>
-                      <div className={styles.moodIconInNote} value="0" onClick={() => handleMoodClick(0, note.id)} ><FaRegLightbulb GiNewspaper size={25} color={"#eb7d16"} /></div>
-                      <div className={styles.moodIconInNote} value="1" onClick={() => handleMoodClick(1, note.id)} ><GiNewspaper size={25} color={"#9966FF"} /></div>
-                      <div className={styles.moodIconInNote} value="2" onClick={() => handleMoodClick(2, note.id)} ><GiArchiveResearch size={25} color={"green"} /></div>
-                      <div className={styles.moodIconInNote} value="3" onClick={() => handleMoodClick(3, note.id)} ><GiCalculator size={25} color={"#666666"}/></div>
-                    </div>
-                  </div>
-              ))
-              :
-              <p>Loading...</p>
-            }
           </div>
+          {user ? (
+            <div className={styles.notes}>
+              {isLoading ?
+                <div className={styles.loadingText}>
+                  <p>筆記整理中，請稍候...</p>
+                </div>
+                :
+                notes.map((note) => (
+                    <div className={styles.singleNoteCard} key={note.id}>
+                      <div className={styles.singleNote} style={{ backgroundColor: setBackgroundColor(note.mood) }} contentEditable onInput={handleEditableChange}>
+                        {note.text}
+                      </div>
+                      <div className={styles.updateIcon} onClick={() => handleUpdateNote(note.id)}><BiSave size={25} color={"#0f73ee"} /></div>
+                      <div className={styles.deleteIcon} onClick={() => handleDeleteNote(note.id)}><RiDeleteBin5Line size={22} color={"#acacac"} /></div>
+                      {note?.time && <div className={styles.updatedDate}>最後編輯時間：{note.time.toDate().toLocaleString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</div>}
+                      <div className={styles.moodInNote}>
+                        <div className={styles.moodIconInNote} value="0" onClick={() => handleMoodClick(0, note.id)} >
+                          {note.mood === 0 ? (
+                            <FaCircle size={16} color={"#eb7d16"} />
+                          ):(
+                            <TbCircleHalf2 size={16} color={"#eb7d16"} />
+                          )}
+                        </div>
+                        <div className={styles.moodIconInNote} value="1" onClick={() => handleMoodClick(1, note.id)} >
+                          {note.mood === 1 ? (
+                            <FaCircle size={16} color={"#9966FF"} />
+                          ):(
+                            <TbCircleHalf2 size={16} color={"#9966FF"} />
+                          )}
+                        </div>
+                        <div className={styles.moodIconInNote} value="2" onClick={() => handleMoodClick(2, note.id)} >
+                          {note.mood === 2 ? (
+                            <FaCircle size={16} color={"#68BE8D"} />
+                          ):(
+                            <TbCircleHalf2 size={16} color={"#68BE8D"} />
+                          )}
+                        </div>
+                        <div className={styles.moodIconInNote} value="3" onClick={() => handleMoodClick(3, note.id)} >
+                          {note.mood === 3 ? (
+                            <FaCircle size={16} color={"#F2666C"} />
+                          ):(
+                            <TbCircleHalf2 size={16} color={"#F2666C"} />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                ))
+              }
+            </div>
+          ):(
+            <div className={styles.redirectMessageBox}>
+                <p>完整內容，僅限註冊會員使用</p>
+                <p>立即<Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span>或</span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link></p>
+                <></>
+            </div>
+          )}
         </div>
       )}
     </div>

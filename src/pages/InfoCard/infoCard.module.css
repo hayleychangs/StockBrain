@@ -22,9 +22,6 @@ a{
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color:var(--latte);
-    box-shadow: 4px 4px 4px var(--lighter-gray);
-    border-radius: 10px;
 }
 .title{
     height: 40px;
@@ -46,45 +43,46 @@ a{
     width: 250px;
     height: 220px;
     background-repeat: 12px;
-    border: 5px solid #fff;
+    border: 7px solid var(--lighter-blue);
+    border-radius: 10px;
     justify-content: center;
     align-items: center;
     margin: 20px;
     cursor: pointer;
-    background-color:#fff;
+    background-color:var(--lighter-blue);
 }
 .cardItem{
     display: flex;
     flex-direction: row;
     margin-top: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
     justify-content: space-between;
 }
-/* .box {
-    margin: 50px auto;
-    width: 250px;
-    height: 1000px;
-    background: #ebeaea;
+.singleItem{
+    display: grid;
+    grid-template-columns: 28% 28% 24% 20%;
+    margin-top: 8px;
+    text-align: center;
 }
-.dropZone1, .dropZone2, .dropZone3, .dropZone4{
-    margin: 50px auto;
-    width: 200px;
-    height: 200px;
-    margin-top: 5px;
-    background: #fff;
+.singleItem:hover{
+    background-color: var(--white);
+    border-radius: 5px;
+    transform: scale(1.03);
 }
-.dropZone0{
-    margin: 50px auto;
-    width: 200px;
-    height: 80px;
-    margin-top: 5px;
-    background: #fff;
+.itemId{
+    grid-column: 1 / 2;
 }
-.dragText, .dragText1, .dragText2{
-    width: 200px;
-    height: 20px;
-    margin-top: 5px;
-    background-color:burlywood;
-} */
+.itemName{
+    grid-column: 2 / 3;
+}
+.itemClose{
+    grid-column: 3 / 4;
+}
+.itemChange{
+    grid-column: 4 / 5;
+    text-align: right;
+}
 @media screen and (max-width:1200px) and (min-width:768px){
     .cardContainer{
         height: 550px;

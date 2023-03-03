@@ -659,6 +659,9 @@ function CandleChartSVG ({data}) {
       const rect = svg.getBoundingClientRect();
       const x = e.nativeEvent.offsetX / rect.width;
       const y = e.nativeEvent.offsetY / rect.height;
+
+      console.log("Y座標0", e.nativeEvent.offsetY);
+      console.log("Y座標", y);
   
       // 繪製水平線
       const hline = hlineRef.current;
@@ -735,12 +738,17 @@ function CandleChartSVG ({data}) {
                             <div className={twentyMA ? styles.maTwentyActive : styles.maTwentyInActive} onClick={() => setTwentyMA(!twentyMA)}>20MA</div>
                     </div>
                 </div>
-                {tracked ?
-                    <div className={styles.trackedBox} onClick={clickToCancel}>
-                        <BsCheckCircleFill size={40} color="gold"/>
-                    </div>
-                    :<div className={styles.trackBtn} onClick={clickToTrack}>
-                            <BsPlusCircle size={40} color="#666666"/>
+                {user ?
+                    tracked ?
+                        <div className={styles.trackedBox} onClick={clickToCancel}>
+                            <BsCheckCircleFill size={40} color="gold"/>
+                        </div>
+                        :<div className={styles.trackBtn} onClick={clickToTrack}>
+                                <BsPlusCircle size={40} color="#666666"/>
+                        </div>
+                    :
+                    <div className={`${styles.trackBtn} ${styles["tipsForTrack"]}`}>
+                        <BsPlusCircle size={40} color="#666666"/>
                     </div>
                 }
                 <div className={styles.candleChart} ref={chartRef}>

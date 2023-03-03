@@ -39,7 +39,7 @@ a{
 .planBox{
     max-width: 1170px;
     width: 100%;
-    height: 100%;
+    height: 90%;
     margin-top: 10px;
     padding-top: 10px;
     display: flex;
@@ -72,6 +72,9 @@ a{
     justify-content: space-evenly;
     text-decoration: underline;
     font-weight: bold;
+}
+.subTitleStockId, .subTitleRRRatio{
+    cursor: pointer;
 }
 .allPlan{
     width: 1180px;
@@ -117,7 +120,7 @@ a{
 }
 .deleteBtn{
     background-color: transparent;
-    color: var(--gray);
+    color: #c9c9c9c9;
     position: relative;
     bottom: 24px;
     left: 1050px;
@@ -125,8 +128,22 @@ a{
     display: none;
 }
 .deleteBtn:hover{
-    color: red;
+    color: #F2666C;
     font-weight: bold;
+}
+.redirectMessageBox{
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    color: var(--gray);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.redirectMessageBox p{
+    margin: 0;
+    margin-block-start: 1em;
 }
 @media screen and (max-width:1200px) and (min-width:768px){
     .subTitle{

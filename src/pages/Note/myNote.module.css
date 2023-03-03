@@ -23,11 +23,10 @@ a{
 }
 .myNote{
     width: 100%;
+    height: 85%;
     display: flex;
     flex-direction: column;
-    background-color: var(--latte);
-    border-radius: 10px;
-    box-shadow: 4px 4px 4px var(--lighter-gray);
+    padding-bottom: 30px;
 }
 .title{
     height: 30px;
@@ -42,21 +41,29 @@ a{
     height: 290px;
     display: flex;
     flex-direction: row;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .inputCard{
-    width: 300px;
+    width: 240px;
 }
 .input{
-    width: 110%;
-    height: 100%;
+    width: 225px;
+    height: 272px;
     margin-left: 10px;
+    margin-top: 5px;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+    box-shadow: 6px 6px 5px var(--lighter-gray);
+}
+.input:hover{
+    transform: scale(1.01);
 }
 .input input{
-    width: 100%;
-    height: 98%;
+    width: 212.5px;
+    height: 270px;
     font-size: 20px;
     font-weight:bold;
+    padding-left: 10px;
     color: var(--gray);
     cursor: text;
     border-style: none;
@@ -64,21 +71,23 @@ a{
     outline: none;
 }
 .input input::placeholder{
-    font-size: 18px;
+    font-size: 16px;
     color: var(gray);
+    padding-left: 5px;
 }
 .moodInput{
     width: 200px;
     height: 30px;
     display: flex;
     position: relative;
-    bottom: 330px;
+    bottom: 305px;
+    left: 10px;
     z-index: 5;
 }
 .moodIcon{
     width: 30px;
     height: 30px;
-    margin-left: 15px;
+    margin-left: 10px;
     cursor: pointer;
 }
 .moodIcon:hover{
@@ -88,8 +97,8 @@ a{
     width: 50px;
     height: 40px;
     position: relative;
-    bottom: 50px;
-    left: 190px;
+    bottom: 265px;
+    left: 200px;
     cursor: pointer;
 }
 .addIcon:hover{
@@ -97,14 +106,14 @@ a{
 }
 .notes{
     width: 5000px;
-    margin-left: 50px;
+    margin-left: 30px;
     padding-bottom: 5px;
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
 }
 .notes::-webkit-scrollbar {
-    height: 14px;           
+    height: 10px;           
     width: 16px;               
     border: 3px solid #dfdfdf;
     border-radius: 10px;
@@ -122,27 +131,57 @@ a{
     height: 100%;
     margin-left: 15px;
     outline: none;
-    background-color:var(--white);
     border-radius: 10px;
+    transform: rotate(0.6deg);
 }
 .singleNote{
-    width: 205px;
-    height: 90%;
+    width: 100%;
+    height: 275px;
     color: var(--gray);
     font-size: 18px;
     font-weight: bold;
+    outline: none;
+    margin-top: 5px;
     padding-top: 30px;
     padding-left: 6px;
     border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
+
+    /*-----*/
+    box-sizing: border-box;
+    position: relative;
+    border-bottom-right-radius: 25px;
+    overflow: hidden;
+    box-shadow: 18px 20px 20px -28px var(--gray);
+    position: relative;
+}
+.singleNote:before, .singleNote:after{
+    content: "";
+    position: absolute;
+    z-index: 1;
+    right: -5px;
+    bottom: -5px;
+    width: 30px;
+    height: 30px;
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.5);
+    transform: skew(-5edg) rotate(-3deg);
+}
+.singleNote:hover{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: 20px 23px 18px -32px var(--gray);
+    transform: rotate(1.3deg);
 }
 .updateIcon{
     width: 30px;
     height: 30px;
     position: relative;
-    bottom: 280px;
-    left: 215px;
+    bottom: 75px;
+    left: 218px;
     cursor: pointer;
+    z-index: 6;
 }
 .updateIcon:hover{
     transform: scale(1.05);
@@ -151,7 +190,7 @@ a{
     width: 30px;
     height: 30px;
     position: relative;
-    bottom: 62px;
+    bottom: 290px;
     left: 218px;
     cursor: pointer;
     z-index: 5;
@@ -166,7 +205,7 @@ a{
     color: var(--gray);
     position: relative;
     bottom: 85px;
-    margin-left: 1px;
+    margin-left: 5px;
 }
 .moodInNote{
     width: 30px;
@@ -175,7 +214,7 @@ a{
     flex-direction: column;
     position: relative;
     bottom: 310px;
-    left: 218px;
+    left: 222px;
     z-index: 5;
 }
 .moodIconInNote{
@@ -185,7 +224,7 @@ a{
 .moodIconInNote:hover{
     transform: scale(1.05);
 }
-.tips {
+.tips{
     position: relative;
     top: 0;
     left: 50%;
@@ -196,6 +235,64 @@ a{
     color: #fff;
     font-size: 12px;
 }
-@media screen and (max-width:1200px) and (min-width:768px){
-
+.redirectMessageBox{
+    width: 100%;
+    height: 100%;
+    margin-left: 50px;
+    font-size: 16px;
+    color: var(--gray);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.redirectMessageBox p{
+    margin: 0;
+    margin-block-end: 1.5em;
+}
+.tipsForAddNote{
+    position: relative;
+}
+.tipsForAddNote:hover::before{
+    height: 30px;
+    width: 200px;
+    position: absolute;
+    top: -36px;
+    left: 36px;
+    color: var(--blue);
+    font-size: 3px;
+    background-color: var(--lighter-blue);
+    padding-top: 10px;
+    padding-right: 5px;
+    text-align: center;
+    box-sizing: content-box;
+    border-radius: 5px;
+    content: "在記錄想法之前，請先註冊或登入!";
+}
+.loadingText{
+    width: 500px;
+    color: var(--Gray);
+    font-size: 16px;
+    letter-spacing: 3px;
+    margin: auto;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 1s steps(8) infinite;
+}
+@keyframes typing{
+    from { width: 0px}
+    to { width: 145px};
+}
+@media screen and (max-width:767px) and (min-width:360px){
+    .redirectMessageBox{
+        margin-left: 5px;
+    }
+}
+@media screen and (max-width:550px) and (min-width:360px){
+    .tipsForAddNote:hover::before{
+        top: -36px;
+        left: -200px;
+    }
 }

@@ -18,16 +18,31 @@ function MainPage () {
     const [isMyNoteOpen, setIsMyNoteOpen] = useState(true);
     const handleMyNoteToggle = () => {
         setIsMyNoteOpen(!isMyNoteOpen);
-        console.log("19列印", isMyNoteOpen)
     };
       
     const [isTradePlanOpen, setIsTradePlanOpen] = useState(true);
     const handleTradePlanToggle = () => {
         setIsTradePlanOpen(!isTradePlanOpen);
-        console.log("28列印", isTradePlanOpen)
     };
 
-    const [isInfoCardOpen, setIsInfoCardOpen] = useState(true);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const handleScroll = () => {
+        if (window.pageYOffset > 20) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
 
     return (
         <div className={styles.mainSection}>
@@ -58,6 +73,11 @@ function MainPage () {
             <div className={styles.footer}>
                     {<Footer />}
             </div>
+            {isVisible && (
+                <button className={styles.goToTop} onClick={scrollToTop}>
+                    Top
+                </button>
+            )}
         </div>
     )
 }

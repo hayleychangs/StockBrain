@@ -212,3 +212,29 @@ a{
     left: 70px;
     justify-content: space-between;
 }
+.tipsForSavePlan{
+    position: relative;
+}
+.tipsForSavePlan:hover::before{
+    height: 38px;
+    width: 150px;
+    position: absolute;
+    top: -5px;
+    left: 100px;
+    color: var(--blue);
+    font-size:3px;
+    font-weight: bold;
+    background-color: var(--lighter-blue);
+    padding-top: 5px;
+    padding-left: 2px;
+    text-align: center;
+    box-sizing: content-box;
+    border-radius: 5px;
+    content: "請先註冊或登入，幫你記下這筆好的交易計畫！";
+}
+@media screen and (max-width:1400px) {
+    .tipsForSavePlan:hover::before{
+        top: 40px;
+        left: -20px;
+    }
+}

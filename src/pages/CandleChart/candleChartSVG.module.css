@@ -15,6 +15,7 @@ body{
     --black:#000000;
     --gray:#666666;
     --lighter-gray:rgb(232, 232, 232);
+    --fa-gray:#f0f0f0;
     --latte:rgb(255, 248, 231);
 }
 a{
@@ -293,6 +294,27 @@ a{
 .maTwentyInActive:hover{
     transform: scale(1.05);
 }
+.tipsForTrack{
+    position: relative;
+}
+.tipsForTrack:hover::before{
+    height: 38px;
+    width: 160px;
+    position: absolute;
+    top: -45px;
+    left: 30px;
+    color: var(--blue);
+    font-size:3px;
+    font-weight: normal;
+    background-color: var(--lighter-blue);
+    padding-top: 5px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    text-align: center;
+    box-sizing: content-box;
+    border-radius: 5px;
+    content: "想將股票加入追蹤嗎，請先註冊或登入!";
+}
 @media screen and (max-width:1200px) and (min-width:768px){
     .container{
         width: 100%;
@@ -309,6 +331,10 @@ a{
     }
     .trackedBox{
         margin-left: -5px;
+    }
+    .tipsForTrack:hover::before{
+        top: -5px;
+        left: -180px;
     }
 }
 @media screen and (max-width:767px) and (min-width:360px){
@@ -357,6 +383,10 @@ a{
         margin-left: -55px;
         margin-top: 28px;
     }
+    .tipsForTrack:hover::before{
+        top: -5px;
+        left: -170px;
+    }
 }
 @media screen and (max-width:668px) and (min-width:360px){
     .updateTime{
@@ -372,5 +402,9 @@ a{
     }
     .trackedBox{
         margin-left: -46px;
+    }
+    .tipsForTrack:hover::before{
+        top: -5px;
+        left: -170px;
     }
 }

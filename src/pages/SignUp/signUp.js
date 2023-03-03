@@ -81,29 +81,32 @@ export const SignUp = () => {
 
 
     return(
-        <div className={styles.signUpCard}>
-            <div className={styles.welcomeText}>建立你的帳戶</div>
-           <div className={styles.email}>
-                <input 
-                    type="text"
-                    placeholder="請輸入電子郵件信箱"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+        <>
+            <div className={styles.brand}>StockBrain</div>
+            <div className={styles.signUpCard}>
+                <div className={styles.welcomeText}>建立你的帳戶</div>
+            <div className={styles.email}>
+                    <input 
+                        type="text"
+                        placeholder="請輸入電子郵件信箱"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                <div className={styles.password}>
+                    <input 
+                        type="password"
+                        placeholder="請輸入密碼"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
+                <button className={styles.signUpBtn} onClick={signUp}>
+                    {isLoading ? <Loading /> : "註冊"}
+                </button>
+                <div className={styles.text}>已經有帳戶了？<span className={styles.clickToLogin} onClick={handleNavToLogIn}>點此登入</span></div>
+                <hr className={styles.hr}/>
+                <div className={styles.googleBox} onClick={signInWithGoogle}>使用Google帳戶登入</div>
             </div>
-            <div className={styles.password}>
-                <input 
-                    type="password"
-                    placeholder="請輸入密碼"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
-            <button className={styles.signUpBtn} onClick={signUp}>
-                {isLoading ? <Loading /> : "註冊"}
-            </button>
-            <div className={styles.text}>已經有帳戶了？<span className={styles.clickToLogin} onClick={handleNavToLogIn}>點此登入</span></div>
-            <hr className={styles.hr}/>
-            <div className={styles.googleBox} onClick={signInWithGoogle}>使用Google帳戶登入</div>
-        </div>
+        </>
     )
 }
