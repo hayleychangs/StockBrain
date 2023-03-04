@@ -93,6 +93,7 @@ function Header(){
                         <div 
                             className={styles.navItem} 
                             onClick={() => setShowPopup(!showPopup)}
+                            data-display-name={`Hi! ${user.displayName}` || ''}
                         >
                             <Avatar 
                                 src={photoURL ? photoURL : defaultAvatar}

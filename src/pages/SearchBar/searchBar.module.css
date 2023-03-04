@@ -103,7 +103,7 @@ a{
 }
 .resultsItem:hover{
     border-radius: 10px;
-    background-color: var(--latte);
+    background-color: var(--lighter-blue);
     cursor: pointer;
 }
 .itemId{

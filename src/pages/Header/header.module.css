@@ -63,6 +63,21 @@ a{
     transform: translateX(1.5px);
     transition: transform 0.5s;
 }
+.navItem[data-display-name]:hover::before {
+    content: attr(data-display-name) " ";
+    position: relative;
+    left: 15px;
+    top: 35px;
+    width: auto;
+    height: 20px;
+    font-size: 14px;
+    text-align: center;
+    transform: scale(0.8);
+    background-color: var(--latte);
+}
+.navItem[data-display-name]::before {
+    display: inline-block;
+}
 .userHead{
     border: 1px solid var(--lighter-gray);
 }

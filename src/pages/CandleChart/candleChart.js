@@ -5,10 +5,13 @@ import { collection, addDoc, query, getDocs, where, deleteDoc, doc, serverTimest
 import {db} from "../../firebase/firebase";
 
 import CandleChartSVG from "./candleChartSVG";
+import NoData from "./noData";
+
+import styles from "./candleChart.module.css";
 
 const CandleChart= () => {
     let { stockId } = useParams();
-
+    const [loading, setLoading] = useState(true);
     const [KChartData, setKChartData] = useState([]);
 
     useEffect(() => {
@@ -19,14 +22,17 @@ const CandleChart= () => {
          }
 
         const getData = async (col) => {
+            setLoading(true);
             try {
                 const kChartDataRef = collection(db, col);
                 const q = query(kChartDataRef, orderBy("date", "asc"));
                 const data = await getDocs(q);
                 const newData = data.docs.map((doc) => ({...doc.data(), id:doc.id }));
-                setKChartData(newData);
+                setKChartData(newData); 
             } catch (error) {
                 console.log("讀取文件時出錯:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -42,10 +48,16 @@ const CandleChart= () => {
     useEffect(() => {
         // console.log('kChartData changed:', KChartData);
     }, [KChartData]);
- 
+
     return(
         <div>
-            <CandleChartSVG data={KChartData} />
+            {loading ? (
+                <div className={styles.loading}>請稍候，K線圖快畫好囉~</div>
+            ) : KChartData.length > 0 ? (
+                <CandleChartSVG data={KChartData} />
+            ) : (
+                <NoData />
+            )}
         </div>
     )
 }

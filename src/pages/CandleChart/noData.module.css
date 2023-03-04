@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
+body{
+    margin:0;
+    font-family: "NOTO Sans JP", san-serif;
+}
+:root{
+    --blue:#0f73ee;
+    --sky-blue: rgba(146,205,250);
+    --lighter-blue:rgb(232,240,254);
+    --lavender:rgba(215,215,255);
+    --yellow:#fba707;
+    --orange:#eb7d16;
+    --white:#FFFFFF;
+    --black:#000000;
+    --gray:#666666;
+    --lighter-gray:rgb(232, 232, 232);
+    --latte:rgb(255, 248, 231);
+}
+a{
+    text-decoration: none;
+    color: var(--blue);
+}
+.noDataCard{
+    width: 100%;
+    max-width: 700px;
+    height: 100%;
+    max-height: 650px;
+    border-radius: 20px;
+    border: 1px solid var(--lighter-gray);
+    margin-left: 20px;
+}
+.text{
+    width: 100%;
+    height: 25px;
+    text-align: center;
+    font-size: 20px;
+    color: var(--gray);
+    margin-top: 20px;
+}
+.semiGroup{
+    width: 100%;
+    height: auto;
+    margin: 30px auto;
+}
+.groupTitle{
+    width: 95%;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--gray);
+    margin-left: 20px;
+    margin-top: 25px;
+}
+.stocks{
+    margin-top: 10px;
+    margin-bottom: 35px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: 30px;
+    justify-items: center;
+}
+.stockLink{
+    list-style: none;
+    width:120px;
+    height:40px;
+    background-color: var(--lighter-blue);
+    box-shadow: 2px 2px 2px var(--sky-blue);
+    border-radius: 20px;
+    text-align: center;
+    font-size: 14px;
+    line-height:40px;
+    font-weight: bold;
+    color: var(--blue);
+    letter-spacing: 2px;
+    transition: background-color 0.5s, color 0.5s;
+    transition: transform 0.8s;
+    cursor: pointer;
+}
+.stockLink:hover{
+    transform: scale(1.03);
+    background-color: var(--sky-blue);
+    box-shadow: 2px 2px 2px var(--blue);
+    color: var(--white);
+}
+.stockLink a:hover{
+    color: var(--white);
+}
+@media screen and (max-width:767px) and (min-width:360px){
+    .noDataCard{
+        margin-left: 0px;
+    }
+    .text{
+        font-size: 16px;
+    }
+    .stockLink{
+        width: 100px;
+    }
+}
+@media screen and (max-width:550px) and (min-width:360px){
+    .stockLink{
+        width: 80px;
+    }
+}

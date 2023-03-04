@@ -236,9 +236,14 @@ function CandleChartSVG ({data}) {
         const priceScale = [];
         const firstPriceScale = minPrice + (inverse*20);
         for (let i = 0 ; i < 8 ; i++){
-            let pScale = firstPriceScale + (inverse*40*i);
-            pScale = pScale.toFixed(2)
-            priceScale.push(pScale)
+            const pScale = firstPriceScale + (inverse*40*i);
+            let formattedPScale;
+            if (pScale > 500) {
+                formattedPScale = Math.round(pScale);
+            } else {
+                formattedPScale = pScale.toFixed(2);
+            }
+            priceScale.push(formattedPScale);
         }
 
         //scale text of vol
@@ -330,7 +335,7 @@ function CandleChartSVG ({data}) {
             MA20.push(Number(average));
         }
 
-        return {dataArray, maxAndMinArray, priceScale, volScale, MA5, MA10, MA20}
+        return {dataArray, maxAndMinArray, priceScale, volScale, MA5, MA10, MA20, maxPrice, minPrice}
     }
     const craftedData = DataCrafting(data).dataArray;
     const maxAndMinArray = DataCrafting(data).maxAndMinArray;
@@ -339,6 +344,8 @@ function CandleChartSVG ({data}) {
     const MA5 = DataCrafting(data).MA5;
     const MA10 = DataCrafting(data).MA10;             
     const MA20 = DataCrafting(data).MA20;
+    const maxPrice = DataCrafting(data).maxPrice;
+    const minPrice = DataCrafting(data).minPrice;
 
     //*build candlestick
     const BuildCandle = () => {
@@ -653,29 +660,48 @@ function CandleChartSVG ({data}) {
     const svgRef = useRef(null);
     const hlineRef = useRef(null);
     const vlineRef = useRef(null);
+    const priceTextRef = useRef(null);
   
     function handleMouseMove1(e) {
-      const svg = svgRef.current;
-      const rect = svg.getBoundingClientRect();
-      const x = e.nativeEvent.offsetX / rect.width;
-      const y = e.nativeEvent.offsetY / rect.height;
+        const svg = svgRef.current;
+        const rect = svg.getBoundingClientRect();
+        const x = e.nativeEvent.offsetX / rect.width;
+        const y = e.nativeEvent.offsetY / rect.height;
 
-      console.log("Y座標0", e.nativeEvent.offsetY);
-      console.log("Y座標", y);
-  
-      // 繪製水平線
-      const hline = hlineRef.current;
-      hline.x1.baseVal.value = 100;
-      hline.y1.baseVal.value = y * rect.height;
-      hline.x2.baseVal.value = 1550;
-      hline.y2.baseVal.value = y * rect.height;
-  
-      // 繪製垂直線
-      const vline = vlineRef.current;
-      vline.x1.baseVal.value = x * rect.width;
-      vline.y1.baseVal.value = 20;
-      vline.x2.baseVal.value = x * rect.width;
-      vline.y2.baseVal.value = 520;
+        const yRange = maxPrice - minPrice;
+        const pricePerPixel = yRange / 320;
+        const price = maxPrice - (e.nativeEvent.offsetY * pricePerPixel);
+        let formattedPrice;
+        if (price > 500) {
+            formattedPrice = Math.round(price);
+        } else {
+            formattedPrice = price.toFixed(2);
+        }
+        if (y > 0.68) {
+            formattedPrice = "";
+        }
+
+        // 繪製水平線
+        const hline = hlineRef.current;
+        hline.x1.baseVal.value = 100;
+        hline.y1.baseVal.value = y * rect.height;
+        hline.x2.baseVal.value = 1550;
+        hline.y2.baseVal.value = y * rect.height;
+    
+        // 繪製垂直線
+        const vline = vlineRef.current;
+        vline.x1.baseVal.value = x * rect.width;
+        vline.y1.baseVal.value = 20;
+        vline.x2.baseVal.value = x * rect.width;
+        vline.y2.baseVal.value = 520;
+
+        // 座標價格
+        const priceText = priceTextRef.current;
+        priceText.setAttribute('x', 1555);
+        priceText.setAttribute('y', y * rect.height);
+        priceText.style.fill = "#0f73ee";
+        priceText.style.fontSize = "12px";
+        priceText.textContent = formattedPrice;
     }
     //---------------
 
@@ -696,7 +722,7 @@ function CandleChartSVG ({data}) {
         <div className={styles.container}>
             <div className={styles.SVG}>
                 <div className={styles.stockNameAndId}>
-                    <div className={styles.stockName}>{stockName}</div>
+                    <div className={styles.stockName} style={{ fontSize: stockName.length > 3 ? '14px' : 'inherit'}}>{stockName}</div>
                     <div className={styles.stockId}>{stockId}</div>
                 </div>
                 <div className={styles.stockBriefInfo}>
@@ -776,10 +802,10 @@ function CandleChartSVG ({data}) {
                         <line
                             ref={hlineRef}
                             x1="100"
-                            y1="0"
+                            y1="520"
                             x2="1550"
-                            y2="0"
-                            stroke="gray"
+                            y2="520"
+                            stroke="#0f73ee"
                             strokeWidth="0.5"
                         />
 
@@ -790,10 +816,14 @@ function CandleChartSVG ({data}) {
                             y1="20"
                             x2="0"
                             y2="520"
-                            stroke="gray"
+                            stroke="#0f73ee"
                             strokeWidth="0.5"
                         />
 
+                        {/* 座標價格 */}
+                        <text
+                            ref={priceTextRef}                       
+                        />
                         {/* horizontal line */}
                         {priceLines}
                         {volLines}

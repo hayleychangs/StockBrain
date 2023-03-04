@@ -61,7 +61,8 @@ function TradePlan ({ onMenuToggle }) {
 
 
   //delete plan-----------------------------
-  async function handleDelete (id) {
+  async function handleDelete (event, id) {
+    event.stopPropagation();
     await deleteDoc(doc(db, "tradePlan", id));
   }
   //----------------------------------------
@@ -190,7 +191,7 @@ function TradePlan ({ onMenuToggle }) {
                       <div className={styles.RRRatio}>
                         {plan.RR_ratio}
                       </div>
-                      <div className={styles.deleteBtn} onClick={() => handleDelete(plan.id)}><RiDeleteBin5Line size={25} /></div>
+                      <div className={styles.deleteBtn} onClick={(event) =>{event.stopPropagation(); handleDelete(event, plan.id)}}><RiDeleteBin5Line size={25} /></div>
                     </div>
                   ))
                   :

@@ -120,7 +120,7 @@ a{
     border-radius: 10px;
     border-style: none;
     outline: none;
-    background-color: #f0f0f0;
+    background-color: var(--lighter-blue);
 }
 .stopLossPoint, .stopProfitPoint{
     width: 50px;
@@ -130,7 +130,7 @@ a{
     border-radius: 10px;
     border-style: none;
     outline: none;
-    background-color: #f0f0f0;
+    background-color: var(--lighter-blue);
 }
 .subRow{
     display: flex;
@@ -155,6 +155,10 @@ a{
     border-radius: 10px;
 }
 .stopLossRatio{
+    padding-left: 5px;
+    width: 60px;
+}
+.stopLossRatio{
     color: #68BE8D;
 }
 .stopProfitRatio{
@@ -163,7 +167,7 @@ a{
 .clearBtn{
     width: 90px;
     height: 30px;
-    background-color: #f0f0f0;
+    background-color: var(--white);
     /* position: relative;
     bottom: 50px;
     left: 130px; */
@@ -194,8 +198,8 @@ a{
 }
 .clearBtn:hover{
     transform: scale(1.03);
-    background-color: #c9c9c9;
-    color: var(--white);
+    background-color: var(--lighter-gray);
+    box-shadow: 2px 2px 2px #c9c9c9;
 }
 .saveBtn:hover{
     transform: scale(1.03);
@@ -208,9 +212,19 @@ a{
     display: flex;
     flex-direction: row;
     position: relative;
-    bottom: 50px;
+    bottom: 60px;
     left: 70px;
     justify-content: space-between;
+}
+.errorMessage{
+    width: 90%;
+    height: 20px;
+    position: relative;
+    bottom: 65px;
+    left: 26px;
+    font-size: 14px;
+    text-align: center;
+    transform: scale(0.9);
 }
 .tipsForSavePlan{
     position: relative;

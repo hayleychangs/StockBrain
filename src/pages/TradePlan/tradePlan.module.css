@@ -31,6 +31,7 @@ a{
     letter-spacing: 2px;
     color: var(--gray);
     margin: 10px;
+    cursor: pointer;
 }
 .container{
     width: 100%;
