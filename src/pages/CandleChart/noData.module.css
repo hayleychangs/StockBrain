@@ -59,15 +59,14 @@ a{
     justify-items: center;
 }
 .stockLink{
-    list-style: none;
-    width:120px;
-    height:40px;
+    width: 80px;
+    height: 30px;
     background-color: var(--lighter-blue);
     box-shadow: 2px 2px 2px var(--sky-blue);
     border-radius: 20px;
     text-align: center;
     font-size: 14px;
-    line-height:40px;
+    line-height:30px;
     font-weight: bold;
     color: var(--blue);
     letter-spacing: 2px;

@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useRef } from "react";
+import React, {useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot, getDoc } from "firebase/firestore";
-import {db, auth} from "../../firebase/firebase";
+import { collection, query, getDocs, orderBy } from "firebase/firestore";
+import {db} from "../../firebase/firebase";
 
 import styles from "./infoCard.module.css";
 
@@ -42,8 +42,6 @@ function InfoCard () {
             const maxAmountData = maxAmountSnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
             const maxRiseData = maxRiseSnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
             const maxFallData = maxFallSnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
-            
-            console.log(maxVolData, maxRiseData, maxFallData, maxAmountData);
             
             setMaxVol(maxVolData);
             setMaxRise(maxRiseData);
@@ -177,16 +175,14 @@ function InfoCard () {
     const [currentCard, setCurrentCard] = useState(null);
 
     function handleDragStart(e, card) {
-        console.log("drag", card);
         setCurrentCard(card);
     }
 
-    function handleDragEnd(e) {
-        console.log("dragend");
-    }
+    // function handleDragEnd(e) {
+    //     console.log("dragend");
+    // }
 
     function handleDragLeave(e) {
-        console.log("dragleave");
         e.target.style.background="rgb(232,240,254)";
     }
 
@@ -197,7 +193,6 @@ function InfoCard () {
 
     function handleDrop(e, card) {
         e.preventDefault();
-        console.log("drop", card);
         setCardList(cardList.map(c =>{
             if (c.id === card.id) {
                 return {...c, order: currentCard.order}

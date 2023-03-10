@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 
-import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import {db, auth} from "../../firebase/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 
 import MarketData from "./market.json";
 
 import styles from "./calculator.module.css";
+
+import { BiInfoCircle } from "react-icons/bi";
 
 function Calculator () {
 
@@ -37,18 +39,14 @@ function Calculator () {
 
     const handlePurchasePriceChange = (e) => {
         setPurchasePrice(e.target.value);
-        console.log(e.target.value)
-
     };
 
     const handleStopLossPointChange = (e) => {
         setStopLossPoint(e.target.value);
-        console.log(e.target.value)
     };
 
     const handleStopProfitPointChange = (e) => {
         setStopProfitPoint(e.target.value);
-        console.log(e.target.value)
     };
 
     const handleClear = () => {
@@ -137,10 +135,14 @@ function Calculator () {
         if ( purchasePriceNum < stopLossPointNum) {
             stopLossRatio = purchasePriceNum && stopLossPointNum ? (purchasePriceNum - stopLossPointNum) / purchasePriceNum * 100 : null;
             stopProfitRatio = purchasePriceNum && stopProfitPointNum ? (purchasePriceNum - stopProfitPointNum) / purchasePriceNum * 100  : null;;
+            stopLossRatio = parseFloat(stopLossRatio).toFixed(2);
+            stopProfitRatio = parseFloat(stopProfitRatio).toFixed(2);
         } 
         if ( purchasePriceNum > stopLossPointNum ) {
             stopLossRatio = purchasePriceNum && stopLossPointNum  ? (stopLossPointNum  - purchasePriceNum) / purchasePriceNum * 100 : null;
             stopProfitRatio = purchasePriceNum && stopProfitPointNum ? (purchasePriceNum -  stopProfitPointNum) / purchasePriceNum * -100 : null;
+            stopLossRatio = parseFloat(stopLossRatio).toFixed(2);
+            stopProfitRatio = parseFloat(stopProfitRatio).toFixed(2);
         }
         if (purchasePrice !== "" && stopLossPoint !== "" && stopProfitPoint !== "") {
             try {
@@ -164,7 +166,6 @@ function Calculator () {
                 setTimeout(() => {
                     setErrorMessage("");
                   }, 2500);
-                console.log("Document written with ID: ", docRef.id);
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
@@ -202,10 +203,14 @@ function Calculator () {
         if ( purchasePriceNum < stopLossPointNum) {
             stopLossRatio = purchasePriceNum && stopLossPointNum ? (purchasePriceNum - stopLossPointNum) / purchasePriceNum * 100 : null;
             stopProfitRatio = purchasePriceNum && stopProfitPointNum ? (purchasePriceNum - stopProfitPointNum) / purchasePriceNum * 100  : null;;
+            stopLossRatio = parseFloat(stopLossRatio).toFixed(2);
+            stopProfitRatio = parseFloat(stopProfitRatio).toFixed(2);
         } 
         if ( purchasePriceNum > stopLossPointNum ) {
             stopLossRatio = purchasePriceNum && stopLossPointNum  ? (stopLossPointNum  - purchasePriceNum) / purchasePriceNum * 100 : null;
             stopProfitRatio = purchasePriceNum && stopProfitPointNum ? (purchasePriceNum -  stopProfitPointNum) / purchasePriceNum * -100 : null;
+            stopLossRatio = parseFloat(stopLossRatio).toFixed(2);
+            stopProfitRatio = parseFloat(stopProfitRatio).toFixed(2);
         }
         if (purchasePrice !== "" && stopLossPoint !== "" && stopProfitPoint !== "") {
             try {
@@ -229,7 +234,6 @@ function Calculator () {
                 setTimeout(() => {
                     setErrorMessage("");
                 }, 2500);
-                console.log("Document written with ID: ", docRef.id);
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
@@ -240,7 +244,10 @@ function Calculator () {
 
     return (
         <>
-        <div className={styles.title}>風險報酬比試算</div>
+        <div className={styles.title}>
+            風險報酬比試算
+            <div className={styles.infoIcon}><BiInfoCircle /></div>
+            </div>
         <div className={styles.tabs}>
             <input type="radio" name="tabs" id="tabone" value="tabone" onChange={handleTabChange} checked={tab === "tabone"} />
             <label className={styles.tabsLabel1} htmlFor="tabone" style={tab === "tabone" ? { backgroundColor: "#FFCCCC", color: "#F2666C" } : {}}>看 多</label>

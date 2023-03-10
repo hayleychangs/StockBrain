@@ -9,10 +9,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import styles from "./header.module.css";
 import defaultAvatar from "../../images/default.png";
 
-import { VscSignOut } from "react-icons/vsc";
-import { GoSignOut } from "react-icons/go";
 import { FiLogOut} from "react-icons/fi";
-import { IoSettingsOutline } from "react-icons/io5";
 
 function Header(){
      //user狀態確認
@@ -40,7 +37,6 @@ function Header(){
         try{
             await signOut(auth);
             navigate("/");
-            console.log("登出成功")
         }catch (error){
             console.log(error);
         }
@@ -93,7 +89,7 @@ function Header(){
                         <div 
                             className={styles.navItem} 
                             onClick={() => setShowPopup(!showPopup)}
-                            data-display-name={`Hi! ${user.displayName}` || ''}
+                            data-display-name={user.displayName ? `Hi! ${user.displayName}` : '來設定暱稱吧!'}
                         >
                             <Avatar 
                                 src={photoURL ? photoURL : defaultAvatar}

@@ -5,10 +5,9 @@ import classNames from 'classnames';
 
 import Header from "../Header/header";
 
-import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot, updateDoc, DocumentReference } from 'firebase/firestore';
-import {db, auth, storage} from "../../firebase/firebase";
+import { auth, storage} from "../../firebase/firebase";
 import { onAuthStateChanged, updateProfile, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
-import { ref, uploadBytes, list, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {v4} from "uuid";
 
 import styles from "./memberSettings.module.css";
@@ -63,7 +62,6 @@ function MemberSettings () {
             updateProfile(user, {
             photoURL: url,
           }).then(() => {
-            console.log("照片上傳成功");
             setIsLoading(false);
             setShowPopup(false);
           }).catch((error) => {
@@ -158,7 +156,6 @@ function MemberSettings () {
                 setError(null);
                 setChangePasswordPopup(false);
               }, 2000);
-            console.log("Password updated successfully");
           })
           .catch((error) => {
             setError("當前密碼輸入錯誤");

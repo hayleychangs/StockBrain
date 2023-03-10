@@ -25,10 +25,13 @@ a{
 }
 .navContainer{
     width: 100%;
-    position: relative;
+    /* position: relative; */
     display: flex;
     z-index: 1000;
     justify-content: end;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 .navItem{
     margin: 20px 80px 0 0;
@@ -36,7 +39,10 @@ a{
     color: var(--gray);
     cursor: pointer;
 }
-.navItem:hover{
+.navItem a{
+    color: var(--gray);
+}
+.navItem a:hover{
     font-weight: bold;
     color: var(--blue);
 }
@@ -68,7 +74,7 @@ a{
     padding-top: 20px;
 }
 .text{
-    width: 450px;
+    width: 490px;
     font-family:  "NOTO Sans JP", san-serif;
     font-size: 16px;
 }
@@ -77,7 +83,7 @@ a{
     margin: 40px 5px;
 }
 .loginBtn{
-    width: 150px;
+    width: 120px;
     height: 30px;
     border: none;
     border-radius: 15px;
@@ -105,7 +111,7 @@ a{
 .svgContainer {
     width: 1920px;
     position: absolute;
-    top: 0;
+    top: -150px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -114,7 +120,7 @@ a{
 @media screen and (max-width: 1920px) {
     .card{
         top: 130px;
-        left: 80px;
+        left: 250px;
         width: 80%;
     }
     .textContainer{

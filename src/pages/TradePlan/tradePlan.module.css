@@ -146,6 +146,21 @@ a{
     margin: 0;
     margin-block-start: 1em;
 }
+.loadingText{
+    width: 500px;
+    color: var(--Gray);
+    font-size: 16px;
+    letter-spacing: 3px;
+    margin: auto;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 1s steps(8) infinite;
+}
+@keyframes typing{
+    from { width: 0px}
+    to { width: 145px};
+}
 @media screen and (max-width:1200px) and (min-width:768px){
     .subTitle{
         font-size: 12px;

@@ -1,9 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import classNames from 'classnames';
-
-import { collection, addDoc, query, getDocs, where, deleteDoc, doc, serverTimestamp, orderBy, onSnapshot } from "firebase/firestore";
-import {db} from "../../firebase/firebase";
 
 import styles from "./searchBar.module.css";
 
@@ -70,7 +66,6 @@ function SearchBar () {
     }
 
     function handleClick (keyword) {
-        console.log("關鍵字", keyword)
         navigate(`/home/${keyword}`)
         setFilteredData([]);
         setSearchInput("");
@@ -91,7 +86,6 @@ function SearchBar () {
             if(!resultRef.current.contains(e.target)){
                 setSearchInput("");
                 setFilteredData([]);
-                // console.log(e);
             };
         };
 

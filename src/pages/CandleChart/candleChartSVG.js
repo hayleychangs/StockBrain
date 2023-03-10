@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
-import { useParams } from "react-router-dom";
 
-import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, where, onSnapshot } from "firebase/firestore";
 import {db, auth} from "../../firebase/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -585,13 +584,8 @@ function CandleChartSVG ({data}) {
                 snapshot.docs.forEach((doc) => {
                   newData.push({ ...doc.data(), id: doc.id });
                   setTrackingList(newData);
-                  console.log("列印newData", newData)
                 });
             })
-            
-            console.log("列印data", data)
-            
-            console.log("471列印trackingList", trackingList)
             setIsLoaded(true);
         } catch (error) {
             console.log(error);
@@ -602,9 +596,7 @@ function CandleChartSVG ({data}) {
     useEffect(()=>{
         fetchList();
 
-    }, [user, data]); //depends on data update
-
-    console.log("494列印trackingList", trackingList)
+    }, [user, data, trackingList]); //depends on data update
 
     //追蹤狀態判斷，判斷是否有該值
     useEffect(() => {
@@ -612,12 +604,9 @@ function CandleChartSVG ({data}) {
             const isStockIdExists = trackingList.some(item => item.stock_id === data[145].stock_id.toString());
             if (isStockIdExists) {
                 setTracked(true);
-                console.log("檢查text是否存在-true", isStockIdExists)
             }else {
                 setTracked(false);
-                console.log("檢查text是否存在-false", isStockIdExists)
             }
-            console.log("追蹤清單", trackingList);
         }
     }, [isLoaded, data, trackingList]); //depends on trackingList
 
@@ -634,7 +623,6 @@ function CandleChartSVG ({data}) {
                 timestamp: serverTimestamp(),
                 userId: auth?.currentUser?.uid
             });
-            console.log("Document written with ID: ", docRef.id);
             setTracked(true);
         } catch (e) {
             console.error("Error adding document: ", e);

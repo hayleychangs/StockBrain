@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+
 
 import Header from "../Header/header";
 import CandleChart from "../CandleChart/candleChart";
@@ -12,7 +12,6 @@ import TradePlan from "../TradePlan/tradePlan";
 import Footer from "../Footer/footer";
 
 import styles from "./mainPage.module.css";
-
 
 function MainPage () {
     const [isMyNoteOpen, setIsMyNoteOpen] = useState(true);

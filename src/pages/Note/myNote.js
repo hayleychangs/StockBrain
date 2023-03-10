@@ -1,18 +1,17 @@
 import React, {useState, useEffect} from "react";
 import { useParams, Link } from "react-router-dom";
 
-import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot, updateDoc } from 'firebase/firestore';
+import { collection, addDoc, query, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot, updateDoc } from 'firebase/firestore';
 import {db, auth} from "../../firebase/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 
 import styles from "./myNote.module.css";
 
-import { GiNewspaper, GiArchiveResearch, GiCalculator } from "react-icons/gi";
-import { FaRegLightbulb, FaThumbtack, FaCircle } from "react-icons/fa";
+import { FaThumbtack, FaCircle } from "react-icons/fa";
 import { BiSave } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { ImMenu3, ImMenu4 } from "react-icons/im";
-import { TbCircleHalf2, TbCircleFilled } from "react-icons/tb";
+import { TbCircleHalf2 } from "react-icons/tb";
 
 function MyNote ({ onMenuToggle }) {
   //user狀態確認
@@ -51,8 +50,6 @@ function MyNote ({ onMenuToggle }) {
     if (!stockId) {
       stockId = "2330";
     }
-
-    console.log("55-print", auth?.currentUser?.uid)
 
       try {
         const docRef = await addDoc(collection(db, 'myNote'), {
@@ -102,7 +99,7 @@ function MyNote ({ onMenuToggle }) {
   //---------------------------------------------
 
   //read note---------
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   async function fetchNotes () {
 
     if (!user) {
@@ -113,7 +110,7 @@ function MyNote ({ onMenuToggle }) {
       stockId = "2330";
     }
 
-    setIsLoading(true);
+    setLoading(true);
     
     const notesRef = collection(db, "myNote");
     const q = query(notesRef, where("user_id", "==", auth?.currentUser?.uid), where("stock_id", "==", stockId), orderBy("time", "desc"));
@@ -123,9 +120,8 @@ function MyNote ({ onMenuToggle }) {
       querySnapshot.forEach((doc) => {
         result.push({...doc.data(), id: doc.id});
       });
-      console.log("列印符合條件的筆記", result);
       setNotes(result);
-      setIsLoading(false);
+      setLoading(false);
     });
   }
 
@@ -142,7 +138,7 @@ function MyNote ({ onMenuToggle }) {
   }
 
   async function handleUpdateNote(id) {
-    setIsLoading(true);
+    setLoading(true);
     try {
       const noteRef = doc(db, "myNote", id);
       await updateDoc(noteRef, 
@@ -151,15 +147,15 @@ function MyNote ({ onMenuToggle }) {
         }
       );
       setEditableContent("");
-      console.log("updated document");
     } catch (e) {
       console.log("Error updating document", e);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   async function handleMoodClick(moodValue, id) {
+    setLoading(true);
     try {
       const noteRef = doc(db, "myNote", id);
       updateDoc(noteRef, 
@@ -167,9 +163,10 @@ function MyNote ({ onMenuToggle }) {
           time: serverTimestamp()
         }
       );
-      console.log("Mood value updated successfully!");
     } catch (e) {
       console.error("Error updating mood value:", e);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -267,22 +264,29 @@ function MyNote ({ onMenuToggle }) {
                 </div>
               </div>
           </div>
-          {user ? (
-            <div className={styles.notes}>
-              {isLoading ?
-                <div className={styles.loadingText}>
-                  <p>筆記整理中，請稍候...</p>
-                </div>
-                :
-                notes.map((note) => (
-                    <div className={styles.singleNoteCard} key={note.id}>
-                      <div className={styles.singleNote} style={{ backgroundColor: setBackgroundColor(note.mood) }} contentEditable onInput={handleEditableChange}>
+          {loading ? ( user ? (
+            <div className={styles.loadingText}>
+              <p>筆記整理中，請稍候...</p>
+            </div>) : (
+              <div className={styles.redirectMessageBox}>
+                <p>完整內容，僅限註冊會員使用</p>
+                <p>
+                  立即<Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span>或</span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link>
+                </p>
+            </div>
+            )
+          ) : (
+            user ? (
+              <div className={styles.notes}>
+                {notes.map((note) => (
+                  <div className={styles.singleNoteCard} key={note.id}>
+                    <div className={styles.singleNote} style={{ backgroundColor: setBackgroundColor(note.mood) }} contentEditable onInput={handleEditableChange}>
                         {note.text}
-                      </div>
-                      <div className={styles.updateIcon} onClick={() => handleUpdateNote(note.id)}><BiSave size={25} color={"#0f73ee"} /></div>
-                      <div className={styles.deleteIcon} onClick={() => handleDeleteNote(note.id)}><RiDeleteBin5Line size={22} color={"#acacac"} /></div>
-                      {note?.time && <div className={styles.updatedDate}>最後編輯時間：{note.time.toDate().toLocaleString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</div>}
-                      <div className={styles.moodInNote}>
+                    </div>
+                    <div className={styles.updateIcon} onClick={() => handleUpdateNote(note.id)}><BiSave size={25} color={"#0f73ee"} /></div>
+                    <div className={styles.deleteIcon} onClick={() => handleDeleteNote(note.id)}><RiDeleteBin5Line size={22} color={"#acacac"} /></div>
+                    {note?.time && <div className={styles.updatedDate}>最後編輯時間：{note.time.toDate().toLocaleString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</div>}
+                    <div className={styles.moodInNote}>
                         <div className={styles.moodIconInNote} value="0" onClick={() => handleMoodClick(0, note.id)} >
                           {note.mood === 0 ? (
                             <FaCircle size={16} color={"#eb7d16"} />
@@ -312,16 +316,17 @@ function MyNote ({ onMenuToggle }) {
                           )}
                         </div>
                       </div>
-                    </div>
-                ))
-              }
-            </div>
-          ):(
-            <div className={styles.redirectMessageBox}>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className={styles.redirectMessageBox}>
                 <p>完整內容，僅限註冊會員使用</p>
-                <p>立即<Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span>或</span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link></p>
-                <></>
-            </div>
+                <p>
+                  立即<Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span>或</span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link>
+                </p>
+              </div>
+            )
           )}
         </div>
       )}

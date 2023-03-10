@@ -22,16 +22,35 @@ export const SignUp = () => {
         )
     };
 
+    //輸入驗證
+    const EmailRegex = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+    const PasswordRegex=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,12}$/;
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    console.log(auth?.currentUser?.email)
-
     // sign up
     const signUp = async () => {
+
+        setErrorMessage("");
+
+        if (password=="" || email=="") {
+            setErrorMessage("請輸入完整的註冊資訊！");
+            return;
+        }
+
+        if (!EmailRegex.test(email)) {
+            setErrorMessage("請填寫正確的Email格式：stock123@example.com");
+            return;
+        }
+
+        if (!PasswordRegex.test(password)) {
+            setErrorMessage("長度須介於8~12字，且包含數字及英文字");
+            return;
+        }
+
         setIsLoading(true);
         try{
             await createUserWithEmailAndPassword(auth, email, password);
@@ -43,10 +62,10 @@ export const SignUp = () => {
                 setErrorMessage("信箱已存在");
                 break;
                 case "auth/invalid-email":
-                setErrorMessage("信箱格式不正確");
+                setErrorMessage("請填寫正確的Email格式：stock123@example.com");
                 break;
                 case "auth/weak-password":
-                setErrorMessage("密碼強度不足");
+                setErrorMessage("密碼強度不足，長度需大於6個字");
                 break;
                 default:
             }

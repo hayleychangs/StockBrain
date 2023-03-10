@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from "react";
-import { useParams } from "react-router-dom";
 import { useNavigate, Link } from "react-router-dom";
 
-import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot, updateDoc, QuerySnapshot } from 'firebase/firestore';
+import { collection, query, deleteDoc, doc, orderBy, where, onSnapshot } from 'firebase/firestore';
 import {db, auth} from "../../firebase/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -30,6 +29,7 @@ function TradePlan ({ onMenuToggle }) {
 
 
   //read plan-----------------------------
+  const [loading, setLoading] = useState(false);
   const [plans, setPlans] = useState([]);
   async function fetchPlans () {
 
@@ -37,7 +37,7 @@ function TradePlan ({ onMenuToggle }) {
       return;
     }
 
-    console.log("37-列印", auth?.currentUser?.uid);
+    setLoading(true);
 
     const plansRef = collection(db, "tradePlan");
     const q = query(plansRef, where("user_id", "==", auth?.currentUser?.uid), orderBy("timestamp", "desc"));
@@ -47,15 +47,13 @@ function TradePlan ({ onMenuToggle }) {
       querySnapshot.forEach((doc) => {
         result.push({...doc.data(), id: doc.id});
       });
-      console.log("列印符合條件的交易計畫", result);
       setPlans(result);
-
+      setLoading(false);
     });
   }
 
   useEffect(() => {
     fetchPlans();
-    console.log("53-列印交易計畫", plans);
   }, [user])
   //-------------------------------------
 
@@ -162,48 +160,57 @@ function TradePlan ({ onMenuToggle }) {
                 {RRRatioClickCount % 2 === 0 ?  <RxTriangleDown /> : <RxTriangleUp />}風險報酬比
               </div>
             </div>
-            {user ? (
-              <div className={styles.allPlan}>
-                {plans?
-                  plans.map((plan)=>(
-                    <div className={styles.singlePlan} key={plan.id} onClick={() => handleSinglePlanClick(plan.stock_id)}>
-                      <div className={styles.stockId}>
-                        {plan.stock_id}
-                      </div>
-                      <div className={styles.stockName}>
-                        {plan.stock_name}
-                      </div>
-                      <div className={styles.purchasePrice}>
-                        {plan.purchase_price}
-                      </div>
-                      <div className={styles.stopLossPoint}>
-                        {plan.stop_loss_point}
-                      </div>
-                      <div className={styles.lossRatio}>
-                        {plan.loss_ratio}%
-                      </div>
-                      <div className={styles.stopProfitPoint}>
-                        {plan.stop_profit_point}
-                      </div>
-                      <div className={styles.ProfitRatio}>
-                        {plan.profit_ratio}%
-                      </div>
-                      <div className={styles.RRRatio}>
-                        {plan.RR_ratio}
-                      </div>
-                      <div className={styles.deleteBtn} onClick={(event) =>{event.stopPropagation(); handleDelete(event, plan.id)}}><RiDeleteBin5Line size={25} /></div>
-                    </div>
-                  ))
-                  :
-                  <p>Loading...</p>
-                }
-              </div>
-            ):(
-              <div className={styles.redirectMessageBox}>
+            {loading ? ( user ? (
+              <div className={styles.loadingText}>
+                <p>筆記整理中，請稍候...</p>
+              </div>) : (
+                <div className={styles.redirectMessageBox}>
                   <p>完整內容，僅限註冊會員使用</p>
-                  <p>立即<Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span>或</span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link></p>
-                  <></>
-              </div>
+                  <p>
+                    立即<Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span>或</span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link>
+                  </p>
+                </div>
+            )
+            ) : (
+              user ? (
+                <div className={styles.allPlan}>
+                  {plans.map((plan)=>(
+                      <div className={styles.singlePlan} key={plan.id} onClick={() => handleSinglePlanClick(plan.stock_id)}>
+                        <div className={styles.stockId}>
+                          {plan.stock_id}
+                        </div>
+                        <div className={styles.stockName}>
+                          {plan.stock_name}
+                        </div>
+                        <div className={styles.purchasePrice}>
+                          {plan.purchase_price}
+                        </div>
+                        <div className={styles.stopLossPoint}>
+                          {plan.stop_loss_point}
+                        </div>
+                        <div className={styles.lossRatio}>
+                          {plan.loss_ratio}%
+                        </div>
+                        <div className={styles.stopProfitPoint}>
+                          {plan.stop_profit_point}
+                        </div>
+                        <div className={styles.ProfitRatio}>
+                          {plan.profit_ratio}%
+                        </div>
+                        <div className={styles.RRRatio}>
+                          {plan.RR_ratio}
+                        </div>
+                        <div className={styles.deleteBtn} onClick={(event) =>{handleDelete(event, plan.id)}}><RiDeleteBin5Line size={25} /></div>
+                      </div>
+                    ))}
+                </div>
+              ) : (
+                <div className={styles.redirectMessageBox}>
+                    <p>完整內容，僅限註冊會員使用</p>
+                    <p>立即<Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span>或</span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link></p>
+                    <></>
+                </div>
+              )
             )}
           </div>
         </div>

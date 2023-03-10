@@ -32,6 +32,37 @@ a{
     text-align: center;
     color: var(--gray);
 }
+.infoIcon{
+    position: relative;
+    left: 95px;
+    top: -25px;
+}
+.infoIcon:hover::before{
+    height: 240px;
+    width: 330px;
+    position: absolute;
+    top: 25px;
+    left: -168px;
+    color: var(--gray);
+    font-size:3px;
+    font-weight: normal;
+    line-height: 30px;
+    background-color: var(--lighter-blue);
+    padding-top: 5px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    text-align: center;
+    box-sizing: content-box;
+    border-radius: 10px;
+    content: "輸入[買進價]、[停損點]、[停利點]即可快速試算風報比，趕快試試吧!\a風險報酬比是什麼?\a就是最大報酬和最大虧損的比率，換句話說，你每冒險投資1元可帶來多少潛在報酬。優秀的交易者會尋找最高的潛在上行空間，以及最低的潛在下行空間,十分謹慎地選擇交易機會，用「風險報酬比」決定是否進行交易，是很好的選擇。";
+    white-space: pre-wrap;
+}
+
+.infoIcon:hover{
+    color: var(--blue);
+    transform: scale(1.05);
+    cursor: pointer;
+}
 .tabs{
     /* width: 300px; */
     height: 350px;

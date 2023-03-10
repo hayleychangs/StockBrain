@@ -31,11 +31,4 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 1.5s steps(20) infinite;
-}
-@keyframes typing{
-    from { width: 100%}
-    to { width: 0%};
 }

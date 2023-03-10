@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { collection, addDoc, query, getDocs, where, deleteDoc, doc, serverTimestamp, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, query, getDocs, orderBy } from "firebase/firestore";
 import {db} from "../../firebase/firebase";
 
 import CandleChartSVG from "./candleChartSVG";
 import NoData from "./noData";
 
 import styles from "./candleChart.module.css";
+
+import { motion } from "framer-motion";
+import { FaSpinner } from "react-icons/fa";
 
 const CandleChart= () => {
     let { stockId } = useParams();
@@ -52,7 +55,13 @@ const CandleChart= () => {
     return(
         <div>
             {loading ? (
-                <div className={styles.loading}>請稍候，K線圖快畫好囉~</div>
+                <motion.div
+                    className={styles.loading}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                >
+                    <FaSpinner size={50} color="#0f73ee"/>
+                </motion.div>
             ) : KChartData.length > 0 ? (
                 <CandleChartSVG data={KChartData} />
             ) : (

@@ -1,9 +1,10 @@
 import React, { useState, useEffect }  from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import styles from "./trackingList.module.css";
 
-import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, query, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot } from "firebase/firestore";
 import {db, auth} from "../../firebase/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -11,6 +12,8 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 
 const TrackingList = () => {
     
+    const { stockId } = useParams();
+
     //add todo
     const [inputValue, setInputValue] = useState("");
     const handleSubmit = async (e) => {
@@ -21,10 +24,8 @@ const TrackingList = () => {
                     text: inputValue,  
                     timestamp: serverTimestamp(),
                     userId: auth?.currentUser?.uid
-                    //!用auth功能取得登入UID後，這邊加入UID
                 });
                 setInputValue("");
-                console.log("Document written with ID: ", docRef.id);
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
@@ -34,23 +35,14 @@ const TrackingList = () => {
 
     //read todo
     const [trackingList, setTrackingList] = useState([]);
-    // const [isLoading, setIsLoading] = useState(false);
     const fetchList = async () => {
-        // if (inputValue !== "") {
-        //     setIsLoading(false);
-        // }else if (isClicked) {
-        //     setIsLoading(false);
-        // }else{
-        //     setIsLoading(true);
-        // };
-
         if (!user) {
             return;
         }
 
         try {
             const listRef = collection(db, "trackingList");
-            // console.log("使用者ID", auth?.currentUser?.uid);
+
             const q = query(listRef, where("userId", "==", auth?.currentUser?.uid), orderBy("timestamp", "desc"));
            
             onSnapshot(q, (snapshot) => {
@@ -58,7 +50,6 @@ const TrackingList = () => {
                 snapshot.docs.forEach((doc) => {
                     newData.push({...doc.data(), id:doc.id})
                 })
-                console.log(newData);
                 setTrackingList(newData);
             })
 
@@ -89,11 +80,13 @@ const TrackingList = () => {
 
     //delete todo
     const [isClicked, setIsClicked] = useState(true);
-    const handleDelete = async (id) => {
+    async function handleDelete (event, id) {  
+        event.stopPropagation();
         setIsClicked(true);
         await deleteDoc(doc(db, "trackingList", id));
         fetchList();
-    }
+      }
+
     
     const navigate = useNavigate()
     function handleClick (keyword) {
@@ -131,7 +124,7 @@ const TrackingList = () => {
                                     <div  className={`${styles.trackText} ${track.change_percent > 0 ? styles.red : track.change_percent < 0 ? styles.green : ''}`}>
                                         {track.change_percent}%
                                     </div>
-                                    <button className={styles.deleteBtn} onClick={() => handleDelete(track.id)}><RiDeleteBin5Line size={20} /></button>
+                                    <button className={styles.deleteBtn} onClick={(event) =>{handleDelete(event, track.id)}}><RiDeleteBin5Line size={20} /></button>
                                 </div>
                             ))
                         }

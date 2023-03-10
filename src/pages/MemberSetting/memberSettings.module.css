@@ -41,7 +41,7 @@ a{
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;    
-    background:linear-gradient(var(--lighter-blue), var(--sky-blue));
+    background:linear-gradient(var(--white) 5%, var(--sky-blue));
 }
 .memberCard{
     width: 1000px;

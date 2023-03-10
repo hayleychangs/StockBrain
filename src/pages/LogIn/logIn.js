@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 
 import { auth, googleProvider } from "../../firebase/firebase";
-import {createUserWithEmailAndPassword, signInWithPopup, signOut, signInWithEmailAndPassword} from "firebase/auth";
+import { signInWithPopup, signInWithEmailAndPassword} from "firebase/auth";
 
 import styles from "./logIn.module.css";
 
@@ -23,8 +23,8 @@ export const LogIn = () => {
     };
 
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("test@email.com");
+    const [password, setPassword] = useState("test1234");
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -35,7 +35,6 @@ export const LogIn = () => {
             await signInWithEmailAndPassword(auth, email, password);
             navigate("/home");
             setIsLoading(false);
-            console.log(auth?.currentUser?.uid)
         }catch (error) {
             switch (error.code){
                 case "auth/invalid-email":
@@ -74,6 +73,7 @@ export const LogIn = () => {
                 <div className={styles.welcomeText}>歡迎回來</div>
                 <div className={styles.email}>
                     <input 
+                        value={email}
                         type="text"
                         placeholder="請輸入電子郵件信箱"
                         onChange={(e) => setEmail(e.target.value)}
@@ -81,7 +81,8 @@ export const LogIn = () => {
                 </div>
                 <div className={styles.password}>
                     <input 
-                        type="text"
+                        value={password}
+                        type="password"
                         placeholder="請輸入密碼"
                         onChange={(e) => setPassword(e.target.value)}
                     />
