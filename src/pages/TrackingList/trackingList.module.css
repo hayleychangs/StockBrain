@@ -94,19 +94,20 @@ body{
     border-radius: 10px;
 }
 .singleTrack{
-    width: 90%;
-    height: 35px;
-    /* padding: 10px 20px; */  
+    box-sizing: border-box;
+    width: 98%;
+    height: 35px;  
     display: grid;
     grid-template-columns: 1.5fr 1.5fr 1.2fr 1.2fr 1fr;
     justify-content: center;
     text-align: center;
     padding-top: 10px;
-    margin-left: 10px;
+    margin-bottom: 5px;
+    margin-left: 3px;
     border-radius: 5px;
     font-size: 14px;
     color: var(--gray);
-    position: relative;
+    /* position: relative; */
 }
 .singleTrack:hover{
     transform: scale(1.01);
@@ -119,7 +120,14 @@ body{
     transform: translateX(50%);
 }
 .trackText{
-    padding-left: 10px;
+    padding-left: 20px;
+    padding-right: 2px;
+}
+.trackTextChange{
+    padding-right: 10px;
+}
+.trackTextPercent{
+    padding-right: 22px;
 }
 .green{
     color: #68BE8D;
@@ -133,12 +141,12 @@ body{
     border: none;
     border-radius: 5px;
     background-color: transparent;
-    color: var(--lighter-gray);
+    color: #dddddd;
     cursor: pointer;
     display: none;
-    position: absolute;
-    top: 2px;
-    left: 285px;
+    position: relative;
+    top: -28px;
+    left: 292px;
 }
 .deleteBtn:hover{
     color: #F2666C;

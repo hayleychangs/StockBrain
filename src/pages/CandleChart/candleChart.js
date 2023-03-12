@@ -63,7 +63,7 @@ const CandleChart= () => {
                     <FaSpinner size={50} color="#0f73ee"/>
                 </motion.div>
             ) : KChartData.length > 0 ? (
-                <CandleChartSVG data={KChartData} />
+                <CandleChartSVG data={KChartData} stock_id={stockId}/>
             ) : (
                 <NoData />
             )}

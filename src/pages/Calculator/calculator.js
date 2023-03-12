@@ -2,8 +2,7 @@ import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import {db, auth} from "../../firebase/firebase";
-import { onAuthStateChanged } from 'firebase/auth';
+import { db } from "../../firebase/firebase";
 
 import MarketData from "./market.json";
 
@@ -11,7 +10,7 @@ import styles from "./calculator.module.css";
 
 import { BiInfoCircle } from "react-icons/bi";
 
-function Calculator () {
+function Calculator ({ user }) {
 
     const [purchasePrice, setPurchasePrice] = useState("");
     const [stopLossPoint, setStopLossPoint] = useState("");
@@ -56,23 +55,6 @@ function Calculator () {
         setErrorMessage("");
     };
 
-    //user狀態確認---------------------------
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, user => {
-          if (user) {
-            setUser(user);
-          } else {
-            setUser(null);
-          }
-        });
-      
-        return () => unsubscribe();
-    }, []);
-    //---------------------------------------
-
-
     //儲存及渲染---------------------------------
     const [data, setData] = useState(MarketData);
     const [stockName, setStockName] = useState("");
@@ -93,8 +75,6 @@ function Calculator () {
         }
     }
 
-
-    //state不同步解法
     useEffect(() => {
         if (purchasePrice !== "" && stopLossPoint !== "" && stopProfitPoint !== ""){
             getStockName();
@@ -156,7 +136,7 @@ function Calculator () {
                     profit_ratio: stopProfitRatio,
                     RR_ratio: RRRatio,
                     timestamp: serverTimestamp(),
-                    user_id: auth?.currentUser?.uid
+                    user_id: user.uid
                 });
                 setPurchasePrice("");
                 setStopLossPoint("");
@@ -224,7 +204,7 @@ function Calculator () {
                     profit_ratio: stopProfitRatio,
                     RR_ratio: RRRatio,
                     timestamp: serverTimestamp(),
-                    user_id: auth?.currentUser?.uid
+                    user_id: user.uid
                 });
                 setPurchasePrice("");
                 setStopLossPoint("");

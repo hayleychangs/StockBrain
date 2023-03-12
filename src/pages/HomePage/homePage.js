@@ -46,9 +46,8 @@ function HomeCard() {
                     <p className={styles.text}>StockBrain是你投資的大腦，一個實用且易於使用的工具。<br/>提供K線圖、市場資訊、風報比試算以及方便的紀錄功能，<br/>讓你快速了解市場動態，及時捕捉交易想法，實現更高的投資回報。</p>
                     <div className={styles.btnContainer}>
                         <button className={styles.loginBtn} onClick={handleNavToMain}>立即體驗</button>
-                        {/* <div className={styles.signUp}>註冊帳戶</div> */}
-                        <div>
-                            <p className={styles.signUp}><Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span> ｜ </span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link></p>
+                        <div className={styles.register}>
+                            <p><Link to="/signup" className={styles.signUpText}>註冊</Link><span className={styles.dividingLine}> ｜ </span><Link to="/login" className={styles.loginInText}>登入</Link></p>
                         </div>
                     </div>
                 </motion.div>

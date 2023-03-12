@@ -4,9 +4,10 @@ import Avatar from 'react-avatar';
 import classNames from 'classnames';
 
 import Header from "../Header/header";
+import UseAuth from "../../hooks/useAuth";
 
 import { auth, storage} from "../../firebase/firebase";
-import { onAuthStateChanged, updateProfile, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import { updateProfile, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {v4} from "uuid";
 
@@ -20,23 +21,18 @@ import { MdOutlineErrorOutline } from "react-icons/md";
 import { BiArrowBack } from "react-icons/bi";
 
 function MemberSettings () {
-    //user狀態確認
-    const [user, setUser] = useState(null);
+    const user = UseAuth();
+
     const [photoURL, setPhotoURL] = useState("");
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, user => {
             if (user) {
-            setUser(user);
             const url = user.photoURL;
             setPhotoURL(url || "");
             } else {
-            setUser(null);
             setPhotoURL("");
             }
-        });
-        return () => unsubscribe();
-    }, []);
+    }, [user]);
 
     //*照片上傳-----------------------
     const [imageUpload, setImageUpload] = useState(null);
@@ -72,8 +68,6 @@ function MemberSettings () {
     };
     
     //*------------------------------
-
-
 
     //*修改名稱-----------------------
     const [newDisplayName, setNewDisplayName] = useState("");

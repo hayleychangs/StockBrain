@@ -375,7 +375,7 @@ function CandleChartSVG ({data}) {
     
             priceTextLeft.push(
                 <text
-                    key={i}
+                    key={i + priceScale[i]}
                     x={x1}
                     y={y}
                     fontSize="12"
@@ -387,7 +387,7 @@ function CandleChartSVG ({data}) {
     
             priceTextRight.push(
                 <text
-                    key={i + priceScale.length}
+                    key={i + priceScale[i]+47}
                     x={x2}
                     y={y}
                     fontSize="12"
@@ -459,7 +459,7 @@ function CandleChartSVG ({data}) {
             }
 
             candleStick.push(
-                <g key={i+candleData.high} transform={`translate(${x})`} index={i} onMouseMove={(event) => handleMouseMove(event, i)}>
+                <g key={i+candleData.high*3} transform={`translate(${x})`} index={i} onMouseMove={(event) => handleMouseMove(event, i)}>
                     <path
                         stroke="#676767"
                         strokeWidth="1"
@@ -472,10 +472,9 @@ function CandleChartSVG ({data}) {
                     />
                 </g>
             )
-            
             tradeVol.push(
                 <path
-                    key={i+candleData.vol}
+                    key={i+candleData.vol*7}
                     stroke={color}
                     strokeWidth="5"
                     transform={`translate(${x})`}
@@ -545,8 +544,8 @@ function CandleChartSVG ({data}) {
               fill="none"
             />
         );
-
-        return [...priceTextLeft, ...priceTextRight, ...volTextLeft, ...volTextRight, ...candleStick, ...tradeVol, fiveMA && MA5Line, tenMA && MA10Line, twentyMA && MA20Line];
+        //    
+        return [...volTextLeft, ...volTextRight,...priceTextLeft, ...priceTextRight, ...candleStick, ...tradeVol, fiveMA && MA5Line, tenMA && MA10Line, twentyMA && MA20Line];
     }
     
 
@@ -577,7 +576,7 @@ function CandleChartSVG ({data}) {
         }
         try {
             const listRef = collection(db, "trackingList");
-            const q = query(listRef, where("userId", "==", user.uid));
+            const q = query(listRef, where("user_id", "==", user.uid));
 
             onSnapshot(q, (snapshot) => {
                 const newData = [];
@@ -595,8 +594,7 @@ function CandleChartSVG ({data}) {
 
     useEffect(()=>{
         fetchList();
-
-    }, [user, data, trackingList]); //depends on data update
+    }, [user, data]); //depends on data update
 
     //追蹤狀態判斷，判斷是否有該值
     useEffect(() => {
@@ -621,7 +619,7 @@ function CandleChartSVG ({data}) {
                 change: stockChange,
                 change_percent:stockChangePercent,
                 timestamp: serverTimestamp(),
-                userId: auth?.currentUser?.uid
+                user_id: auth?.currentUser?.uid
             });
             setTracked(true);
         } catch (e) {
@@ -633,7 +631,7 @@ function CandleChartSVG ({data}) {
     const clickToCancel = async () =>{
         try {
             const listRef = collection(db, "trackingList");
-            const q = query(listRef, where("userId", "==", auth?.currentUser?.uid), where("stock_id", "==", stockId));
+            const q = query(listRef, where("user_id", "==", auth?.currentUser?.uid), where("stock_id", "==", stockId));
             const data = await getDocs(q);
             const results=data.docs.map((doc) => ({...doc.data(), id:doc.id }));
             await deleteDoc(doc(db, "trackingList", results[0].id));

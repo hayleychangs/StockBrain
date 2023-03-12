@@ -3,8 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import Avatar from 'react-avatar';
 import classNames from 'classnames';
 
+import UseAuth from "../../hooks/useAuth";
+
 import { auth } from "../../firebase/firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 import styles from "./header.module.css";
 import defaultAvatar from "../../images/default.png";
@@ -12,23 +14,18 @@ import defaultAvatar from "../../images/default.png";
 import { FiLogOut} from "react-icons/fi";
 
 function Header(){
-     //user狀態確認
-     const [user, setUser] = useState(null);
-     const [photoURL, setPhotoURL] = useState("");
+    const user = UseAuth();
+
+    const [photoURL, setPhotoURL] = useState("");
  
      useEffect(() => {
-         const unsubscribe = onAuthStateChanged(auth, user => {
              if (user) {
-             setUser(user);
              const url = user.photoURL;
              setPhotoURL(url || "");
              } else {
-             setUser(null);
              setPhotoURL("");
              }
-         });
-         return () => unsubscribe();
-     }, []);
+     }, [user]);
 
     const navigate = useNavigate();
 
@@ -42,8 +39,12 @@ function Header(){
         }
     };
 
-    function backToHome () {
+    function backToMain () {
         navigate("/home");
+    }
+
+    function backToHome () {
+        navigate("/");
     }
 
     const [boxShadow, setBoxShadow] = useState('none');
@@ -83,7 +84,11 @@ function Header(){
     return (
         <div className={styles.header} style={{ boxShadow }}>
             <div className={styles.headerContent}>
-                <h2 className={styles.theme} onClick={backToHome}>StockBrain</h2>
+                {user ? 
+                    <h2 className={styles.theme} onClick={backToMain}>StockBrain</h2>
+                    :
+                    <h2 className={styles.theme} onClick={backToHome}>StockBrain</h2>
+                }
                 <nav ref={popUpRef}>
                     {user ?
                         <div 
@@ -100,7 +105,7 @@ function Header(){
                         </div>
                         :
                         <div>
-                            <p><Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span> ｜ </span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link></p>
+                            <p><Link to="/signup" className={styles.signUpText}>註冊</Link><span className={styles.dividingLine}> ｜ </span><Link to="/login" className={styles.loginInText}>登入</Link></p>
                         </div>
                     }
                         <div className={classNames(!showPopup ? styles['popup-inactive'] : styles['popup-active'])}>

@@ -6,7 +6,7 @@ import {db} from "../../firebase/firebase";
 
 import styles from "./infoCard.module.css";
 
-import { HiArrowTrendingUp, HiArrowTrendingDown, HiChartBar, HiCurrencyDollar,HiOutlinePlusCircle, HiOutlineCheckCircle } from "react-icons/hi2";
+import { HiArrowTrendingUp, HiArrowTrendingDown, HiChartBar, HiCurrencyDollar } from "react-icons/hi2";
 import { ImMenu3, ImMenu4 } from "react-icons/im";
 
 function InfoCard () {
@@ -111,7 +111,7 @@ function InfoCard () {
                                 <div>漲跌幅</div>
                             </div>
                             {maxAmount.map((item) => (
-                                <div key={item.vol} className={styles.singleItem} onClick={() => handleClick(item.stock_id)}>
+                                <div key={item.amount} className={styles.singleItem} onClick={() => handleClick(item.stock_id)}>
                                     <div className={styles.itemId}>{item.stock_id}</div>
                                     <div className={styles.itemName}>{item.name}</div>
                                     <div className={styles.itemClose}>{item.close}</div>
@@ -135,7 +135,7 @@ function InfoCard () {
                                 <div>漲跌幅</div>
                             </div>
                             {maxRise.map((item) => (
-                                <div key={item.vol} className={styles.singleItem} onClick={() => handleClick(item.stock_id)}>
+                                <div key={item.stock_id} className={styles.singleItem} onClick={() => handleClick(item.stock_id)}>
                                     <div className={styles.itemId}>{item.stock_id}</div>
                                     <div className={styles.itemName}>{item.name}</div>
                                     <div className={styles.itemClose}>{item.close}</div>
@@ -158,7 +158,7 @@ function InfoCard () {
                                 <div>漲跌幅</div>
                             </div>
                             {maxFall.map((item) => (
-                                <div key={item.vol} className={styles.singleItem} onClick={() => handleClick(item.stock_id)}>
+                                <div key={item.close} className={styles.singleItem} onClick={() => handleClick(item.stock_id)}>
                                     <div className={styles.itemId}>{item.stock_id}</div>
                                     <div className={styles.itemName}>{item.name}</div>
                                     <div className={styles.itemClose}>{item.close}</div>
@@ -193,7 +193,7 @@ function InfoCard () {
 
     function handleDrop(e, card) {
         e.preventDefault();
-        setCardList(cardList.map(c =>{
+        setCardList(cardList.map(c => {
             if (c.id === card.id) {
                 return {...c, order: currentCard.order}
             }
@@ -235,10 +235,9 @@ function InfoCard () {
             {isOpen && (
                 <div className={styles.cardContainer}>
                     {cardList.sort(sortCards).map(card =>
-                        <div 
+                        <div key={card.id}
                             onDragStart={(e) => handleDragStart(e, card)}
                             onDragLeave={(e) => handleDragLeave(e)}
-                            onDragEnd={(e) => handleDragEnd(e)}
                             onDragOver={(e) => handleDragOver(e)}
                             onDrop={(e) => handleDrop(e, card)}
                             draggable={true}

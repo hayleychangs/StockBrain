@@ -173,6 +173,26 @@ a{
     bottom: 3px;
     left: 2px;
 }
+.signUpText{
+    font-size: 14px;
+    color: var(--gray);
+}
+.signUpText:hover{
+    font-weight: bold;
+    color: var(--blue);
+}
+.loginInText{
+    font-size: 14px;
+    color: var(--gray);
+}
+.loginInText:hover{
+    font-weight: bold;
+    color: var(--blue);
+}
+.dividingLine{
+    color: var(--gray);
+    font-weight: bold;
+}
 @media screen and (max-width:1200px) and (min-width:768px){
     .header{
         width: 100%;

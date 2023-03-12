@@ -1,91 +1,52 @@
 import React, { useState, useEffect }  from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+
+import { useTrackingList } from "../../hooks/useFirestore";
 
 import styles from "./trackingList.module.css";
 
-import { collection, addDoc, query, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot } from "firebase/firestore";
-import {db, auth} from "../../firebase/firebase";
-import { onAuthStateChanged } from 'firebase/auth';
+import { collection, query, deleteDoc, doc, orderBy, where, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 import { RiDeleteBin5Line } from "react-icons/ri";
 
-const TrackingList = () => {
-    
-    const { stockId } = useParams();
-
-    //add todo
-    const [inputValue, setInputValue] = useState("");
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (inputValue !== "") {
-            try {
-                const docRef = await addDoc(collection(db, "trackingList"), {
-                    text: inputValue,  
-                    timestamp: serverTimestamp(),
-                    userId: auth?.currentUser?.uid
-                });
-                setInputValue("");
-            } catch (e) {
-                console.error("Error adding document: ", e);
-            }
-        }
-        fetchList();
-    };
-
+function TrackingList ({ user }) {
     //read todo
-    const [trackingList, setTrackingList] = useState([]);
-    const fetchList = async () => {
-        if (!user) {
-            return;
-        }
+    // const [trackingList, setTrackingList] = useState([]);
+    // async function fetchList () {
+    //     if (!user) {
+    //         return;
+    //     }
 
-        try {
-            const listRef = collection(db, "trackingList");
-
-            const q = query(listRef, where("userId", "==", auth?.currentUser?.uid), orderBy("timestamp", "desc"));
+    //     try {
+    //         const listRef = collection(db, "trackingList");
+    //         const q = query(listRef, where("user_id", "==", user.uid), orderBy("timestamp", "desc"));
            
-            onSnapshot(q, (snapshot) => {
-                const newData = []
-                snapshot.docs.forEach((doc) => {
-                    newData.push({...doc.data(), id:doc.id})
-                })
-                setTrackingList(newData);
-            })
+    //         onSnapshot(q, (snapshot) => {
+    //             const newData = []
+    //             snapshot.docs.forEach((doc) => {
+    //                 newData.push({...doc.data(), id:doc.id})
+    //             })
+    //             setTrackingList(newData);
+    //         })
 
-        } catch (error) {
-            console.log(error);
-        }; 
-    };
-        
-    //!user狀態確認
-    const [user, setUser] = useState(null);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }; 
+    // };
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, user => {
-          if (user) {
-            setUser(user);
-          } else {
-            setUser(null);
-          }
-        });
-      
-        return () => unsubscribe();
-    }, []);
+    // useEffect(()=>{
+    //     fetchList();
+    // }, [user]);
 
-    useEffect(()=>{
-        fetchList();
-        
-    }, [user]);
+    const { data: trackingList } = useTrackingList(user?.uid);
 
     //delete todo
-    const [isClicked, setIsClicked] = useState(true);
     async function handleDelete (event, id) {  
         event.stopPropagation();
-        setIsClicked(true);
         await deleteDoc(doc(db, "trackingList", id));
-        fetchList();
-      }
+        // fetchList();
+    }
 
     
     const navigate = useNavigate()
@@ -118,10 +79,10 @@ const TrackingList = () => {
                                     <div  className={styles.trackText}>
                                         {track.close}
                                     </div>
-                                    <div  className={`${styles.trackText} ${track.change > 0 ? styles.red : track.change < 0 ? styles.green : ''}`}>
+                                    <div  className={`${styles.trackTextChange} ${track.change > 0 ? styles.red : track.change < 0 ? styles.green : ''}`}>
                                         {track.change}
                                     </div>
-                                    <div  className={`${styles.trackText} ${track.change_percent > 0 ? styles.red : track.change_percent < 0 ? styles.green : ''}`}>
+                                    <div  className={`${styles.trackTextPercent} ${track.change_percent > 0 ? styles.red : track.change_percent < 0 ? styles.green : ''}`}>
                                         {track.change_percent}%
                                     </div>
                                     <button className={styles.deleteBtn} onClick={(event) =>{handleDelete(event, track.id)}}><RiDeleteBin5Line size={20} /></button>

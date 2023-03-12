@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
 import { useParams, Link } from "react-router-dom";
 
+import { useNotes } from "../../hooks/useFirestore";
+
 import { collection, addDoc, query, deleteDoc, doc, serverTimestamp, orderBy, where, onSnapshot, updateDoc } from 'firebase/firestore';
-import {db, auth} from "../../firebase/firebase";
-import { onAuthStateChanged } from 'firebase/auth';
+import { db } from "../../firebase/firebase";
 
 import styles from "./myNote.module.css";
 
@@ -13,30 +14,18 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { ImMenu3, ImMenu4 } from "react-icons/im";
 import { TbCircleHalf2 } from "react-icons/tb";
 
-function MyNote ({ onMenuToggle }) {
-  //user狀態確認
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-    });
-  
-    return () => unsubscribe();
-  }, []);
-
+function MyNote ({ onMenuToggle, user }) {
   let { stockId } = useParams();
+
+  if (!stockId) {
+    stockId = "2330";
+  }
 
   //add note
   const [inputValue, setInputValue] = useState('');
   const [moodValue, setMoodValue] = useState('');
   const [selectedColor, setSelectedColor] = useState(null);
   const [inputBackgroundColor, setInputBackgroundColor] = useState('white');
-  const [notes, setNotes] = useState([]);
 
   async function handleAddItem() {
     if (!inputValue) {
@@ -47,26 +36,22 @@ function MyNote ({ onMenuToggle }) {
       setMoodValue("0");
     }
 
-    if (!stockId) {
-      stockId = "2330";
+    try {
+      const docRef = await addDoc(collection(db, 'myNote'), {
+        stock_id: stockId,
+        text: inputValue,
+        mood: moodValue,
+        time: serverTimestamp(),
+        user_id: user.uid
+      });
+
+      setInputValue('');
+      setMoodValue('');
+      setSelectedColor(null);
+      setInputBackgroundColor('white');
+    } catch (e) {
+      console.error('Error adding document: ', e);
     }
-
-      try {
-        const docRef = await addDoc(collection(db, 'myNote'), {
-          stock_id: stockId,
-          text: inputValue,
-          mood: moodValue,
-          time: serverTimestamp(),
-          user_id: auth?.currentUser?.uid
-        });
-
-        setInputValue('');
-        setMoodValue('');
-        setSelectedColor(null);
-        setInputBackgroundColor('white');
-      } catch (e) {
-        console.error('Error adding document: ', e);
-      }
   }
 
 
@@ -98,37 +83,38 @@ function MyNote ({ onMenuToggle }) {
   }
   //---------------------------------------------
 
-  //read note---------
-  const [loading, setLoading] = useState(true);
-  async function fetchNotes () {
+  //!read note---------
+  // const [notes, setNotes] = useState([]);
+  const [isLoading, setIsLoading] = useState(loading);
+  // async function fetchNotes () {
 
-    if (!user) {
-      return;
-    }
+  //   if (!user) {
+  //     return;
+  //   }
 
-    if (!stockId) {
-      stockId = "2330";
-    }
 
-    setLoading(true);
+
+  //   setIsLoading(true);
     
-    const notesRef = collection(db, "myNote");
-    const q = query(notesRef, where("user_id", "==", auth?.currentUser?.uid), where("stock_id", "==", stockId), orderBy("time", "desc"));
+  //   const notesRef = collection(db, "myNote");
+  //   const q = query(notesRef, where("user_id", "==", user.uid), where("stock_id", "==", stockId), orderBy("time", "desc"));
 
-    onSnapshot(q, (querySnapshot) => {
-      const result = [];
-      querySnapshot.forEach((doc) => {
-        result.push({...doc.data(), id: doc.id});
-      });
-      setNotes(result);
-      setLoading(false);
-    });
-  }
+  //   onSnapshot(q, (querySnapshot) => {
+  //     const result = [];
+  //     querySnapshot.forEach((doc) => {
+  //       result.push({...doc.data(), id: doc.id});
+  //     });
+  //     setNotes(result);
+  //     setIsLoading(false);
+  //   });
+  // }
 
-  useEffect(() => {
-    fetchNotes();
-  }, [user, stockId])
+  // useEffect(() => {
+  //   fetchNotes();
+  // }, [user, stockId])
   //----------------------
+
+  const { data: notes, loading: loading } = useNotes(user?.uid, stockId);
 
   //update note
   const [editableContent, setEditableContent] = useState("");
@@ -138,7 +124,7 @@ function MyNote ({ onMenuToggle }) {
   }
 
   async function handleUpdateNote(id) {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const noteRef = doc(db, "myNote", id);
       await updateDoc(noteRef, 
@@ -150,12 +136,12 @@ function MyNote ({ onMenuToggle }) {
     } catch (e) {
       console.log("Error updating document", e);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   async function handleMoodClick(moodValue, id) {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const noteRef = doc(db, "myNote", id);
       updateDoc(noteRef, 
@@ -166,7 +152,7 @@ function MyNote ({ onMenuToggle }) {
     } catch (e) {
       console.error("Error updating mood value:", e);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -264,7 +250,7 @@ function MyNote ({ onMenuToggle }) {
                 </div>
               </div>
           </div>
-          {loading ? ( user ? (
+          {isLoading ? ( user ? (
             <div className={styles.loadingText}>
               <p>筆記整理中，請稍候...</p>
             </div>) : (

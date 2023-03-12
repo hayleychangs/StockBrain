@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate, Link } from "react-router-dom";
 
+import { useTradePlans } from "../../hooks/useFirestore";
 import { collection, query, deleteDoc, doc, orderBy, where, onSnapshot } from 'firebase/firestore';
-import {db, auth} from "../../firebase/firebase";
-import { onAuthStateChanged } from 'firebase/auth';
+import { db } from "../../firebase/firebase";
 
 import styles from "./tradePlan.module.css";
 
@@ -11,51 +11,39 @@ import { ImMenu3, ImMenu4 } from "react-icons/im";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
 
-function TradePlan ({ onMenuToggle }) {
-  //user狀態確認
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-    });
+function TradePlan ({ onMenuToggle, user }) {
+  const [sortedPlans, setSortedPlans] = useState([]);
   
-    return () => unsubscribe();
-  }, []);
+  //!read plan-----------------------------
+  // const [loading, setLoading] = useState(false);
+  
+  // async function fetchPlans () {
 
+  //   if (!user) {
+  //     return;
+  //   }
 
-  //read plan-----------------------------
-  const [loading, setLoading] = useState(false);
-  const [plans, setPlans] = useState([]);
-  async function fetchPlans () {
+  //   setLoading(true);
 
-    if (!user) {
-      return;
-    }
+  //   const plansRef = collection(db, "tradePlan");
+  //   const q = query(plansRef, where("user_id", "==", user.uid), orderBy("timestamp", "desc"));
 
-    setLoading(true);
+  //   onSnapshot(q, (querySnapshot) => {
+  //     const result = [];
+  //     querySnapshot.forEach((doc) => {
+  //       result.push({...doc.data(), id: doc.id});
+  //     });
+  //     setPlans(result);
+  //     setLoading(false);
+  //   });
+  // }
 
-    const plansRef = collection(db, "tradePlan");
-    const q = query(plansRef, where("user_id", "==", auth?.currentUser?.uid), orderBy("timestamp", "desc"));
-
-    onSnapshot(q, (querySnapshot) => {
-      const result = [];
-      querySnapshot.forEach((doc) => {
-        result.push({...doc.data(), id: doc.id});
-      });
-      setPlans(result);
-      setLoading(false);
-    });
-  }
-
-  useEffect(() => {
-    fetchPlans();
-  }, [user])
+  // useEffect(() => {
+  //   fetchPlans();
+  // }, [user])
   //-------------------------------------
+
+  const { data: plans, loading } = useTradePlans(user?.uid);
 
 
   //delete plan-----------------------------
@@ -73,13 +61,13 @@ function TradePlan ({ onMenuToggle }) {
   // id asc
   const handleSortByIdSmall = () => {
     const sortedPlans = [...plans].sort((a, b) => a.stock_id - b.stock_id);
-    setPlans(sortedPlans);
+    setSortedPlans(sortedPlans);
   };
 
   // id desc
   const handleSortByIdBig = () => {
     const sortedPlans = [...plans].sort((a, b) => b.stock_id - a.stock_id);
-    setPlans(sortedPlans);
+    setSortedPlans(sortedPlans);
   };
 
   function handleStockIdClick () {
@@ -94,13 +82,13 @@ function TradePlan ({ onMenuToggle }) {
   // RRRatio asc
   const handleSortByRRRatioSmall = () => {
     const sortedPlans = [...plans].sort((a, b) => a.RR_ratio - b.RR_ratio);
-    setPlans(sortedPlans);
+    setSortedPlans(sortedPlans);
   };
 
   // RRRatio desc
   const handleSortByRRRatioBig = () => {
     const sortedPlans = [...plans].sort((a, b) => b.RR_ratio - a.RR_ratio);
-    setPlans(sortedPlans);
+    setSortedPlans(sortedPlans);
   };
 
   function handleRRRatioClick () {
@@ -113,6 +101,9 @@ function TradePlan ({ onMenuToggle }) {
   }
 
   //----------------------------------------
+
+  // 判斷是否顯示排序後的資料
+  const displayPlans = sortedPlans.length ? sortedPlans : plans;
 
 
   const navigate = useNavigate()
@@ -162,7 +153,7 @@ function TradePlan ({ onMenuToggle }) {
             </div>
             {loading ? ( user ? (
               <div className={styles.loadingText}>
-                <p>筆記整理中，請稍候...</p>
+                <p>資料整理中，請稍候...</p>
               </div>) : (
                 <div className={styles.redirectMessageBox}>
                   <p>完整內容，僅限註冊會員使用</p>
@@ -174,7 +165,7 @@ function TradePlan ({ onMenuToggle }) {
             ) : (
               user ? (
                 <div className={styles.allPlan}>
-                  {plans.map((plan)=>(
+                  {displayPlans.map((plan)=>(
                       <div className={styles.singlePlan} key={plan.id} onClick={() => handleSinglePlanClick(plan.stock_id)}>
                         <div className={styles.stockId}>
                           {plan.stock_id}

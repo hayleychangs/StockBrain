@@ -77,6 +77,7 @@ a{
     width: 490px;
     font-family:  "NOTO Sans JP", san-serif;
     font-size: 16px;
+    color: var(--gray);
 }
 .btnContainer{
     display: flex;
@@ -96,17 +97,30 @@ a{
 }
 .loginBtn:hover{
     transform: scale(1.03);
-}  
-.signUp{
-    font-size: 14px;
-    color: var(--gray);
-    margin-top: 5px;
+}
+.register{
+    margin-top: -12px;
     margin-left: 30px;
     cursor: pointer;
 }
-.signUp:hover{
-    font-weight: bold;
+.signUpText{
+    font-size: 14px;
+    color: var(--gray);
+}
+.signUpText:hover{
     color: var(--blue);
+    font-weight: bold;
+}
+.loginInText{
+    font-size: 14px;
+    color: var(--gray);
+}
+.loginInText:hover{
+    color: var(--blue);
+    font-weight: bold;
+}
+.dividingLine{
+    color: var(--gray);
 }
 .svgContainer {
     width: 1920px;
