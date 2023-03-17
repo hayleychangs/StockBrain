@@ -1,10 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import styles from "./searchBar.module.css";
 
 import { BiSearchAlt } from "react-icons/bi";
-
 
 import MarketData from "./market.json";
 
@@ -16,19 +15,16 @@ function SearchBar () {
 
     const navigate = useNavigate()
 
-    //--------搜尋欄-------------
-    const handleSubmit = (event) => {
+    //搜尋欄
+    function handleSubmit (event) {
         event.preventDefault();
-        //設定querystring
         navigate(`/home/${stockId}`);
         setFilteredData([]);
         setSearchInput("");
     }
-    //--------------------------------------
- 
 
-    //-----處理搜尋結果篩選---------------------
-    const handleFilter = (event) => {
+    //處理搜尋結果篩選
+    function handleFilter (event) {
         let searchWord = event.target.value;
         setSearchInput(searchWord);
         let filterResult;
@@ -52,16 +48,13 @@ function SearchBar () {
             setFilteredData(filterResult);
         }
     }
-    //------------------------------------------
 
-
-    //-----OnFocus & OnBlur & click---------------------
- 
-    const handleOnFocus = (event) => {
+    //OnFocus & OnBlur & click
+    function handleOnFocus (event) {
         event.target.placeholder="";
     }
 
-    const handleOnBlur = (event) => {
+    function handleOnBlur (event) {
         event.target.placeholder="輸入台股名稱或代號搜尋";
     }
 
@@ -70,15 +63,13 @@ function SearchBar () {
         setFilteredData([]);
         setSearchInput("");
     }
-    //-------------------------------------------------
     
     useEffect(() => {
-        if (searchInput==""){
+        if (searchInput=="") {
             setFilteredData([]);
         }
     }, [searchInput]);
 
-    
     let resultRef = useRef();
 
     useEffect(() => {
@@ -98,7 +89,7 @@ function SearchBar () {
     
     return (
         <div className={styles.searchBox} ref={resultRef}>
-            <form className={filteredData.length !== 0 ? `${styles.input} ${styles['has-results']}` : styles.input} onSubmit={handleSubmit}>
+            <form className={filteredData.length !== 0 ? `${styles.input} ${styles["has-results"]}` : styles.input} onSubmit={handleSubmit}>
                 <input
                     value={searchInput}
                     type="text"
@@ -126,5 +117,4 @@ function SearchBar () {
         </div>
     );
 }
-
 export default SearchBar;

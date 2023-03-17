@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import {auth} from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
-function UseAuth() {
+function useAuth () {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -15,6 +15,6 @@ function UseAuth() {
   }, []);
 
   return user;
-}
+};
 
-export default UseAuth;
+export default useAuth;

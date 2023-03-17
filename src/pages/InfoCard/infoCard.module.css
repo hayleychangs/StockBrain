@@ -49,7 +49,7 @@ a{
     justify-content: center;
     align-items: center;
     margin: 20px;
-    cursor: pointer;
+    cursor: grab;
     background-color:var(--lighter-blue);
 }
 .cardItem{
@@ -65,6 +65,7 @@ a{
     grid-template-columns: 28% 28% 24% 20%;
     margin-top: 8px;
     text-align: center;
+    cursor: pointer;
 }
 .singleItem:hover{
     background-color: var(--white);

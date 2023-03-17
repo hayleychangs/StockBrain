@@ -1,11 +1,15 @@
 import  React from "react";
 import { Link } from "react-router-dom";
 
+import HomeNavigation from "../../components/homeNavigation/HomeNavigation";
+
 import styles from "./about.module.css";
 
 import { motion } from "framer-motion";
 
-import { TfiHandPointLeft } from "react-icons/tfi";
+import candleChart from "../../images/candleChart.gif";
+import note from "../../images/note.gif";
+import plan from "../../images/plan.gif";
 
 function About () {
     const variants = {
@@ -18,46 +22,64 @@ function About () {
           opacity: 0,
           x: -50
         }
-    }
+    };
 
     return (
         <div>
             <div className={styles.textContainer}>
-                <nav className={styles.navContainer}>
-                        <div className={styles.navItem}><Link to="/">首頁</Link></div>
-                        <div className={styles.navItem}><Link to="/about">關於我們</Link></div>
-                        <div className={styles.navItem}><Link to="/contact">聯絡我們</Link></div>
-                </nav>
-                <motion.div 
-                    className={styles.text}
-                    variants={variants} 
-                    initial="hidden" 
-                    animate="visible"
-                    mode="wait"
-                >
-                    <p>在投資市場有無數的數據和資訊需要追蹤，如何才能關閉市場噪音，不再被市場情緒波動左右?</p>
-                    <p>有了<Link className={styles.brand} to="/home">StockBrain</Link>，您可以使用一個簡單純淨的K線圖，幫助您關注真正重要的事情： 價格 和 交易量 !</p>
-                    <p>應用風報比試算器平衡風險和回報比例，建立一個紀律的交易計畫，只要按下儲存，<Link className={styles.brand} to="/home">StockBrain</Link>幫您紀錄。</p>
-                    <p>有了<Link className={styles.brand} to="/home">StockBrain</Link>，您可以培養一個穩定獲利的投資大腦，還在等什麼呢？立即嘗試<Link className={styles.brand} to="/home">StockBrain</Link>！<TfiHandPointLeft className={styles.hand} size={20}/></p>
-                </motion.div>
+                <HomeNavigation />
             </div>
-            <div className={styles.svgContainer}>
-                <svg width="100%" height="120vh" viewBox="0 0 1920 1000" preserveAspectRatio="xMidYMid meet">
-                    <path className={styles.curve}
-                        d="M0 1920 
-                        C-185 520,240 520, 360 700
-                        S500 500, 720 600 
-                        S960 420, 1080 700
-                        S1340 200, 1920 650
-                        V1920 Z"
-
-                        strokeWidth="5"
-                        fill="rgba(146,205,250)"
-                    />
-                </svg>
-            </div>
+            <motion.div 
+                variants={variants} 
+                initial="hidden" 
+                animate="visible"
+                mode="wait"
+                className={styles.introContainer}
+            >
+                <div className={styles.introCandleChart}>
+                    <div className={styles.candleChartTextBox}>
+                        <div className={styles.candleChartText}>
+                            <h2 className={styles.candleChartTextTitle}>簡單純淨的K線圖</h2>
+                            <p>在投資市場有無數的數據和資訊需要追蹤，</p>
+                            <p>如何才能關閉市場噪音，不再被市場情緒波動左右?</p>
+                            <p>有了<Link className={styles.brand} to="/home">StockBrain</Link>，您可以使用一個簡單純淨的K線圖，</p>
+                            <p>幫助您關注真正重要的事情： 價格 和 交易量 !</p>
+                        </div>
+                    </div>
+                    <div className={styles.candleChartGifBox}>
+                        <img className={styles.candleChart} src={candleChart} alt="candleChart"></img>
+                    </div>
+                </div>
+                <div className={styles.introNote}>
+                    <div className={styles.noteGifBox}>
+                        <img className={styles.note} src={note} alt="note"></img>
+                    </div>
+                    <div className={styles.noteTextBox}>
+                        <div className={styles.noteText}>
+                            <h2 className={styles.noteTextTitle}>方便的紀錄功能</h2>
+                            <p>將有興趣的股票加入追蹤，及時捕捉交易想法及心情，</p>
+                            <p>4種背景顏色選擇、可編輯以及刪除功能。</p>
+                        </div>
+                    </div>  
+                </div>
+                <div className={styles.introPlan}>
+                    <div className={styles.planTextBox}>
+                        <div className={styles.planText}>
+                            <h2 className={styles.planTextTitle}>風險報酬比試算</h2>
+                            <p>應用風報比試算器平衡風險和回報比例，建立一個紀律的交易計畫，</p>
+                            <p>只要按下儲存，<Link className={styles.brand} to="/home">StockBrain</Link>幫您紀錄。</p>
+                            <p>點擊股票代號或風險報酬比欄位，排序您的交易計畫，</p>
+                            <p>點擊單筆交易計畫可以查看該個股的K線圖。</p>
+                            <br/>
+                            <p className={styles.annotation}>*風險報酬比是什麼? 就是最大報酬和最大虧損的比率，換句話說，你每冒險投資1元可帶來多少潛在報酬。優秀的交易者會尋找最高的潛在上行空間，以及最低的潛在下行空間,十分謹慎地選擇交易機會，用「風險報酬比」決定是否進行交易，是很好的選擇。</p>
+                        </div>
+                    </div>
+                    <div className={styles.planGifBox}>
+                        <img className={styles.plan} src={plan} alt="plan"></img>
+                    </div>
+                </div>
+            </motion.div>
         </div>
     )
 }
-
 export default About;

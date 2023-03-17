@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
+body{
+    margin:0;
+    font-family: "NOTO Sans JP", san-serif;
+    background-color:white;
+}
+a{
+    text-decoration: none;
+}
+:root{
+    --blue:#0f73ee;
+    --lighter-blue:rgb(232,240,254);
+    --lavender:rgba(215,215,255);
+    --yellow:#fba707;
+    --orange:#eb7d16;
+    --white:#FFFFFF;
+    --black:#000000;
+    --gray:#666666;
+    --lighter-gray:rgb(232, 232, 232);
+    --fa-gray:#f0f0f0;
+    --latte:rgb(255, 248, 231);
+}
+.header{
+    width: 100%;
+    max-width: 1920px;
+    height: 54px;
+    border-bottom: 1px solid var(--lighter-gray);
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    background-color: var(--white);
+    display: grid;
+    grid-template-columns: 0.1fr 5.8fr 0.1fr;  
+}
+.header .headerContent{
+    width: 100%;
+    height: 54px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #3366CC;
+    grid-column: 2 / 3;
+    margin-left: -10px;
+}
+.theme{
+    box-sizing: border-box;
+    width: auto;
+    height: 34px;
+    font-family: "Carter One";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 34px;
+    color: var(--blue);
+    cursor: pointer;
+}
+.navItem{
+    display: flex;
+    color: var(--gray);
+    cursor: pointer;
+}
+.navItem[data-display-name]:hover::before {
+    content: attr(data-display-name) " ";
+    position: relative;
+    left: 15px;
+    top: 35px;
+    width: auto;
+    height: 20px;
+    font-size: 14px;
+    text-align: center;
+    transform: scale(0.8);
+    background-color: var(--latte);
+}
+.navItem[data-display-name]::before {
+    display: inline-block;
+}
+.userHead{
+    border: 1px solid var(--lighter-gray);
+}
+.popup{
+    /*定位*/
+    position: absolute;
+    top: 55px;             
+    bottom: 200;           
+    left: 100;        
+    right: 0;
+    margin: auto;
+
+    width: 130px;
+    height: 105px;
+    z-index: 1000;
+    border-radius: 13px;
+}
+.popupContent{
+    width: 100%;
+    height: 100px;
+    background-color: var(--white);
+    margin: auto;
+    border-radius: 10px;
+    border: 1px solid var(--lighter-gray);
+}
+.popup-active{
+    /*定位*/
+    position: absolute;
+    top: 55px;             
+    bottom: 200;           
+    left: 100;        
+    right: 0;
+    margin: auto 25px auto auto;
+
+    width: 130px;
+    height: 105px;
+    z-index: 1000;
+    border-radius: 13px;
+
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: 0.5s ease;
+}
+.popup-inactive{
+    /*定位*/
+    position: absolute;
+    top: 55px;             
+    bottom: 200;           
+    left: 100;        
+    right: 0;
+    margin: auto 25px auto auto;
+
+    width: 130px;
+    height: 105px;
+    z-index: 1000;
+    border-radius: 13px;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: 0.5s ease;
+}
+.myAccountLink, .logOutLink{
+    width: 90%;
+    height: 35px;
+
+    padding-top: 15px;
+    padding-left: 15px;
+    color: var(--gray);
+    cursor: pointer;
+}
+.myAccountLink{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: 1px solid var(--lighter-gray);
+}
+.myAccountLink:hover{
+    font-weight: bolder;
+    background-color: var(--fa-gray);
+}
+.logOutLink{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: 1px solid var(--lighter-gray);
+}
+.logOutLink:hover{
+    font-weight: bolder;
+    background-color: var(--fa-gray);
+}
+.logOut{
+    position: relative;
+    bottom: 3px;
+    left: 2px;
+}
+.signUpText{
+    font-size: 14px;
+    color: var(--gray);
+}
+.signUpText:hover{
+    font-weight: bold;
+    color: var(--blue);
+}
+.loginInText{
+    font-size: 14px;
+    color: var(--gray);
+}
+.loginInText:hover{
+    font-weight: bold;
+    color: var(--blue);
+}
+.dividingLine{
+    color: var(--gray);
+    font-weight: bold;
+}
+@media screen and (max-width:1200px) and (min-width:768px){
+    .header{
+        width: 100%;
+    }
+    .headerContent{
+        width: 100%;
+    }
+    .theme{
+        margin-left: 10px;
+    }
+}
+@media screen and (max-width:767px) and (min-width:360px){
+    .header{
+        width: 100%;
+    }
+    .headerContent{
+        width: 100%;
+    }
+    .theme{
+        margin-left: 20px;
+    }
+}

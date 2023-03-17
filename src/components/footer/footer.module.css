@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
+body{
+    margin:0;
+    font-family: "NOTO Sans JP", san-serif;
+}
+:root{
+    --blue:#0f73ee;
+    --lighter-blue:rgb(232,240,254);
+    --lavender:rgba(215,215,255);
+    --yellow:#fba707;
+    --orange:#eb7d16;
+    --white:#FFFFFF;
+    --black:#000000;
+    --gray:#666666;
+    --lighter-gray:rgb(232, 232, 232);
+    --fa-gray:#f0f0f0;
+    --latte:rgb(255, 248, 231);
+}
+a{
+    text-decoration: none;
+}
+.footer{
+    background-color:#fafafa ;
+    /* height: 200%; */
+    color: var(--gray);
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 50px;
+    text-align: center;
+    border-top: 1px solid var(--lighter-gray);
+    padding: 10px;
+}

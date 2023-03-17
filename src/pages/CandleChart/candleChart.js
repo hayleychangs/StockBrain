@@ -12,7 +12,7 @@ import styles from "./candleChart.module.css";
 import { motion } from "framer-motion";
 import { FaSpinner } from "react-icons/fa";
 
-const CandleChart= () => {
+const CandleChart= ({ user }) => {
     let { stockId } = useParams();
     const [loading, setLoading] = useState(true);
     const [KChartData, setKChartData] = useState([]);
@@ -22,7 +22,7 @@ const CandleChart= () => {
          // 預設執行getData("2330")
          if (!stockId) {
              stockId = "2330";
-         }
+         };
 
         const getData = async (col) => {
             setLoading(true);
@@ -49,7 +49,7 @@ const CandleChart= () => {
     }, [stockId])
 
     useEffect(() => {
-        // console.log('kChartData changed:', KChartData);
+        // console.log("kChartData changed:", KChartData);
     }, [KChartData]);
 
     return(
@@ -63,7 +63,7 @@ const CandleChart= () => {
                     <FaSpinner size={50} color="#0f73ee"/>
                 </motion.div>
             ) : KChartData.length > 0 ? (
-                <CandleChartSVG data={KChartData} stock_id={stockId}/>
+                <CandleChartSVG data={KChartData} user={user}/>
             ) : (
                 <NoData />
             )}

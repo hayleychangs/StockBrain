@@ -12,7 +12,7 @@ import { ImMenu3, ImMenu4 } from "react-icons/im";
 function InfoCard () {
 
 
-    //取得資料-----------------------------------------------------------
+    //取得資料
     const [maxVol, setMaxVol] = useState([]);
     const [maxAmount, setMaxAmount] = useState([]);
     const [maxRise, setMaxRise] = useState([]);
@@ -56,21 +56,18 @@ function InfoCard () {
     useEffect(() => {
         getData();
     },[]);
-    //-----------------------------------------------------------
  
-    //-----------------------------------------------------------
-    const [cardList, setCardList] = useState([]);
-    
 
-    const navigate = useNavigate()
+    const [cardList, setCardList] = useState([]);
+    const navigate = useNavigate();
     function handleClick (keyword) {
-        navigate(`/home/${keyword}`)
+        navigate(`/home/${keyword}`);
 
         const chartContainer = document.querySelector(".searchBar-module__input___O_uKh");
         const containerOffsetTop = chartContainer.offsetTop;
 
         window.scrollTo({ top: containerOffsetTop, behavior: "smooth" });
-    }
+    };
 
     useEffect(() => {
         if (maxVol.length > 0) {
@@ -92,7 +89,7 @@ function InfoCard () {
                                 <div className={styles.itemId}>{item.stock_id}</div>
                                 <div className={styles.itemName}>{item.name}</div>
                                 <div className={styles.itemClose}>{item.close}</div>
-                                <div className={styles.itemChange} style={{color: item.changePercent > 0 ? '#F2666C' : '#68BE8D'}}>{item.changePercent}%</div>
+                                <div className={styles.itemChange} style={{color: item.changePercent > 0 ? "#F2666C" : "#68BE8D"}}>{item.changePercent}%</div>
                             </div>
                         ))}
                       </div>
@@ -115,7 +112,7 @@ function InfoCard () {
                                     <div className={styles.itemId}>{item.stock_id}</div>
                                     <div className={styles.itemName}>{item.name}</div>
                                     <div className={styles.itemClose}>{item.close}</div>
-                                    <div className={styles.itemChange} style={{color: item.changePercent > 0 ? '#F2666C' : '#68BE8D'}}>{item.changePercent}%</div>
+                                    <div className={styles.itemChange} style={{color: item.changePercent > 0 ? "#F2666C" : "#68BE8D"}}>{item.changePercent}%</div>
                                 </div>
                             ))}
                         </div>
@@ -139,7 +136,7 @@ function InfoCard () {
                                     <div className={styles.itemId}>{item.stock_id}</div>
                                     <div className={styles.itemName}>{item.name}</div>
                                     <div className={styles.itemClose}>{item.close}</div>
-                                    <div className={styles.itemChange} style={{color: item.changePercent > 0 ? '#F2666C' : '#68BE8D'}}>{item.changePercent}%</div>
+                                    <div className={styles.itemChange} style={{color: item.changePercent > 0 ? "#F2666C" : "#68BE8D"}}>{item.changePercent}%</div>
                                 </div>
                             ))}
                         </div>
@@ -162,7 +159,7 @@ function InfoCard () {
                                     <div className={styles.itemId}>{item.stock_id}</div>
                                     <div className={styles.itemName}>{item.name}</div>
                                     <div className={styles.itemClose}>{item.close}</div>
-                                    <div className={styles.itemChange} style={{color: item.changePercent > 0 ? '#F2666C' : '#68BE8D'}}>{item.changePercent}%</div>
+                                    <div className={styles.itemChange} style={{color: item.changePercent > 0 ? "#F2666C" : "#68BE8D"}}>{item.changePercent}%</div>
                                 </div>
                             ))}
                         </div>
@@ -174,57 +171,57 @@ function InfoCard () {
     
     const [currentCard, setCurrentCard] = useState(null);
 
-    function handleDragStart(e, card) {
+    function handleDragStart (event, card) {
         setCurrentCard(card);
-    }
+    };
 
-    // function handleDragEnd(e) {
-    //     console.log("dragend");
-    // }
+    function handleDragLeave (event) {
+        event.target.style.background="rgb(232,240,254)";
+    };
 
-    function handleDragLeave(e) {
-        e.target.style.background="rgb(232,240,254)";
-    }
+    function handleDragOver (event) {
+        event.preventDefault();
+        event.target.style.background="rgb(232,240,254)";
+    };
 
-    function handleDragOver(e) {
-        e.preventDefault();
-        e.target.style.background="lightgray";
-    }
-
-    function handleDrop(e, card) {
-        e.preventDefault();
+    function handleDrop (event, card) {
+        event.preventDefault();
         setCardList(cardList.map(c => {
             if (c.id === card.id) {
                 return {...c, order: currentCard.order}
-            }
+            };
             if (c.id === currentCard.id) {
                 return {...c, order: card.order}
-            }
+            };
             return c;
         }))
-        e.target.style.background="rgb(232,240,254)";
-    }
+        event.target.style.background="rgb(232,240,254)";
+    };
 
-    const sortCards = (a,b) => {
+    function handleMouseDown (event) {
+        event.target.style.cursor = "grabbing";
+    };
+      
+    function handleMouseUpOrLeave (event) {
+        event.target.style.cursor = "grab";
+    };
+      
+
+    function sortCards (a,b) {
         if (a.order > b.order) {
             return 1;
         } else {
             return -1;
         }
-    }
-    //-----------------------------------------------------------
+    };
 
-
-    //menu show hide ----------------------------
+    //menu show hide
     const [isOpen, setIsOpen] = useState(true);
 
     const handleMenuClick = () => {
         setIsOpen(!isOpen);
         onMenuToggle();
     };
-
-    //------------------------------------------
-
 
     return(
         <div className={styles.infoCard}>
@@ -236,10 +233,13 @@ function InfoCard () {
                 <div className={styles.cardContainer}>
                     {cardList.sort(sortCards).map(card =>
                         <div key={card.id}
-                            onDragStart={(e) => handleDragStart(e, card)}
-                            onDragLeave={(e) => handleDragLeave(e)}
-                            onDragOver={(e) => handleDragOver(e)}
-                            onDrop={(e) => handleDrop(e, card)}
+                            onDragStart={(event) => handleDragStart(event, card)}
+                            onDragLeave={(event) => handleDragLeave(event)}
+                            onDragOver={(event) => handleDragOver(event)}
+                            onDrop={(event) => handleDrop(event, card)}
+                            onMouseDown={(event) => handleMouseDown(event)}
+                            onMouseUp={(event) => handleMouseUpOrLeave(event)}
+                            onMouseLeave={(event) => handleMouseUpOrLeave(event)}
                             draggable={true}
                             className={styles.card}>
                             {card.text}
@@ -250,6 +250,4 @@ function InfoCard () {
         </div>
     )
 }
-
 export default InfoCard;
-

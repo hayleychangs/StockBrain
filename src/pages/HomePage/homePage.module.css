@@ -3,7 +3,6 @@ body{
     width: 100vw;
     height: 100vh;
     margin:0;
-    /* overflow: hidden; */
     font-family: "NOTO Sans JP", san-serif;
     background-color: var(--White);
 }
@@ -25,7 +24,6 @@ a{
 }
 .navContainer{
     width: 100%;
-    /* position: relative; */
     display: flex;
     z-index: 1000;
     justify-content: end;
@@ -59,7 +57,6 @@ a{
     position: relative;
     top: 200px;
     left: 250px;
-    /* background-color:#eb7d16; */
 }
 .title{
     box-sizing: border-box;
@@ -153,6 +150,14 @@ a{
         left: 80px;
         width: 80%;
     }
+    .svgContainer {
+        top: -120px;
+    }
+}
+@media screen and (max-width: 1050px) {
+    .svgContainer {
+        top: 0;
+    }
 }
 @media screen and (max-width: 900px) {
     .navItem{
@@ -194,6 +199,9 @@ a{
     }
     .text{
         font-size: 16px;
+    }
+    .svgContainer {
+        top: 60px;
     }
 }
 @media screen and (max-width: 560px) {

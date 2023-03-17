@@ -41,7 +41,6 @@ a{
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;    
-    background:linear-gradient(var(--white) 5%, var(--sky-blue));
 }
 .memberCard{
     width: 1000px;
@@ -51,19 +50,23 @@ a{
     display: flex;
     flex-direction: row;
     border-radius: 20px;
-    margin-right: 10px;
+    margin-right: 15px;
+    box-shadow: 7px 6px 2px var(--lighter-gray);
 }
 .leftSide{
     width: 350px;
     height: 100%;
     background-color: var(--fa-gray);
     border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 .rightSide{
     width: 650px;
     height: 100%;
     background-color: var(--white);
     border-top-right-radius: 20px;
+    border-bottom-right-radius: 15px;
+    border-top: 1px solid var(--fa-gray);
 }
 .title{
     font-size: 24px;
@@ -116,8 +119,6 @@ a{
     border-radius: 0 0 100px 100px;
     transform: translate(-50%, -50%) scale(1);
     background: rgba(0, 0, 0, 0.25);
-    /* border-bottom-left-radius: 100px;
-    border-bottom-right-radius: 100px; */
     z-index: 5;
     cursor: pointer;
     pointer-events: auto; /* 偽元素出現時才啟用點擊事件 */
@@ -206,7 +207,6 @@ a{
     width: 200px;
     height: auto;
     margin: 8px auto;
-    /* background-color:#eb7d16; */
 }
 .buttonBox{
     display: flex;
@@ -273,26 +273,34 @@ a{
     border-style: none;
     outline: none;
     border: 1px solid var(--fa-gray);
+    color: var(--gray);
 }
 .nickNameBtn{
     box-sizing: border-box;
     width: 28px;
     height: 28px;
     position: relative;
+    top: 2px;
     left: -30px;
     border-style: none;
     border-radius: 20px;
     cursor: pointer;
     padding: 0;
-    background-color: var(--white);
+    background-color: transparent
 }
 .nickNameBtn:hover{
     color: var(--blue);
     transform: scale(1.08);
 }
-/* .memberNickName input::placeholder{
-    font-size: 12px;
-} */
+.nickNameSuccessMsgBox, .nickNameErrorMsgBox{
+    margin-left: -20px;
+}
+.nickNameSuccessMsgBox{
+    color: #68BE8D;
+}
+.nickNameErrorMsgBox{
+    color: red;
+}
 .changePasswordBox{
     width: 100%;
     height: 200px;    
@@ -370,7 +378,7 @@ a{
     height: 25px;
     position: absolute;
     right: 15px;
-    bottom: 16px;
+    bottom: 25px;
 }
 .successMsg, .errorMsg{
     position: absolute;
@@ -395,7 +403,25 @@ a{
 }
 @media screen and (max-width:1200px) and (min-width:768px){
     .memberCard{
-        width: 90%;
+        width: 80%;
+        margin-right: 0px;
+    }
+}
+@media screen and (max-width:1099px) {
+    .memberInfo{
+        position: relative;
+    }
+    .nickNameMsgBox{
+        width: 120px;
+        font-size: 12px;
+        position: absolute;
+        top: 35px;
+        left: 100px;
+    }
+}
+@media screen and (max-width:792px) {
+    .infoItem{
+        min-width: 80px;
     }
 }
 @media screen and (max-width:767px) and (min-width:360px){
@@ -411,6 +437,7 @@ a{
         width: 100%;
         height: 45%;
         border-top-right-radius: 20px;
+        border-bottom-left-radius: 0px;
     }
     .rightSide{
         border-top-right-radius: 0px;
@@ -450,7 +477,7 @@ a{
         width: 90%;
     }
     .memberNickName{
-        width: 90%;
+        width: 228px;
     }
     .backToHomeBtn{
         width: 95%;
@@ -464,6 +491,9 @@ a{
     }
 }
 @media screen and (max-width:475px) and (min-width:360px){
+    .memberCard{
+        margin-left: 9px;
+    }
     .memberInfo{
         display: flex;
         margin: 20px 0px 50px 5px;
@@ -475,14 +505,48 @@ a{
     .avatarBox{
         margin-left: 28px;
     }
+    .showNickName{
+        margin-left: 60px;
+    }
     .infoItem{
-        width: 25%;
+        max-width: 80px;
         font-size: 14px;
     }
     .memberAccount[readonly]{
         width: 90%;
     }
+    .nickNameBtn{
+        box-sizing: border-box;
+        width: 28px;
+        height: 28px;
+        position: relative;
+        top: 3px;
+        left: -30px;
+        border-style: none;
+        border-radius: 20px;
+        cursor: pointer;
+        padding: 0;
+        background-color: transparent
+    }
+}
+@media screen and (max-width:475px) and (min-width:360px){
     .memberNickName{
-        width: 80%;
+        width: 123%;
+    }
+    .nickNameBtn{
+        left: 25px;
+    }
+}
+@media screen and (max-width:374px){
+    .memberAccount[readonly]{
+        font-size: 14px;
+        height: 25px;
+        width: 200px;
+    }
+    .memberNickName{
+        width: 108%;
+    }
+    .nickNameBtn{
+        left: 2px;
     }
 }

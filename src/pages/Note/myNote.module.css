@@ -3,9 +3,6 @@ body{
     margin:0;
     font-family: "NOTO Sans JP", san-serif;
 }
-/* *{
-    font-family: "NOTO Sans JP", san-serif;
-} */
 :root{
     --blue:#0f73ee;
     --lighter-blue:rgb(232,240,254);
@@ -149,7 +146,6 @@ a{
     border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
 
-    /*-----*/
     box-sizing: border-box;
     position: relative;
     border-bottom-right-radius: 25px;

@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Kalam:wght@700&family=Nabla&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Ubuntu:ital,wght@1,700&display=swap');
 body{
     margin:0;
-    font-family: "NOTO Sans TC", san-serif;
-    background-color: cadetblue;
+    font-family: "NOTO Sans JP", san-serif;
 }
 :root{
     --blue:#0f73ee;
@@ -22,8 +21,7 @@ a{
 .searchBox{
     width: 100%;
     height: 55px;
-    /* margin-right: 100px; */
-    background-color:#fff;
+    position: relative;
 }
 .input{
     width: 100%;
@@ -53,6 +51,7 @@ a{
     border-style: none;
     border-radius: 20px;
     outline: none;
+    background-color: transparent;
 }
 .searchBox input::placeholder{
     color: gray;
@@ -61,9 +60,9 @@ a{
     box-sizing: border-box;
     width: 46px;
     height: 46px;
-    position: relative;
-    left: 630px;
-    bottom: 47px;
+    position: absolute;
+    right: 0;
+    top: 5px;
     border-style: none;
     border-radius: 20px;
     cursor: pointer;
@@ -80,8 +79,8 @@ a{
     width: 680px;
     height: 170px;
     position: relative;
-    bottom: 47px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     background-color:var(--white);
     overflow: hidden;
     overflow-y: auto;
@@ -118,25 +117,17 @@ a{
     .searchBtn{
         width: 40px;
         height: 40px;
-        position: relative;
-        margin-top: 51px;
-        margin-left: -668px;
+        position: absolute;
+        right: 0;
+        bottom: 8px;
         z-index: 1;
-    }
-    .input{
-        width: 100%;
-        margin-left: 0px;
     }
     .searchBox input{
         width: 90%;
-        position: relative;
-        bottom: 59px;
-    }
+        margin-top: 5px;
+        margin-left: 10px;
+    } 
     .searchResults{
         width: 100%;
-        position: relative;
-        bottom: 55px;
-        left: 0px;
-        z-index: 5;
     }
 }

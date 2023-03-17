@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { useTradePlans } from "../../hooks/useFirestore";
-import { collection, query, deleteDoc, doc, orderBy, where, onSnapshot } from 'firebase/firestore';
-import { db } from "../../firebase/firebase";
+import { useDeleteDoc } from "../../hooks/useFirestore";
 
 import styles from "./tradePlan.module.css";
 
@@ -14,58 +13,28 @@ import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
 function TradePlan ({ onMenuToggle, user }) {
   const [sortedPlans, setSortedPlans] = useState([]);
   
-  //!read plan-----------------------------
-  // const [loading, setLoading] = useState(false);
-  
-  // async function fetchPlans () {
-
-  //   if (!user) {
-  //     return;
-  //   }
-
-  //   setLoading(true);
-
-  //   const plansRef = collection(db, "tradePlan");
-  //   const q = query(plansRef, where("user_id", "==", user.uid), orderBy("timestamp", "desc"));
-
-  //   onSnapshot(q, (querySnapshot) => {
-  //     const result = [];
-  //     querySnapshot.forEach((doc) => {
-  //       result.push({...doc.data(), id: doc.id});
-  //     });
-  //     setPlans(result);
-  //     setLoading(false);
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   fetchPlans();
-  // }, [user])
-  //-------------------------------------
-
+  //read plan
   const { data: plans, loading } = useTradePlans(user?.uid);
 
-
-  //delete plan-----------------------------
+  //delete plan
+  const { handleDeleteDoc } = useDeleteDoc("tradePlan");
   async function handleDelete (event, id) {
     event.stopPropagation();
-    await deleteDoc(doc(db, "tradePlan", id));
+    await handleDeleteDoc(id);
   }
-  //----------------------------------------
 
-
-  //資料排序---------------------------------
+  //資料排序
   const [stockIdClickCount, setStockIdClickCount] = useState(0);
   const [RRRatioClickCount, setRRRatioClickCount] = useState(0);
 
   // id asc
-  const handleSortByIdSmall = () => {
+  function handleSortByIdSmall () {
     const sortedPlans = [...plans].sort((a, b) => a.stock_id - b.stock_id);
     setSortedPlans(sortedPlans);
   };
 
   // id desc
-  const handleSortByIdBig = () => {
+  function handleSortByIdBig () {
     const sortedPlans = [...plans].sort((a, b) => b.stock_id - a.stock_id);
     setSortedPlans(sortedPlans);
   };
@@ -80,13 +49,13 @@ function TradePlan ({ onMenuToggle, user }) {
   }
 
   // RRRatio asc
-  const handleSortByRRRatioSmall = () => {
+  function handleSortByRRRatioSmall () {
     const sortedPlans = [...plans].sort((a, b) => a.RR_ratio - b.RR_ratio);
     setSortedPlans(sortedPlans);
   };
 
   // RRRatio desc
-  const handleSortByRRRatioBig = () => {
+  function handleSortByRRRatioBig () {
     const sortedPlans = [...plans].sort((a, b) => b.RR_ratio - a.RR_ratio);
     setSortedPlans(sortedPlans);
   };
@@ -100,13 +69,10 @@ function TradePlan ({ onMenuToggle, user }) {
     setRRRatioClickCount(RRRatioClickCount + 1);
   }
 
-  //----------------------------------------
-
   // 判斷是否顯示排序後的資料
   const displayPlans = sortedPlans.length ? sortedPlans : plans;
 
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   function handleSinglePlanClick (keyword) {
       navigate(`/home/${keyword}`)
 
@@ -117,16 +83,13 @@ function TradePlan ({ onMenuToggle, user }) {
   }
 
 
-  //menu shoe hide ----------------------------
+  //menu show hide
   const [isOpen, setIsOpen] = useState(true);
 
-  const handleClick = () => {
+  function handleClick () {
     setIsOpen(!isOpen);
     onMenuToggle();
   };
-
-  //------------------------------------------
-
 
   return (
     <div className={styles.tradePlan}>
@@ -151,58 +114,55 @@ function TradePlan ({ onMenuToggle, user }) {
                 {RRRatioClickCount % 2 === 0 ?  <RxTriangleDown /> : <RxTriangleUp />}風險報酬比
               </div>
             </div>
-            {loading ? ( user ? (
-              <div className={styles.loadingText}>
-                <p>資料整理中，請稍候...</p>
-              </div>) : (
-                <div className={styles.redirectMessageBox}>
-                  <p>完整內容，僅限註冊會員使用</p>
-                  <p>
-                    立即<Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span>或</span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link>
-                  </p>
-                </div>
-            )
-            ) : (
-              user ? (
+              {user ? (
                 <div className={styles.allPlan}>
-                  {displayPlans.map((plan)=>(
-                      <div className={styles.singlePlan} key={plan.id} onClick={() => handleSinglePlanClick(plan.stock_id)}>
-                        <div className={styles.stockId}>
-                          {plan.stock_id}
+                    {loading ? (
+                        <div className={styles.loadingText}>
+                          <p>資料整理中，請稍候...</p>
                         </div>
-                        <div className={styles.stockName}>
-                          {plan.stock_name}
-                        </div>
-                        <div className={styles.purchasePrice}>
-                          {plan.purchase_price}
-                        </div>
-                        <div className={styles.stopLossPoint}>
-                          {plan.stop_loss_point}
-                        </div>
-                        <div className={styles.lossRatio}>
-                          {plan.loss_ratio}%
-                        </div>
-                        <div className={styles.stopProfitPoint}>
-                          {plan.stop_profit_point}
-                        </div>
-                        <div className={styles.ProfitRatio}>
-                          {plan.profit_ratio}%
-                        </div>
-                        <div className={styles.RRRatio}>
-                          {plan.RR_ratio}
-                        </div>
-                        <div className={styles.deleteBtn} onClick={(event) =>{handleDelete(event, plan.id)}}><RiDeleteBin5Line size={25} /></div>
-                      </div>
-                    ))}
+                      ) : (
+                        displayPlans.map((plan)=>(
+                            <div className={styles.singlePlan} key={plan.id} onClick={() => handleSinglePlanClick(plan.stock_id)}>
+                              <div className={styles.stockId}>
+                                {plan.stock_id}
+                              </div>
+                              <div className={styles.stockName}>
+                                {plan.stock_name}
+                              </div>
+                              <div className={styles.purchasePrice}>
+                                {plan.purchase_price}
+                              </div>
+                              <div className={styles.stopLossPoint}>
+                                {plan.stop_loss_point}
+                              </div>
+                              <div className={styles.lossRatio}>
+                                {plan.loss_ratio}%
+                              </div>
+                              <div className={styles.stopProfitPoint}>
+                                {plan.stop_profit_point}
+                              </div>
+                              <div className={styles.ProfitRatio}>
+                                {plan.profit_ratio}%
+                              </div>
+                              <div className={styles.RRRatio}>
+                                {plan.RR_ratio}
+                              </div>
+                              <div className={styles.deleteBtn} onClick={(event) =>{handleDelete(event, plan.id)}}><RiDeleteBin5Line size={25} /></div>
+                            </div>
+                        ))
+                      )
+                    }
                 </div>
               ) : (
                 <div className={styles.redirectMessageBox}>
                     <p>完整內容，僅限註冊會員使用</p>
-                    <p>立即<Link to="/signup" style={{ color: "#0f73ee"}}>註冊</Link><span>或</span><Link to="/login" style={{ color: "#0f73ee"}}>登入</Link></p>
+                    <p>
+                      立即<Link to="/signup" style={{ color: "#0f73ee"}}> 註冊</Link><span> 或 </span><Link to="/login" style={{ color: "#0f73ee"}}>登入<span style={{fontSize:"10px"}}> (測試帳號)</span></Link>
+                    </p>
                     <></>
                 </div>
               )
-            )}
+            }
           </div>
         </div>
       )}

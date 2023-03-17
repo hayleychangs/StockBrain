@@ -30,6 +30,7 @@ a{
     line-height: 34px;
     margin-left: 20px;
     padding-top: 20px;
+    cursor: pointer;
 }
 .signUpCard{
     width: 500px;
@@ -95,6 +96,8 @@ a{
     transform: scale(1.03);
 }
 .text{
+    color: var(--gray);
+    font-weight: bold;
     margin: 20px auto 20px 160px;
 }
 .clickToLogin:hover{
@@ -104,7 +107,7 @@ a{
 .hr{
     width: 300px;
     border:0;
-    height: 1px;
+    height: 0.5px;
     background: var(--gray);
 }
 .googleBox{
@@ -121,8 +124,15 @@ a{
     cursor: pointer;
 }
 .googleBox:hover{
-    background-color: var(--lighter-blue);
+    background-color: var(--sky-blue);
     color: var(--white);
+}
+.googleLogo{
+    width: 22px;
+    height: 22px;
+    position: relative;
+    top: 3.5px;
+    margin-right: 3px;
 }
 .errorMessage{
     width: 290px;
@@ -135,4 +145,25 @@ a{
     border-radius: 20px;
     padding-left: 10px;
     font-size: 12px;
+}
+@media screen and (max-width: 500px) {
+    .brand{
+        margin-left: 20px;
+    }
+    .signUpCard{
+        top: 160px;
+        margin-left: -65px;
+    }
+    .signUpBtn{
+        margin-left: 95px;
+    }
+    .text{
+        margin-left: 180px;
+    }
+    .hr{
+        margin-left: 110px;
+    }
+    .googleBox{
+        margin-left: 110px;
+    }
 }

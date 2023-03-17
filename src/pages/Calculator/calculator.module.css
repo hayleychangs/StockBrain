@@ -64,7 +64,6 @@ a{
     cursor: pointer;
 }
 .tabs{
-    /* width: 300px; */
     height: 350px;
     max-width: 350px;
     display: flex;
@@ -90,7 +89,6 @@ a{
     margin-top: 45px;
 }
 .tabs label:hover{
-    /* background-color: var(--lighter-gray); */
     color: var(--gray);
     background-color:var(--white);
 }
@@ -99,7 +97,6 @@ a{
 }
 .tabs .tab{
     width: 100%;
-    /* height: 300px; */
     display: flex;
     order: 1;    /*set tabs after the label*/
     display: none;
@@ -117,7 +114,6 @@ a{
     height: 245px;
     display: flex;
     flex-direction: row;
-    /* background-color: var(--lighter-blue); */
     font-size: 14px;
     margin-left: 10px;
     border-bottom-left-radius: 10px;
@@ -199,9 +195,6 @@ a{
     width: 90px;
     height: 30px;
     background-color: var(--white);
-    /* position: relative;
-    bottom: 50px;
-    left: 130px; */
     font-weight: bold;
     border: none;
     border-radius: 20px;
@@ -215,9 +208,6 @@ a{
     width: 90px;
     height: 30px;
     background-color: var(--lighter-blue);
-    /* position: relative;
-    bottom: 50px;
-    left: 130px; */
     border: none;
     border-radius: 20px;
     font-weight: bold;
@@ -281,5 +271,13 @@ a{
     .tipsForSavePlan:hover::before{
         top: 40px;
         left: -20px;
+    }
+}
+@media screen and (max-width:420px) {
+    .rowItem{
+        font-size: 12px;
+    }
+    .subRow{
+        font-size: 12px;
     }
 }

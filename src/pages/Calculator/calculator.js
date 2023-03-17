@@ -20,8 +20,8 @@ function Calculator ({ user }) {
 
     const [tab, setTab] = useState("tabone");
 
-    const handleTabChange = (e) => {
-        setTab(e.target.value);
+    function handleTabChange (event) {
+        setTab(event.target.value);
         handleClear();
     };
 
@@ -33,29 +33,29 @@ function Calculator ({ user }) {
     } else{
         stopLossRatio = purchasePrice && stopLossPoint ? (stopLossPoint - purchasePrice) / purchasePrice * 100 : null;
         stopProfitRatio = purchasePrice && stopProfitPoint ? (purchasePrice -  stopProfitPoint) / purchasePrice * 100 : null;
-    }
+    };
     
 
-    const handlePurchasePriceChange = (e) => {
-        setPurchasePrice(e.target.value);
+    function handlePurchasePriceChange (event) {
+        setPurchasePrice(event.target.value);
     };
 
-    const handleStopLossPointChange = (e) => {
-        setStopLossPoint(e.target.value);
+    function handleStopLossPointChange (event) {
+        setStopLossPoint(event.target.value);
     };
 
-    const handleStopProfitPointChange = (e) => {
-        setStopProfitPoint(e.target.value);
+    function handleStopProfitPointChange (event) {
+        setStopProfitPoint(event.target.value);
     };
 
-    const handleClear = () => {
+    function handleClear () {
         setPurchasePrice("");
         setStopLossPoint("");
         setStopProfitPoint("");
         setErrorMessage("");
     };
 
-    //儲存及渲染---------------------------------
+    //儲存及渲染
     const [data, setData] = useState(MarketData);
     const [stockName, setStockName] = useState("");
 
@@ -63,7 +63,8 @@ function Calculator ({ user }) {
 
     if (!stockId) {
         stockId = "2330";
-    }
+    };
+
     function getStockName () {
         let result;
 
@@ -72,8 +73,8 @@ function Calculator ({ user }) {
                 return item.股票代碼.toString().includes(stockId)
             });
             setStockName(result[0].股票名稱);
-        }
-    }
+        };
+    };
 
     useEffect(() => {
         if (purchasePrice !== "" && stopLossPoint !== "" && stopProfitPoint !== ""){
@@ -90,7 +91,7 @@ function Calculator ({ user }) {
     async function handleSaveLong () {
         if (!user) {
             return;
-        }
+        };
         
         let purchasePriceNum = parseFloat(purchasePrice);
         let stopLossPointNum = parseFloat(stopLossPoint);
@@ -108,7 +109,7 @@ function Calculator ({ user }) {
         } else if (!purchasePriceNum || !stopLossPointNum || !stopProfitPointNum) {
             setErrorMessage("[看多] 請輸入完整試算條件。");
             return;
-        }
+        };
 
         let stopLossRatio;
         let stopProfitRatio;
@@ -117,13 +118,13 @@ function Calculator ({ user }) {
             stopProfitRatio = purchasePriceNum && stopProfitPointNum ? (purchasePriceNum - stopProfitPointNum) / purchasePriceNum * 100  : null;;
             stopLossRatio = parseFloat(stopLossRatio).toFixed(2);
             stopProfitRatio = parseFloat(stopProfitRatio).toFixed(2);
-        } 
+        };
         if ( purchasePriceNum > stopLossPointNum ) {
             stopLossRatio = purchasePriceNum && stopLossPointNum  ? (stopLossPointNum  - purchasePriceNum) / purchasePriceNum * 100 : null;
             stopProfitRatio = purchasePriceNum && stopProfitPointNum ? (purchasePriceNum -  stopProfitPointNum) / purchasePriceNum * -100 : null;
             stopLossRatio = parseFloat(stopLossRatio).toFixed(2);
             stopProfitRatio = parseFloat(stopProfitRatio).toFixed(2);
-        }
+        };
         if (purchasePrice !== "" && stopLossPoint !== "" && stopProfitPoint !== "") {
             try {
                 const docRef = await addDoc(collection(db, "tradePlan"), {
@@ -146,16 +147,16 @@ function Calculator ({ user }) {
                 setTimeout(() => {
                     setErrorMessage("");
                   }, 2500);
-            } catch (e) {
-                console.error("Error adding document: ", e);
+            } catch (error) {
+                console.error("Error adding document: ", error);
             }
-        }
+        };
     };
 
     async function handleSaveShort () {
         if (!user) {
             return;
-        }
+        };
         
         let purchasePriceNum = parseFloat(purchasePrice);
         let stopLossPointNum = parseFloat(stopLossPoint);
@@ -176,7 +177,7 @@ function Calculator ({ user }) {
         } else if (purchasePriceNum < 0 || stopLossPointNum < 0 || stopProfitPointNum  < 0) {
             setErrorMessage("[看空] 輸入值需大於0。");
             return;
-        }
+        };
 
         let stopLossRatio;
         let stopProfitRatio;
@@ -185,13 +186,13 @@ function Calculator ({ user }) {
             stopProfitRatio = purchasePriceNum && stopProfitPointNum ? (purchasePriceNum - stopProfitPointNum) / purchasePriceNum * 100  : null;;
             stopLossRatio = parseFloat(stopLossRatio).toFixed(2);
             stopProfitRatio = parseFloat(stopProfitRatio).toFixed(2);
-        } 
+        };
         if ( purchasePriceNum > stopLossPointNum ) {
             stopLossRatio = purchasePriceNum && stopLossPointNum  ? (stopLossPointNum  - purchasePriceNum) / purchasePriceNum * 100 : null;
             stopProfitRatio = purchasePriceNum && stopProfitPointNum ? (purchasePriceNum -  stopProfitPointNum) / purchasePriceNum * -100 : null;
             stopLossRatio = parseFloat(stopLossRatio).toFixed(2);
             stopProfitRatio = parseFloat(stopProfitRatio).toFixed(2);
-        }
+        };
         if (purchasePrice !== "" && stopLossPoint !== "" && stopProfitPoint !== "") {
             try {
                 const docRef = await addDoc(collection(db, "tradePlan"), {
@@ -214,14 +215,12 @@ function Calculator ({ user }) {
                 setTimeout(() => {
                     setErrorMessage("");
                 }, 2500);
-            } catch (e) {
-                console.error("Error adding document: ", e);
+            } catch (error) {
+                console.error("Error adding document: ", error);
             }
-        }
+        };
     };
    
-    //-------------------------------------
-
     return (
         <>
         <div className={styles.title}>
@@ -272,9 +271,6 @@ function Calculator ({ user }) {
                     }
                 </div>
             </div>
-            
-
-
             <input type="radio" name="tabs" id="tabtwo" value="tabtwo" onChange={handleTabChange}/>
             <label className={styles.tabsLabel} htmlFor="tabtwo" style={tab === "tabtwo" ? {backgroundColor: "#CDE6C7", color: "#68BE8D" } : {}}>看 空</label>
             <div  className={styles.tab}>
@@ -322,5 +318,4 @@ function Calculator ({ user }) {
         </>
     )
 }
-
 export default Calculator;

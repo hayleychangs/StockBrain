@@ -42,7 +42,6 @@ a{
     background: #c6c6c6;
 }
 .candleChart{
-    /* width: 780px; */
     width: 100%;
     height: 565px;
     grid-row: 4 / 5;
@@ -51,11 +50,9 @@ a{
     overflow-y: hidden;
 }
 .SVG{
-    /* width: 780px; */
-    /* width: 100%; */
     background: #fff;
     border-radius: 10px;
-    border: 1px solid #dfdfdf;  /* */
+    border: 1px solid #dfdfdf;
     margin-left: 10px;
     margin-right: 10px;
     display: grid;
@@ -390,7 +387,7 @@ a{
 }
 @media screen and (max-width:668px) and (min-width:360px){
     .updateTime{
-        margin-top: -10px;
+        margin-top: -18px;
         margin-left: -5px;
         margin-right: 8px;
         transform: scale(0.6);

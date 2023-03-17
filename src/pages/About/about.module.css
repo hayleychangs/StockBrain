@@ -2,6 +2,7 @@
 body{
     margin:0;
     font-family: "NOTO Sans JP", san-serif;
+    height: 100vh;
 }
 :root{
     --blue:#0f73ee;
@@ -20,44 +21,6 @@ body{
 a{
     text-decoration: none;
 }
-.navContainer{
-    width: 100%;
-    display: flex;
-    z-index: 1000;
-    justify-content: end;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-.navItem{
-    margin: 20px 80px 0 0;
-    font-size: 14px;
-    color: var(--gray);
-    cursor: pointer;
-}
-.navItem a{
-    color: var(--gray);
-}
-.navItem a:hover{
-    font-weight: bold;
-    color: var(--blue);
-}
-.textContainer{
-    width: 100%;
-    height: 100vh;
-}
-.text{
-    width: 70%;
-    height: 300px;
-    text-align: left;
-    font-size: 16px;
-    font-weight:bold;
-    color: var(--gray);
-    position: relative;
-    top: 180px;
-    left: 250px;
-    z-index: 1;
-}
 .brand{
     color: var(--gray);
 }
@@ -69,39 +32,178 @@ a{
     transition: transform 0.5s ease-in-out;
     cursor: pointer;
 }
-.svgContainer{
-    width: 1920px;
-    position: absolute;
-    top: -150px;
-    left: 0;
-    right: 0;
-    bottom: 0;
+.introContainer{
+    width: 100%;
+    max-width: 1920px;
+    height: 1800px;
+    margin-top: 64px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    background-color:blanchedalmond;
 }
-@media screen and (max-width: 1920px) {
-    .textContainer{
-        max-width: 100%;
-    }
-    .svgContainer {
-        max-width: 100%;
-    }
+.introCandleChart{
+    width: 100%;
+    background-color: var(--white);
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.candleChartTextBox{
+    grid-column: 0 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.candleChartText{
+    width: 100%;
+    max-width: 480px;
+    margin: auto;
+    color: var(--gray);
+    text-align: right;
+    font-size: 16px;
+}
+.candleChartTextTitle{
+    height: 25px;
+    margin-bottom: 50px;
+    margin-right: 10px;
+}
+.candleChartGifBox{
+    grid-column: 2 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.candleChart{
+    width: 100%;
+    max-width: 550px;
+}
+.introNote{
+    width: 100%;
+    background-color: var(--lighter-blue);
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.noteTextBox{
+    grid-column: 2 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.noteText{
+    width: 100%;
+    max-width: 490px;
+    margin: auto;
+    color: var(--gray);
+    text-align: left;
+    font-size: 16px;
+}
+.noteTextTitle{
+    height: 25px;
+    margin-bottom: 50px;
+}
+.noteGifBox{
+    grid-column: 0 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.note{
+    width: 100%;
+    max-width: 550px;
+}
+.introPlan{
+    width: 100%;
+    background-color: var(--white);
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.planTextBox{
+    grid-column: 0 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.planText{
+    width: 100%;
+    max-width: 480px;
+    margin: auto;
+    color: var(--gray);
+    text-align: right;
+    font-size: 16px;
+    position: relative;
+}
+.planTextTitle{
+    height: 25px;
+    margin-bottom: 50px;
+    margin-right: 10px;
+}
+.planGifBox{
+    grid-column: 2 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.plan{
+    width: 100%;
+    max-width: 550px;
+}
+.annotation{
+    width: 100%;
+    font-size: 12px;
+    transform: scale(0.8);
+    color: #bbbbbb;
+    position: absolute;
+    left: 35px;
 }
 @media screen and (max-width: 1200px) {
     .navItem{
         margin: 20px 40px 0 0;
     }
-    .text{
-        top: 200px;
-        left: 100px;
-        width: 80%;
+    .introCandleChart, .introNote, .introPlan{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    .candleChartTextBox, .noteTextBox, .planTextBox{
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+    }
+    .candleChartText, .noteText, .planText{
+        width: 90%;
+        text-align: center;
+    }
+    .candleChartGifBox, .noteGifBox, .planGifBox{
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        margin-bottom: 50px;
+    }
+    .planText{
+        margin-top: 60px;
+    }
+    .planGifBox{
+        margin-top: 40px;
+    }
+    .annotation{
+        left: 0;
+    }
+}
+@media screen and (max-width: 1050px) {
+    .svgContainer {
+        top: 0;
+    }
+    .candleChart, .note, .plan{
+        width: 400px;
+    }
+    .candleChart{
+        margin-top: 20px;   
+    }
+    .planGifBox{
+        margin-top: 80px;
     }
 }
 @media screen and (max-width: 900px) {
     .navItem{
         margin: 20px 30px 0 0;
-    }
-    .text{
-        left: 80px;
-        width: 80%;
     }
 }
 @media screen and (max-width: 767px) {
@@ -109,15 +211,37 @@ a{
         left: 60px;
         width: 80%;
     }
-}
-@media screen and (max-width: 560px) {
-    .text{
-        top: 200px;
-        left: 45px;
+    .svgContainer {
+        top: 60px;
     }
 }
 @media screen and (max-width: 560px) {
     .text{
-        top: 150px;
+        top: 60px;
+        left: 45px;
+    }
+    .candleChartText, .noteText, .planText{
+        font-size: 14px;
+    }
+    .candleChart, .note, .plan{
+        width: 300px;
+    }
+    .planGifBox{
+        margin-top: 100px;
+    }
+}
+@media screen and (max-width: 420px) {
+    .planGifBox{
+        margin-top: 100px;
+    }
+}
+@media screen and (max-width: 404px) {
+    .planGifBox{
+        margin-top: 110px;
+    }
+}
+@media screen and (max-width: 386px) {
+    .planGifBox{
+        margin-top: 120px;
     }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import UseAuth from "../../hooks/useAuth";
-import Header from "../Header/header";
+import useAuth from "../../hooks/useAuth";
+import Header from "../../components/header/header";
 import CandleChart from "../CandleChart/candleChart";
 import Calculator from "../Calculator/calculator";
 import SearchBar from "../SearchBar/searchBar";
@@ -9,20 +9,20 @@ import TrackingList from "../TrackingList/trackingList";
 import MyNote from "../Note/myNote";
 import InfoCard from "../InfoCard/infoCard";
 import TradePlan from "../TradePlan/tradePlan";
-import Footer from "../Footer/footer";
+import Footer from "../../components/footer/footer";
 
 import styles from "./mainPage.module.css";
 
 function MainPage () {
-    const user = UseAuth();
+    const user = useAuth();
 
     const [isMyNoteOpen, setIsMyNoteOpen] = useState(true);
-    const handleMyNoteToggle = () => {
+    function handleMyNoteToggle () {
         setIsMyNoteOpen(!isMyNoteOpen);
     };
       
     const [isTradePlanOpen, setIsTradePlanOpen] = useState(true);
-    const handleTradePlanToggle = () => {
+    function handleTradePlanToggle () {
         setIsTradePlanOpen(!isTradePlanOpen);
     };
 
@@ -33,7 +33,7 @@ function MainPage () {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const handleScroll = () => {
+    function handleScroll () {
         if (window.pageYOffset > 20) {
           setIsVisible(true);
         } else {
@@ -41,7 +41,7 @@ function MainPage () {
         }
     };
 
-    const scrollToTop = () => {
+    function scrollToTop () {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
@@ -53,7 +53,7 @@ function MainPage () {
                     {<SearchBar />}
                 </div>
                 <div className={styles.candleStickChart}>
-                    {<CandleChart />}
+                    {<CandleChart user={user}/>}
                 </div>
                 <div className={styles.trackingList}>
                     {<TrackingList user={user}/>}
@@ -82,5 +82,4 @@ function MainPage () {
         </div>
     )
 }
-
 export default MainPage;

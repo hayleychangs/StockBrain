@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 
 import { collection, addDoc, query, getDocs, deleteDoc, doc, serverTimestamp, where, onSnapshot } from "firebase/firestore";
 import {db, auth} from "../../firebase/firebase";
-import { onAuthStateChanged } from 'firebase/auth';
 
 import styles from "./candleChartSVG.module.css";
 import { BsCheckCircleFill, BsPlusCircle } from "react-icons/bs";
@@ -53,7 +52,7 @@ function redCandlestick(candleStick, candleData, maxPrice, multiplier){
         candleStick.open=candleStick.low; 
         candleStick.close=candleStick.high;
         candleStick.positive=1;
-    }
+    };
     return candleStick;
 }
 
@@ -73,7 +72,7 @@ function greenCandlestick(candleStick, candleData, maxPrice, multiplier){
         candleStick.open=candleStick.open;
         candleStick.close=candleStick.low;
         candleStick.positive=2;
-    }else if (candleData.open==candleData.max && candleData.close==candleData.min){
+    }else if(candleData.open==candleData.max && candleData.close==candleData.min){
         candleStick.high=candleStick.high;
         candleStick.low=candleStick.low;
         candleStick.open=candleStick.high;
@@ -98,17 +97,17 @@ function greenCandlestick(candleStick, candleData, maxPrice, multiplier){
         candleStick.open=candleStick.high-(candleStick.open-candleStick.close);
         candleStick.close=candleStick.high;
         candleStick.positive=2;
-    }
+    };
     return candleStick;
 }
 
-function CandleChartSVG ({data}) {
+function CandleChartSVG ({data, user}) {
 
     if (!data.length) {
         return null;
-    }
+    };
 
-    //---------- init briefInfo value --------
+    //init briefInfo value
     const [stockName, setStockName] = useState(data[145].stock_name);
     const [stockId, setStockId] = useState(data[145].stock_id);
     const [stockOpen, setStockOpen] = useState(data[145].open);
@@ -166,7 +165,7 @@ function CandleChartSVG ({data}) {
             strokeDasharray={i < 8 ? "2 2" : null}
         />
         );
-    }
+    };
 
     const volLines = [];
     for (let i = 1; i < 4; i++) {
@@ -188,9 +187,9 @@ function CandleChartSVG ({data}) {
                 strokeDasharray={strokeDasharray}
             />
         );
-    }
+    };
 
-    //*DataCrafting
+    //DataCrafting
     const DataCrafting = (data) => {
         let dataArray=[];
 
@@ -201,7 +200,7 @@ function CandleChartSVG ({data}) {
             close: 0,
             positive: 0,
             vol:0
-        }
+        };
             
         //get maxPrice, minPrice, maxVol, minVol and multiplier
         let originalData = data.slice(1);;
@@ -219,7 +218,7 @@ function CandleChartSVG ({data}) {
             minPrice: minPrice,
             maxVol: maxVol,
             minVol: minVol
-        }
+        };
         maxAndMinArray.push(maxAndMin);
 
         let multiplier = Math.round((320-40)/(maxPrice-minPrice)*100)/100;
@@ -243,7 +242,7 @@ function CandleChartSVG ({data}) {
                 formattedPScale = pScale.toFixed(2);
             }
             priceScale.push(formattedPScale);
-        }
+        };
 
         //scale text of vol
         const volScale = [];
@@ -251,11 +250,10 @@ function CandleChartSVG ({data}) {
             let vScale = volInverse * 45 * i;
             vScale = parseInt(vScale.toFixed(2));
             volScale.push(vScale);
-        }
+        };
 
         //candle relocate
-        for (let i = 1
-            ; i < data.length; i++) {
+        for (let i = 1; i < data.length; i++) {
             
             let candleData = data[i];
           
@@ -267,7 +265,7 @@ function CandleChartSVG ({data}) {
                 close: 0,
                 positive: 0,
                 vol:0
-            }
+            };
 
             //relocate process
             if (candleData.close>candleData.open){
@@ -289,13 +287,13 @@ function CandleChartSVG ({data}) {
                 candleStick.positive=0;
             }else{
                 greenCandlestick(candleStick, candleData, maxPrice, multiplier);
-            }
+            };
 
             //trade volume
             candleStick.vol=Math.floor(candleData.Trading_Volume/1000);
 
             dataArray.push(candleStick);
-        }
+        };
         dataArray.push(stickEnd);
 
         //5MA
@@ -308,7 +306,7 @@ function CandleChartSVG ({data}) {
             average=parseFloat((40+(maxPrice-average)*multiplier).toFixed(2));
 
             MA5.push(Number(average));
-        }
+        };
 
         //10MA
         const MA10 = [];
@@ -320,7 +318,7 @@ function CandleChartSVG ({data}) {
             average=parseFloat((40+(maxPrice-average)*multiplier).toFixed(2));
 
             MA10.push(Number(average));
-        }
+        };
     
         //20MA
         const MA20 = [];
@@ -332,10 +330,10 @@ function CandleChartSVG ({data}) {
             average=parseFloat((40+(maxPrice-average)*multiplier).toFixed(2));
 
             MA20.push(Number(average));
-        }
+        };
 
         return {dataArray, maxAndMinArray, priceScale, volScale, MA5, MA10, MA20, maxPrice, minPrice}
-    }
+    };
     const craftedData = DataCrafting(data).dataArray;
     const maxAndMinArray = DataCrafting(data).maxAndMinArray;
     const priceScale = DataCrafting(data).priceScale;
@@ -346,7 +344,7 @@ function CandleChartSVG ({data}) {
     const maxPrice = DataCrafting(data).maxPrice;
     const minPrice = DataCrafting(data).minPrice;
 
-    //*build candlestick
+    //build candlestick
     const BuildCandle = () => {
         const spacing = 5;
         let x = 52.5;
@@ -365,11 +363,15 @@ function CandleChartSVG ({data}) {
         for (let i = 0; i <priceScale.length-1; i++) {
             let priceScaleData = priceScale[i];
             let x1;
-            if (priceScale[6] < 100) {
+            if (priceScale[i] < 100) {
                 x1 = 65;
+            }else if (priceScale[i] > 1000) {
+                x1 = 65;
+            } else if (priceScale[i] > 500) {
+                x1 = 75;
             } else {
                 x1 = 58;
-            }
+            };
             let x2 = 1555;
             let y = 305 - 40 * i;
     
@@ -396,7 +398,7 @@ function CandleChartSVG ({data}) {
                     {priceScaleData}
                 </text>
             );
-        }
+        };
 
         //vol scale
         let volTextLeft = [];
@@ -404,7 +406,7 @@ function CandleChartSVG ({data}) {
         for (let i = 0; i < volScale.length; i++) {
             let volScaleData = volScale[i];
             let x1;
-            if(volScale[2]<1000){
+            if (volScale[2]<1000) {
                 x1 = 60;
             }else if(volScale[2]<100){
                 x1 = 70;
@@ -441,7 +443,7 @@ function CandleChartSVG ({data}) {
                     {volScaleData + "張"}
                 </text>
             );
-        }
+        };
 
         //candle&vol
         let candleStick = [];
@@ -450,13 +452,13 @@ function CandleChartSVG ({data}) {
             let candleData = craftedData[i];
 
             let color;
-            if (candleData.positive === 1) {
+            if (candleData.positive === 1){
                 color = "#F2666C";
-            } else if (candleData.positive === 2) {
+            }else if(candleData.positive === 2){
                 color = "#68BE8D";
-            } else {
+            }else{
                 color = "#8592A2";
-            }
+            };
 
             candleStick.push(
                 <g key={i+candleData.high*3} transform={`translate(${x})`} index={i} onMouseMove={(event) => handleMouseMove(event, i)}>
@@ -471,7 +473,7 @@ function CandleChartSVG ({data}) {
                         d={`M ${x},${candleData.open},${x},${candleData.close}`}
                     />
                 </g>
-            )
+            );
             tradeVol.push(
                 <path
                     key={i+candleData.vol*7}
@@ -480,10 +482,10 @@ function CandleChartSVG ({data}) {
                     transform={`translate(${x})`}
                     d={`M ${x},${Math.round(bottom - (candleData.vol / (maxVol / (bottom - dividingLine))))},${x},${bottom}`}
                 />
-            )
+            );
             
             x += spacing;
-        }
+        };
 
         //5MA
         let pointsForMA5 = "";
@@ -494,7 +496,7 @@ function CandleChartSVG ({data}) {
             pointsForMA5 += `${x},${y} `;
         
             xForMA5+=polylineSpacing;
-        }
+        };
         const MA5Line = (
             <polyline
               key="ma5"
@@ -514,7 +516,7 @@ function CandleChartSVG ({data}) {
             pointsForMA10 += `${x},${y} `;
            
             xForMA10+=polylineSpacing;
-        }
+        };
         const MA10Line = (
             <polyline
               key="ma10"
@@ -534,7 +536,7 @@ function CandleChartSVG ({data}) {
             pointsForMA20 += `${x},${y} `;
            
             xForMA20+=polylineSpacing;
-        }
+        };
         const MA20Line = (
             <polyline
               key="ma200"
@@ -544,36 +546,23 @@ function CandleChartSVG ({data}) {
               fill="none"
             />
         );
-        //    
+  
         return [...volTextLeft, ...volTextRight,...priceTextLeft, ...priceTextRight, ...candleStick, ...tradeVol, fiveMA && MA5Line, tenMA && MA10Line, twentyMA && MA20Line];
     }
     
 
-    //*加入追蹤功能-----------------------------------------------
+    //加入追蹤功能
 
     //user狀態確認並取得資料庫清單
-    const [user, setUser] = useState(null);
     const [trackingList, setTrackingList] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [tracked, setTracked] = useState(false);
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, user => {
-        if (user) {
-            setUser(user);
-        } else {
-            setUser(null);
-        }
-        });
-    
-        return () => unsubscribe();
-    }, []);
 
     //取得資料庫的追蹤清單
     const fetchList = async () => {
         if (!user) {
             return;
-        }
+        };
         try {
             const listRef = collection(db, "trackingList");
             const q = query(listRef, where("user_id", "==", user.uid));
@@ -588,8 +577,7 @@ function CandleChartSVG ({data}) {
             setIsLoaded(true);
         } catch (error) {
             console.log(error);
-        } 
-
+        };
     };
 
     useEffect(()=>{
@@ -622,8 +610,8 @@ function CandleChartSVG ({data}) {
                 user_id: auth?.currentUser?.uid
             });
             setTracked(true);
-        } catch (e) {
-            console.error("Error adding document: ", e);
+        } catch (error) {
+            console.error("Error adding document: ", error);
         }
     };
 
@@ -639,33 +627,34 @@ function CandleChartSVG ({data}) {
             console.log(error);
         };
         setTracked(false);
-    }
-    //*加入追蹤功能-------------------------------------------------------
+    };
 
-    //滑鼠事件---------------
+
+    //滑鼠事件
     const svgRef = useRef(null);
     const hlineRef = useRef(null);
     const vlineRef = useRef(null);
-    const priceTextRef = useRef(null);
+    const priceTextLeftRef = useRef(null);
+    const priceTextRightRef = useRef(null);
   
-    function handleMouseMove1(e) {
+    function handleMouseMove1 (event) {
         const svg = svgRef.current;
         const rect = svg.getBoundingClientRect();
-        const x = e.nativeEvent.offsetX / rect.width;
-        const y = e.nativeEvent.offsetY / rect.height;
+        const x = event.nativeEvent.offsetX / rect.width;
+        const y = event.nativeEvent.offsetY / rect.height;
 
         const yRange = maxPrice - minPrice;
         const pricePerPixel = yRange / 320;
-        const price = maxPrice - (e.nativeEvent.offsetY * pricePerPixel);
+        const price = maxPrice - (event.nativeEvent.offsetY * pricePerPixel);
         let formattedPrice;
         if (price > 500) {
             formattedPrice = Math.round(price);
-        } else {
+        }else{
             formattedPrice = price.toFixed(2);
-        }
+        };
         if (y > 0.68) {
             formattedPrice = "";
-        }
+        };
 
         // 繪製水平線
         const hline = hlineRef.current;
@@ -682,16 +671,32 @@ function CandleChartSVG ({data}) {
         vline.y2.baseVal.value = 520;
 
         // 座標價格
-        const priceText = priceTextRef.current;
-        priceText.setAttribute('x', 1555);
-        priceText.setAttribute('y', y * rect.height);
-        priceText.style.fill = "#0f73ee";
-        priceText.style.fontSize = "12px";
-        priceText.textContent = formattedPrice;
-    }
-    //---------------
+        const priceTextLeft = priceTextLeftRef.current;
+        priceTextLeft.setAttribute("x", 1555);
+        priceTextLeft.setAttribute("y", y * rect.height);
+        priceTextLeft.style.fill = "#0f73ee";
+        priceTextLeft.style.fontSize = "12px";
+        priceTextLeft.textContent = formattedPrice;
 
-    //scroll default--------------
+        const priceTextRight = priceTextRightRef.current;
+        let xLeft;
+        if (formattedPrice < 100) {
+            xLeft = 65;
+        }else if(formattedPrice > 1000){
+            xLeft = 65;
+        }else if(formattedPrice > 500){
+            xLeft = 75;
+        }else{
+            xLeft = 58;
+        }
+        priceTextRight.setAttribute("x", xLeft);
+        priceTextRight.setAttribute("y", y * rect.height);
+        priceTextRight.style.fill = "#0f73ee";
+        priceTextRight.style.fontSize = "12px";
+        priceTextRight.textContent = formattedPrice;
+    };
+
+    //scroll default
     const chartRef = useRef({scrollWidth: 0});
     useLayoutEffect(() => {
         const element = chartRef.current;
@@ -699,7 +704,7 @@ function CandleChartSVG ({data}) {
     }, []);
 
 
-    //average line checkbox--------------
+    //average line checkbox
     const [fiveMA, setFiveMA] = useState(true);
     const [tenMA, setTenMA] = useState(true);
     const [twentyMA, setTwentyMA] = useState(true);
@@ -708,7 +713,7 @@ function CandleChartSVG ({data}) {
         <div className={styles.container}>
             <div className={styles.SVG}>
                 <div className={styles.stockNameAndId}>
-                    <div className={styles.stockName} style={{ fontSize: stockName.length > 3 ? '14px' : 'inherit'}}>{stockName}</div>
+                    <div className={styles.stockName} style={{ fontSize: stockName.length > 3 ? "14px" : "inherit"}}>{stockName}</div>
                     <div className={styles.stockId}>{stockId}</div>
                 </div>
                 <div className={styles.stockBriefInfo}>
@@ -730,7 +735,7 @@ function CandleChartSVG ({data}) {
                     </div>
                     <div className={styles.change}>
                         <span className={styles.infoTitle}>漲跌元(幅)：</span>
-                        <span className={`${styles.infoContent} ${stockChange > 0 ? styles.red : stockChange < 0 ? styles.green : ''}`}>{stockChange} ({stockChangePercent}%)</span>
+                        <span className={`${styles.infoContent} ${stockChange > 0 ? styles.red : stockChange < 0 ? styles.green : ""}`}>{stockChange} ({stockChangePercent}%)</span>
                     </div>
                     <div className={styles.vol}>
                         <span className={styles.infoTitle}>成交量：</span>
@@ -774,7 +779,7 @@ function CandleChartSVG ({data}) {
                         {/* chart border */}
                         <rect
                             ref={svgRef}
-                            onMouseMove={(e) => handleMouseMove1(e)}
+                            onMouseMove={(event) => handleMouseMove1(event)}
                             x="100"
                             y="20"
                             width="1450"
@@ -808,7 +813,10 @@ function CandleChartSVG ({data}) {
 
                         {/* 座標價格 */}
                         <text
-                            ref={priceTextRef}                       
+                            ref={priceTextLeftRef}                       
+                        />
+                        <text
+                            ref={priceTextRightRef}                       
                         />
                         {/* horizontal line */}
                         {priceLines}
@@ -834,8 +842,6 @@ function CandleChartSVG ({data}) {
 
                         {/* candleStick */}
                         {<BuildCandle />}
-
-    
                     </svg>
                 </div>
             </div>

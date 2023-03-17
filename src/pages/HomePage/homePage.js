@@ -5,14 +5,13 @@ import styles from "./homePage.module.css";
 
 import { motion } from "framer-motion";
 
-
-function HomeCard() {
+function HomePage () {
 
     const navigate = useNavigate();
     
-    function handleNavToMain() {
+    function handleNavToMain () {
       navigate("/home");
-    }
+    };
 
     const variants = {
         visible: {
@@ -24,7 +23,7 @@ function HomeCard() {
           opacity: 0,
           x: -50
         }
-    }
+    };
 
     return (
         <div
@@ -47,7 +46,7 @@ function HomeCard() {
                     <div className={styles.btnContainer}>
                         <button className={styles.loginBtn} onClick={handleNavToMain}>立即體驗</button>
                         <div className={styles.register}>
-                            <p><Link to="/signup" className={styles.signUpText}>註冊</Link><span className={styles.dividingLine}> ｜ </span><Link to="/login" className={styles.loginInText}>登入</Link></p>
+                            <p><Link to="/signup" className={styles.signUpText}>註冊</Link><span className={styles.dividingLine}> ｜ </span><Link to="/login" className={styles.loginInText}>登入<span style={{fontSize:"10px"}}> (測試帳號)</span></Link></p>
                         </div>
                     </div>
                 </motion.div>
@@ -71,14 +70,4 @@ function HomeCard() {
         </div>
     );
 }
-
-function HomePage () {
-    
-    return (
-        <>
-            <HomeCard />
-        </>
-    );
-}
-
 export default HomePage;

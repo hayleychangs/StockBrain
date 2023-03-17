@@ -1,11 +1,38 @@
 import  React from "react";
-import { Link } from "react-router-dom";
+
+import HomeNavigation from "../../components/homeNavigation/HomeNavigation";
 
 import styles from "./contact.module.css";
 
 import { motion } from "framer-motion";
 
 function Contact () {
+
+    //OnFocus & OnBlur
+    function handleOnFocusName (event) {
+        event.target.placeholder="";
+    };
+
+    function handleOnBlurName (event) {
+        event.target.placeholder="請填寫姓名";
+    };
+
+    function handleOnFocusEmail (event) {
+        event.target.placeholder="";
+    };
+
+    function handleOnBlurEmail (event) {
+        event.target.placeholder="請填寫Email";
+    };
+
+    function handleOnFocusMsg (event) {
+        event.target.placeholder="";
+    };
+
+    function handleOnBlurMsg (event) {
+        event.target.placeholder="請填寫您想說的話";
+    };
+
     const variants = {
         visible: {
           opacity: 1,
@@ -16,16 +43,11 @@ function Contact () {
           opacity: 0,
           x: -50
         }
-    }
-    // onfocus="this.placeholder=''" onblur="this.placeholder='輸入電子信箱'"
+    };
     return (
        <div>
             <div className={styles.textContainer}>
-                <nav className={styles.navContainer}>
-                        <div className={styles.navItem}><Link to="/">首頁</Link></div>
-                        <div className={styles.navItem}><Link to="/about">關於我們</Link></div>
-                        <div className={styles.navItem}><Link to="/contact">聯絡我們</Link></div>
-                </nav>
+                <HomeNavigation />
                 <motion.div 
                     className={styles.text}
                     variants={variants} 
@@ -38,19 +60,19 @@ function Contact () {
                         <div className={styles.formItem}>
                             <div className={styles.formTitle}>姓名</div>
                             <div className={styles.formElement}>
-                                <input type="text" placeholder="請填寫姓名" />
+                                <input type="text" placeholder="請填寫姓名" onFocus={handleOnFocusName} onBlur={handleOnBlurName} />
                             </div>
                         </div>
                         <div className={styles.formItem}>
                             <div className={styles.formTitle}>Email</div>
                             <div className={styles.formElement}>
-                                <input type="email" placeholder="請填寫Email" />
+                                <input type="email" placeholder="請填寫Email" onFocus={handleOnFocusEmail} onBlur={handleOnBlurEmail}/>
                             </div>
                         </div>
                         <div className={styles.formItem}>
                             <div className={styles.formTitle}>訊息</div>
                             <div className={styles.formElement}>
-                                <input type="text" placeholder="請填寫您想說的話" />
+                                <input type="text" placeholder="請填寫您想說的話" onFocus={handleOnFocusMsg} onBlur={handleOnBlurMsg} />
                             </div>
                         </div>
                         <button className={styles.btn}>發送訊息</button>
@@ -75,5 +97,4 @@ function Contact () {
         </div>
     )
 }
-
-export default Contact
+export default Contact;

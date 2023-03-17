@@ -3,7 +3,6 @@ import {Route, Routes, useLocation } from "react-router-dom";
 
 import MainPage from "../MainPage/mainPage";
 import HomePage from "../HomePage/homePage";
-import { Auth } from "../Auth/auth";
 import { LogIn } from "../LogIn/logIn";
 import { SignUp } from "../SignUp/signUp";
 import MemberSettings from "../MemberSetting/memberSettings";
@@ -20,7 +19,6 @@ function AnimateRoutes () {
                 <Route path="/home" element={ <MainPage /> } exact/>
                 <Route path="/home/:stockId" element={ <MainPage /> } exact/>
                 <Route path="/" element={ <HomePage /> } exact/>
-                <Route path="/auth" element={ <Auth /> } />
                 <Route path="/login" element={ <LogIn /> } exact/>
                 <Route path="/signup" element={ <SignUp /> } exact/>
                 <Route path="/myaccount" element={ <MemberSettings /> } exact/>
@@ -29,6 +27,5 @@ function AnimateRoutes () {
             </Routes>
         </AnimatePresence>
     )
-}
-
-export default AnimateRoutes
+};
+export default AnimateRoutes;
